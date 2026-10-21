@@ -4,9 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10213b">
 <title>Адмінпанель — Звягель Туристичний</title>
 <style>
-:root{--navy:#10213b;--blue:#1c385d;--orange:#f58220;--bg:#f2f5f9;--line:#dce3ec;--muted:#687487;--red:#b42318}
+:root{--navy:#10213b;--orange:#f58220;--bg:#f2f5f9;--line:#dce3ec;--muted:#687487;--red:#b42318}
 *{box-sizing:border-box}
 body{margin:0;font:15px/1.5 Arial,sans-serif;background:var(--bg);color:var(--navy)}
 button,input,textarea{font:inherit}
@@ -15,16 +16,17 @@ button{cursor:pointer;border:0;border-radius:8px;padding:10px 14px;font-weight:b
 .secondary{background:#e7edf5;color:var(--navy)}
 .danger{background:#fde8e7;color:var(--red)}
 .hidden{display:none!important}
-header{background:var(--navy);color:white;padding:20px max(18px,calc((100vw - 1200px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-header h1{font-size:24px;margin:0}
+header{background:var(--navy);color:white;padding:18px max(18px,calc((100vw - 1200px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:23px;margin:0}
 header a{color:white}
-main{max-width:1200px;margin:25px auto;padding:0 16px 50px}
+main{max-width:1250px;margin:25px auto;padding:0 16px 50px}
 .panel{background:white;border:1px solid var(--line);border-radius:14px;padding:20px}
-#loginView{max-width:450px;margin:55px auto}
+#loginView{max-width:440px;margin:55px auto}
 label{display:block;font-weight:bold;margin:12px 0 5px}
 input:not([type=checkbox]),textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px}
+input[type=checkbox]{width:auto}
 textarea{min-height:100px;resize:vertical}
-.layout{display:grid;grid-template-columns:225px minmax(0,1fr);gap:18px;align-items:start}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px;align-items:start}
 nav{display:grid;gap:7px;position:sticky;top:15px}
 .navbtn{text-align:left;background:transparent;color:var(--navy);border:1px solid transparent}
 .navbtn.active{background:#fff0df;border-color:#ffd2a1}
@@ -44,23 +46,39 @@ nav{display:grid;gap:7px;position:sticky;top:15px}
 .full{grid-column:1/-1}
 .editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
 .status{font-size:14px;margin-top:12px;overflow-wrap:anywhere}
-.error{color:var(--red)}.success{color:#167647}
+.error{color:var(--red)}
+.success{color:#167647}
 .empty{padding:20px;border:1px dashed var(--line);border-radius:8px;color:var(--muted)}
 .badge{color:#167647;font-size:12px}
-@media(max-width:750px){.layout{grid-template-columns:1fr}nav{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}.navbtn{font-size:13px;padding:9px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.item{flex-wrap:wrap}.item-actions{width:100%}.panel{padding:14px}}
+@media(max-width:800px){
+ .layout{grid-template-columns:1fr}
+ nav{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .navbtn{font-size:13px;padding:9px}
+ .form-grid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+ .item{flex-wrap:wrap}
+ .item-actions{width:100%}
+ .panel{padding:14px}
+}
 </style>
 </head>
 <body>
+
 <header>
-  <div><h1>Звягель Туристичний</h1><div>Адмінпанель керування сайтом</div></div>
-  <div><a href="./" target="_blank" rel="noopener">Відкрити сайт ↗</a>
-  <button id="logoutBtn" class="secondary hidden">Вийти</button></div>
+  <div>
+    <h1>Звягель Туристичний</h1>
+    <div>Адмінпанель керування сайтом</div>
+  </div>
+  <div>
+    <a href="./" target="_blank" rel="noopener">Відкрити сайт ↗</a>
+    <button id="logoutBtn" class="secondary hidden">Вийти</button>
+  </div>
 </header>
 
 <main>
 <section id="loginView" class="panel">
   <h2>Вхід адміністратора</h2>
-  <p class="muted">Увійдіть через свій обліковий запис Firebase.</p>
+  <p class="muted">Увійдіть через обліковий запис Firebase.</p>
   <form id="loginForm">
     <label for="email">Електронна пошта</label>
     <input id="email" type="email" autocomplete="username" required>
@@ -72,22 +90,34 @@ nav{display:grid;gap:7px;position:sticky;top:15px}
 </section>
 
 <section id="appView" class="hidden">
-  <div class="note">Записи з’являються на сайті, якщо позначено «Опубліковано». Для фотографій вставляйте пряме HTTPS-посилання на зображення.</div>
+  <div class="note">
+    Публічний сайт показує записи, у яких увімкнено «Опубліковано».
+    Для фотографій використовуйте прямі HTTPS-посилання на зображення.
+    Для Google Maps вставляйте повне посилання на карту.
+  </div>
+
   <div class="layout">
-    <nav>
+    <nav aria-label="Розділи адмінпанелі">
       <button class="navbtn active" data-section="home">🏠 Головна</button>
       <button class="navbtn" data-section="places">🏰 Цікавинки</button>
       <button class="navbtn" data-section="about">🏙️ Про місто</button>
       <button class="navbtn" data-section="contacts">☎️ Контакти</button>
       <button class="navbtn" data-section="tours">🧭 Екскурсії</button>
       <button class="navbtn" data-section="news">📰 Новини</button>
+      <button class="navbtn" data-section="food">🍽️ Де поїсти</button>
+      <button class="navbtn" data-section="stay">🛏️ Де переночувати</button>
+      <button class="navbtn" data-section="gettingHere">🗺️ Як дістатися</button>
     </nav>
 
     <div class="panel">
       <div class="section-head">
-        <div><h2 id="sectionTitle">Головна</h2><div id="sectionDesc" class="muted"></div></div>
+        <div>
+          <h2 id="sectionTitle">Головна</h2>
+          <div id="sectionDesc" class="muted"></div>
+        </div>
         <button id="addBtn" class="primary">＋ Додати</button>
       </div>
+
       <p id="pageNote" class="muted"></p>
       <div id="list" class="item-list"></div>
 
@@ -111,6 +141,7 @@ nav{display:grid;gap:7px;position:sticky;top:15px}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <script>
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
@@ -121,24 +152,31 @@ const FIREBASE_CONFIG = {
   appId: "1:914549612868:web:3abce6606a89167134b711",
   measurementId: "G-DV5YF43W24"
 };
+
+/* Дозвіл на вхід до панелі лише для цього UID. */
 const ADMIN_UID = "6l0nN1oKvCYorigm0MHGycuBV9j1";
 
 if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+
 const auth = firebase.auth();
 const db = firebase.firestore();
 const $ = id => document.getElementById(id);
 
 const configs = {
   home: {
-    title:"Головна", desc:"Заголовок, вступний текст і назви блоків.",
-    mode:"doc", collection:"siteContent", doc:"homepage", add:false,
-    note:"Зміни застосовуються до головного екрана та заголовків блоків.",
-    fields:[
+    title: "Головна",
+    desc: "Заголовок, вступний текст і назви блоків.",
+    mode: "doc",
+    collection: "siteContent",
+    doc: "homepage",
+    add: false,
+    note: "Зміни застосовуються до головного екрана та заголовків блоків.",
+    fields: [
       ["hero_title","Головний заголовок","text"],
       ["hero_subtitle","Вступний текст","textarea"],
       ["hero_image","Фото тла (HTTPS URL)","url"],
       ["places_title","Заголовок «Цікавинки»","text"],
-      ["places_intro","Вступ до «Цікавинок»","textarea"],
+      ["places_intro","Вступ до «Цікавинки»","textarea"],
       ["tours_title","Заголовок «Екскурсії»","text"],
       ["tours_intro","Вступ до «Екскурсій»","textarea"],
       ["news_title","Заголовок «Новини»","text"],
@@ -146,36 +184,49 @@ const configs = {
     ]
   },
   places: {
-    title:"Цікавинки", desc:"Туристичні місця та пам'ятки.",
-    mode:"collection", collection:"places", add:true,
-    note:"Додавайте історичні пам'ятки, археологічні об'єкти та таємниці замку.",
-    fields:[
+    title: "Цікавинки",
+    desc: "Туристичні місця та пам’ятки.",
+    mode: "collection",
+    collection: "places",
+    add: true,
+    note: "Додавайте пам’ятки, історичні місця, адреси, фото та посилання.",
+    fields: [
       ["title","Назва локації","text",true],
       ["address","Адреса","text"],
       ["image","Фото (HTTPS URL)","url"],
       ["description","Опис","textarea",true],
       ["hours","Графік відвідування","text"],
       ["link","Посилання на додаткову інформацію","url"],
+      ["mapLink","Посилання на Google Maps","url"],
       ["published","Опубліковано","checkbox"]
     ]
   },
   about: {
-    title:"Про місто", desc:"Історія та інформаційні тексти.",
-    mode:"doc", collection:"siteContent", doc:"about", add:false,
-    note:"Редагуйте історію міста та текст виділеного блоку.",
-    fields:[
+    title: "Про місто",
+    desc: "Історія та інформаційні тексти.",
+    mode: "doc",
+    collection: "siteContent",
+    doc: "about",
+    add: false,
+    note: "Основний текст, який відображається в розділі «Про місто».",
+    fields: [
       ["title","Заголовок розділу","text"],
-      ["text1","Перший абзац","textarea"],
-      ["text2","Другий абзац","textarea"],
+      ["body","Повний текст про місто","textarea"],
+      ["text1","Перший абзац (старий формат)","textarea"],
+      ["text2","Другий абзац (старий формат)","textarea"],
       ["box_title","Заголовок виділеного блоку","text"],
       ["box_text","Текст виділеного блоку","textarea"]
     ]
   },
   contacts: {
-    title:"Контакти", desc:"Адреса, телефон, графік та соціальні мережі.",
-    mode:"doc", collection:"siteContent", doc:"contacts", add:false,
-    note:"Контактні дані публікуються внизу головної сторінки.",
-    fields:[
+    title: "Контакти",
+    desc: "Адреса, телефон, графік та соціальні мережі.",
+    mode: "doc",
+    collection: "siteContent",
+    doc: "contacts",
+    add: false,
+    note: "Використовуйте лише актуальні контактні дані.",
+    fields: [
       ["title","Заголовок контактів","text"],
       ["address","Адреса","text"],
       ["phone","Телефон","text"],
@@ -187,26 +238,32 @@ const configs = {
     ]
   },
   tours: {
-    title:"Екскурсії", desc:"Маршрути, тривалість і умови замовлення.",
-    mode:"collection", collection:"tours", add:true,
-    note:"Опубліковані екскурсії автоматично з'являються на сайті.",
-    fields:[
+    title: "Екскурсії",
+    desc: "Маршрути, тривалість і умови замовлення.",
+    mode: "collection",
+    collection: "tours",
+    add: true,
+    note: "Тривалість, вартість і опис відображатимуться в картці екскурсії.",
+    fields: [
       ["title","Назва екскурсії","text",true],
       ["subtitle","Короткий підзаголовок","text"],
       ["duration","Тривалість","text"],
       ["price","Вартість або умови","text"],
       ["image","Фото (HTTPS URL)","url"],
       ["description","Опис","textarea",true],
-      ["booking","Як замовити / контакти","text"],
+      ["booking","Умови запису / телефон","text"],
       ["link","Посилання на подробиці","url"],
       ["published","Опубліковано","checkbox"]
     ]
   },
   news: {
-    title:"Новини", desc:"Новини та оголошення.",
-    mode:"collection", collection:"news", add:true,
-    note:"Опубліковані новини відображатимуться на головній сторінці.",
-    fields:[
+    title: "Новини",
+    desc: "Новини та оголошення.",
+    mode: "collection",
+    collection: "news",
+    add: true,
+    note: "Новини відображаються на головній сторінці сайту.",
+    fields: [
       ["title","Заголовок","text",true],
       ["date","Дата","text"],
       ["image","Фото (HTTPS URL)","url"],
@@ -215,6 +272,60 @@ const configs = {
       ["link","Посилання на матеріал","url"],
       ["published","Опубліковано","checkbox"]
     ]
+  },
+  food: {
+    title: "Де поїсти",
+    desc: "Кафе, ресторани та інші заклади харчування.",
+    mode: "collection",
+    collection: "food",
+    add: true,
+    note: "Вносьте перевірені дані. Прапорець публікації показує запис на сайті.",
+    fields: [
+      ["title","Назва закладу","text",true],
+      ["address","Адреса","text"],
+      ["image","Фото (HTTPS URL)","url"],
+      ["description","Опис закладу","textarea",true],
+      ["hours","Графік роботи","text"],
+      ["price","Середній чек / цінова категорія","text"],
+      ["phone","Телефон","text"],
+      ["mapLink","Посилання на Google Maps","url"],
+      ["link","Сайт або соціальна мережа","url"],
+      ["published","Опубліковано","checkbox"]
+    ]
+  },
+  stay: {
+    title: "Де переночувати",
+    desc: "Готелі та інші варіанти проживання.",
+    mode: "collection",
+    collection: "stay",
+    add: true,
+    note: "Перевіряйте актуальність цін, контактів та умов розміщення.",
+    fields: [
+      ["title","Назва місця проживання","text",true],
+      ["address","Адреса","text"],
+      ["image","Фото (HTTPS URL)","url"],
+      ["description","Опис","textarea",true],
+      ["hours","Час заїзду / додаткова інформація","text"],
+      ["price","Ціна або цінова категорія","text"],
+      ["phone","Телефон","text"],
+      ["mapLink","Посилання на Google Maps","url"],
+      ["link","Сайт або сторінка бронювання","url"],
+      ["published","Опубліковано","checkbox"]
+    ]
+  },
+  gettingHere: {
+    title: "Як дістатися",
+    desc: "Інформація про дорогу та карта міста.",
+    mode: "doc",
+    collection: "siteContent",
+    doc: "gettingHere",
+    add: false,
+    note: "Вкажіть перевірену інформацію та посилання Google Maps.",
+    fields: [
+      ["body","Текст про те, як дістатися","textarea"],
+      ["mapLink","Посилання на Google Maps міста","url"],
+      ["directionsLink","Посилання на маршрут у Google Maps","url"]
+    ]
   }
 };
 
@@ -222,14 +333,14 @@ let currentSection = "home";
 let editingId = null;
 let records = [];
 
-function setStatus(id, message, type="") {
+function setStatus(id, message, type = "") {
   $(id).textContent = message;
   $(id).className = "status " + type;
 }
 function esc(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
+  })[ch]);
 }
 function showLogin() {
   $("appView").classList.add("hidden");
@@ -244,7 +355,10 @@ function showApp() {
 }
 
 auth.onAuthStateChanged(async user => {
-  if (!user) { showLogin(); return; }
+  if (!user) {
+    showLogin();
+    return;
+  }
   if (user.uid !== ADMIN_UID) {
     await auth.signOut();
     setStatus("loginStatus","Цей акаунт не має прав адміністратора.","error");
@@ -254,35 +368,41 @@ auth.onAuthStateChanged(async user => {
   showApp();
 });
 
-$("loginForm").addEventListener("submit", async e => {
-  e.preventDefault();
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
   setStatus("loginStatus","Перевіряємо облікові дані…");
   try {
     const result = await auth.signInWithEmailAndPassword(
-      $("email").value.trim(), $("password").value
+      $("email").value.trim(),
+      $("password").value
     );
     if (result.user.uid !== ADMIN_UID) {
       await auth.signOut();
       throw new Error("Цей акаунт не має прав адміністратора.");
     }
     setStatus("loginStatus","Вхід успішний.","success");
-  } catch (err) {
-    setStatus("loginStatus",
-      err.code === "auth/invalid-credential"
+  } catch (error) {
+    setStatus(
+      "loginStatus",
+      error.code === "auth/invalid-credential"
         ? "Неправильна електронна пошта або пароль."
-        : err.message, "error");
+        : error.message,
+      "error"
+    );
   }
 });
+
 $("logoutBtn").addEventListener("click", () => auth.signOut());
 
-document.querySelectorAll(".navbtn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".navbtn").forEach(x =>
-      x.classList.toggle("active", x === btn)
+document.querySelectorAll(".navbtn").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".navbtn").forEach(item =>
+      item.classList.toggle("active", item === button)
     );
-    loadSection(btn.dataset.section);
+    loadSection(button.dataset.section);
   });
 });
+
 $("addBtn").addEventListener("click", () => openEditor(null));
 $("cancelBtn").addEventListener("click", closeEditor);
 $("deleteCurrentBtn").addEventListener("click", deleteCurrent);
@@ -291,96 +411,139 @@ $("recordForm").addEventListener("submit", saveRecord);
 async function loadSection(section) {
   currentSection = section;
   closeEditor();
-  const c = configs[section];
-  $("sectionTitle").textContent = c.title;
-  $("sectionDesc").textContent = c.desc;
-  $("pageNote").textContent = c.note;
-  $("addBtn").classList.toggle("hidden", !c.add);
+  const config = configs[section];
+
+  $("sectionTitle").textContent = config.title;
+  $("sectionDesc").textContent = config.desc;
+  $("pageNote").textContent = config.note;
+  $("addBtn").classList.toggle("hidden", !config.add);
   $("list").innerHTML = '<div class="empty">Завантаження…</div>';
+
   try {
-    if (c.mode === "doc") {
-      const snap = await db.collection(c.collection).doc(c.doc).get();
-      records = [{id:c.doc, ...(snap.exists ? snap.data() : {})}];
+    if (config.mode === "doc") {
+      const snap = await db.collection(config.collection).doc(config.doc).get();
+      records = [{
+        id: config.doc,
+        ...(snap.exists ? snap.data() : {})
+      }];
     } else {
-      const snap = await db.collection(c.collection).get();
-      records = snap.docs.map(d => ({id:d.id, ...d.data()}));
-      records.sort((a,b) => String(a.title||"").localeCompare(String(b.title||""),"uk"));
+      const snap = await db.collection(config.collection).get();
+      records = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
+      records.sort((a,b) =>
+        String(a.title || "").localeCompare(String(b.title || ""), "uk")
+      );
     }
     renderList();
-  } catch (err) {
-    console.error(err);
-    $("list").innerHTML = '<div class="empty error">Помилка завантаження: ' + esc(err.message) + '</div>';
+  } catch (error) {
+    console.error(error);
+    $("list").innerHTML =
+      '<div class="empty error">Помилка завантаження: ' +
+      esc(error.message) + '</div>';
   }
 }
 
 function renderList() {
-  const c = configs[currentSection];
-  if (c.mode === "doc") {
-    const r = records[0] || {};
-    const filled = c.fields.some(f => String(r[f[0]] ?? "").trim());
+  const config = configs[currentSection];
+
+  if (config.mode === "doc") {
+    const record = records[0] || {};
+    const hasData = config.fields.some(field =>
+      String(record[field[0]] ?? "").trim()
+    );
     $("list").innerHTML =
-      '<div class="item"><div class="item-main"><h3>' + esc(c.title) +
-      '</h3><p>' + (filled ? "Налаштування збережені." : "Поки використовуються стандартні тексти.") +
+      '<div class="item"><div class="item-main"><h3>' +
+      esc(config.title) + '</h3><p>' +
+      (hasData ? "Налаштування збережені." :
+      "Поки використовуються стандартні тексти.") +
       '</p></div><button class="primary small" id="editPage">Редагувати</button></div>';
-    $("editPage").addEventListener("click", () => openEditor(r));
+
+    $("editPage").addEventListener("click", () => openEditor(record));
     return;
   }
+
   if (!records.length) {
-    $("list").innerHTML = '<div class="empty">Записів поки немає. Натисніть «＋ Додати».</div>';
+    $("list").innerHTML =
+      '<div class="empty">Записів поки немає. Натисніть «＋ Додати».</div>';
     return;
   }
-  $("list").innerHTML = records.map(r =>
+
+  $("list").innerHTML = records.map(record =>
     '<article class="item"><div class="item-main"><h3>' +
-    esc(r.title || "(без назви)") + ' ' +
-    (r.published ? '<span class="badge">Опубліковано</span>' : '<span class="muted">Чернетка</span>') +
-    '</h3><p>' + esc(String(r.description || r.summary || r.body || r.date || "").slice(0,220)) +
-    '</p></div><div class="item-actions"><button class="secondary small" data-edit="' +
-    esc(r.id) + '">Редагувати</button><button class="danger small" data-delete="' +
-    esc(r.id) + '">Видалити</button></div></article>'
+    esc(record.title || "(без назви)") + ' ' +
+    (record.published
+      ? '<span class="badge">Опубліковано</span>'
+      : '<span class="muted">Чернетка</span>') +
+    '</h3><p>' +
+    esc(String(record.description || record.summary || record.body ||
+      record.address || "").slice(0,220)) +
+    '</p></div><div class="item-actions">' +
+    '<button class="secondary small" data-edit="' + esc(record.id) +
+    '">Редагувати</button><button class="danger small" data-delete="' +
+    esc(record.id) + '">Видалити</button></div></article>'
   ).join("");
-  $("list").querySelectorAll("[data-edit]").forEach(btn =>
-    btn.addEventListener("click", () => openEditor(records.find(r => r.id === btn.dataset.edit)))
-  );
-  $("list").querySelectorAll("[data-delete]").forEach(btn =>
-    btn.addEventListener("click", async () => {
-      const r = records.find(x => x.id === btn.dataset.delete);
-      if (!r || !confirm("Видалити «" + (r.title || r.id) + "»?")) return;
+
+  $("list").querySelectorAll("[data-edit]").forEach(button => {
+    button.addEventListener("click", () => {
+      openEditor(records.find(record => record.id === button.dataset.edit));
+    });
+  });
+
+  $("list").querySelectorAll("[data-delete]").forEach(button => {
+    button.addEventListener("click", async () => {
+      const record = records.find(item => item.id === button.dataset.delete);
+      if (!record || !confirm("Видалити «" + (record.title || record.id) + "»?")) return;
       try {
-        await db.collection(c.collection).doc(r.id).delete();
+        await db.collection(config.collection).doc(record.id).delete();
         await loadSection(currentSection);
-      } catch (err) {
-        alert("Помилка видалення: " + err.message);
+      } catch (error) {
+        alert("Помилка видалення: " + error.message);
       }
-    })
-  );
+    });
+  });
 }
 
 function openEditor(record) {
-  const c = configs[currentSection];
-  editingId = record && c.mode === "collection" ? record.id : null;
+  const config = configs[currentSection];
+  editingId = record && config.mode === "collection" ? record.id : null;
+
   $("editor").classList.remove("hidden");
-  $("editorTitle").textContent = record ? "Редагування: " + (record.title || c.title) : "Новий запис";
+  $("editorTitle").textContent = record
+    ? "Редагування: " + (record.title || config.title)
+    : "Новий запис";
   $("deleteCurrentBtn").classList.toggle("hidden", !editingId);
-  setStatus("editorStatus","");
-  $("fields").innerHTML = c.fields.map(([name,label,type,required]) => {
+  setStatus("editorStatus", "");
+
+  $("fields").innerHTML = config.fields.map(([name,label,type,required]) => {
     const value = record?.[name] ?? (type === "checkbox" ? false : "");
+
     if (type === "checkbox") {
-      return '<div class="full"><label><input style="width:auto" type="checkbox" name="' +
-        name + '" ' + (value ? "checked" : "") + '> ' + esc(label) + '</label></div>';
+      return '<div class="full"><label><input type="checkbox" name="' +
+        name + '" ' + (value ? "checked" : "") + '> ' +
+        esc(label) + '</label></div>';
     }
+
     if (type === "textarea") {
-      return '<div class="full"><label for="f_' + name + '">' + esc(label) +
-        (required ? " *" : "") + '</label><textarea id="f_' + name + '" name="' +
-        name + '" ' + (required ? "required" : "") + '>' + esc(value) + '</textarea></div>';
+      return '<div class="full"><label for="f_' + name + '">' +
+        esc(label) + (required ? " *" : "") +
+        '</label><textarea id="f_' + name + '" name="' + name + '" ' +
+        (required ? "required" : "") + '>' + esc(value) +
+        '</textarea></div>';
     }
-    const full = ["title","image","address","hero_image","facebook","instagram"].includes(name) ? "full" : "";
+
+    const full = [
+      "title","image","address","hero_image","facebook",
+      "instagram","mapLink","directionsLink"
+    ].includes(name) ? "full" : "";
     const inputType = ["url","email"].includes(type) ? type : "text";
-    return '<div class="' + full + '"><label for="f_' + name + '">' + esc(label) +
-      (required ? " *" : "") + '</label><input id="f_' + name + '" name="' + name +
+
+    return '<div class="' + full + '"><label for="f_' + name + '">' +
+      esc(label) + (required ? " *" : "") +
+      '</label><input id="f_' + name + '" name="' + name +
       '" type="' + inputType + '" value="' + esc(value) + '" ' +
       (required ? "required" : "") + '></div>';
   }).join("");
-  $("editor").scrollIntoView({behavior:"smooth",block:"start"});
+
+  $("editor").scrollIntoView({behavior:"smooth", block:"start"});
 }
 
 function closeEditor() {
@@ -389,22 +552,33 @@ function closeEditor() {
   editingId = null;
 }
 
-async function saveRecord(e) {
-  e.preventDefault();
-  const c = configs[currentSection];
+async function saveRecord(event) {
+  event.preventDefault();
+  const config = configs[currentSection];
   const data = {};
-  for (const [name,label,type] of c.fields) {
-    const el = $("fields").querySelector('[name="' + name + '"]');
-    data[name] = type === "checkbox" ? el.checked : el.value.trim();
+
+  for (const [name,label,type] of config.fields) {
+    const element = $("fields").querySelector('[name="' + name + '"]');
+    if (!element) continue;
+    data[name] = type === "checkbox" ? element.checked : element.value.trim();
   }
+
   setStatus("editorStatus","Зберігаємо…");
+
   try {
-    if (c.mode === "doc") {
-      const ref = db.collection(c.collection).doc(c.doc);
+    if (config.mode === "doc") {
+      const ref = db.collection(config.collection).doc(config.doc);
+
       if (currentSection === "home") {
+        /*
+          Зберігаємо поля головної сторінки всередині texts,
+          щоб не знищити інші наявні дані homepage.
+        */
         const old = (await ref.get()).data() || {};
         const texts = {...(old.texts || {})};
-        c.fields.forEach(([name]) => texts[name] = data[name]);
+        config.fields.forEach(([name]) => {
+          texts[name] = data[name];
+        });
         await ref.set({
           texts,
           updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -417,31 +591,34 @@ async function saveRecord(e) {
       }
     } else {
       data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+
       if (editingId) {
-        await db.collection(c.collection).doc(editingId).set(data,{merge:true});
+        await db.collection(config.collection).doc(editingId).set(data, {merge:true});
       } else {
         data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-        await db.collection(c.collection).add(data);
+        await db.collection(config.collection).add(data);
       }
     }
+
     closeEditor();
     await loadSection(currentSection);
     alert("Зміни збережено.");
-  } catch (err) {
-    console.error(err);
-    setStatus("editorStatus","Помилка збереження: " + err.message,"error");
+  } catch (error) {
+    console.error(error);
+    setStatus("editorStatus","Помилка збереження: " + error.message,"error");
   }
 }
 
 async function deleteCurrent() {
-  const c = configs[currentSection];
+  const config = configs[currentSection];
   if (!editingId || !confirm("Ви впевнені, що хочете видалити запис?")) return;
+
   try {
-    await db.collection(c.collection).doc(editingId).delete();
+    await db.collection(config.collection).doc(editingId).delete();
     closeEditor();
     await loadSection(currentSection);
-  } catch (err) {
-    setStatus("editorStatus","Помилка видалення: " + err.message,"error");
+  } catch (error) {
+    setStatus("editorStatus","Помилка видалення: " + error.message,"error");
   }
 }
 </script>
