@@ -1,416 +1,624 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101d35">
-  <title>Адмінпанель — Звягель Туристичний</title>
-  <style>
-    :root {
-      --navy: #101d35;
-      --navy2: #1b2e4d;
-      --orange: #f58220;
-      --bg: #f4f6fa;
-      --white: #fff;
-      --muted: #657084;
-      --border: #dce2eb;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--navy);
-    }
-    header {
-      background: var(--navy);
-      color: white;
-      padding: 22px 0;
-    }
-    .container { width: min(1000px, 92%); margin: auto; }
-    header h1 { margin: 0; font-size: 24px; }
-    header span { color: var(--orange); }
-    .panel {
-      max-width: 680px;
-      margin: 35px auto;
-      padding: 26px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 6px 25px #101d3510;
-    }
-    h2 { margin-top: 0; }
-    label {
-      display: block;
-      font-weight: 700;
-      margin: 18px 0 7px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      font: inherit;
-      background: white;
-      color: var(--navy);
-    }
-    textarea { min-height: 90px; resize: vertical; }
-    .cards-json { min-height: 260px; font-family: monospace; }
-    button, .button-link {
-      display: inline-block;
-      border: 0;
-      border-radius: 7px;
-      padding: 12px 17px;
-      margin-top: 18px;
-      background: var(--orange);
-      color: white;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    button.secondary { background: var(--navy2); }
-    button.danger { background: #a52c2c; }
-    button:disabled { opacity: .6; cursor: wait; }
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-    .hint { color: var(--muted); font-size: 14px; }
-    .status {
-      margin-top: 18px;
-      padding: 12px;
-      border-radius: 7px;
-      background: #eef2f8;
-      overflow-wrap: anywhere;
-    }
-    .hidden { display: none !important; }
-    .divider { border: 0; border-top: 1px solid var(--border); margin: 25px 0; }
-    @media (max-width: 600px) {
-      .panel { padding: 18px; margin: 20px auto; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Адмінпанель — Звягель Туристичний</title>
+<style>
+:root {
+  --navy:#102b4e;
+  --navy2:#173d68;
+  --orange:#f28c28;
+  --bg:#f3f6fa;
+  --ink:#1c2938;
+  --muted:#66758a;
+  --line:#dce4ee;
+  --white:#fff;
+  --red:#b42318;
+  --green:#167647;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  font:15px/1.5 system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+button,input,textarea,select {font:inherit}
+button {
+  cursor:pointer;
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:650;
+}
+.primary {background:var(--orange);color:#172b40}
+.secondary {background:#e8eef5;color:var(--navy)}
+.danger {background:#fde8e7;color:var(--red)}
+.small {padding:6px 10px;font-size:13px}
+header {
+  background:linear-gradient(120deg,var(--navy),var(--navy2));
+  color:white;
+  padding:20px max(18px,calc((100vw - 1200px)/2));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+header h1 {margin:0;font-size:26px}
+header p {margin:3px 0 0;color:#d6e4f5}
+.header-actions {display:flex;gap:8px;flex-wrap:wrap}
+main {max-width:1200px;margin:24px auto;padding:0 16px 50px}
+.panel {
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 4px 18px #132d4a0b;
+}
+.hidden {display:none!important}
+.muted {color:var(--muted)}
+.error {color:var(--red)}
+.success {color:var(--green)}
+#loginView {max-width:440px;margin:55px auto}
+.login-logo {font-size:36px}
+label {display:block;font-weight:650;margin:12px 0 5px}
+input,textarea,select {
+  width:100%;
+  border:1px solid #cbd6e3;
+  border-radius:9px;
+  padding:11px 12px;
+  background:white;
+  color:var(--ink);
+}
+textarea {min-height:100px;resize:vertical}
+input:focus,textarea:focus,select:focus {
+  outline:2px solid #f28c2866;
+  border-color:var(--orange);
+}
+.form-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0 16px;
+}
+.full {grid-column:1/-1}
+.layout {
+  display:grid;
+  grid-template-columns:230px minmax(0,1fr);
+  gap:18px;
+  align-items:start;
+}
+nav {display:grid;gap:7px;position:sticky;top:12px}
+.navbtn {
+  text-align:left;
+  background:transparent;
+  color:var(--navy);
+  border:1px solid transparent;
+}
+.navbtn.active {
+  background:#fff1e2;
+  border-color:#ffd2a1;
+  color:#713c00;
+}
+.section-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+.section-head h2 {margin:0;font-size:22px}
+.notice {
+  padding:11px 13px;
+  border-radius:10px;
+  background:#fff6e9;
+  color:#74440c;
+  margin:0 0 14px;
+}
+.item-list {display:grid;gap:10px}
+.item {
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:13px;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+.item h3 {margin:0 0 4px;font-size:16px}
+.item p {margin:0;color:var(--muted);white-space:pre-wrap}
+.item-main {min-width:0;flex:1;overflow-wrap:anywhere}
+.item-actions {display:flex;gap:6px;flex-wrap:wrap}
+.thumb {
+  width:78px;height:66px;object-fit:cover;
+  border-radius:8px;background:#edf1f6;
+}
+.empty {
+  padding:25px;text-align:center;color:var(--muted);
+  border:1px dashed var(--line);border-radius:12px;
+}
+.status {font-size:13px;margin-top:10px;min-height:20px}
+.badge {
+  font-size:12px;background:#e8f6ed;color:#17633a;
+  padding:3px 8px;border-radius:30px;display:inline-block;
+}
+#editor {margin-top:18px;border-top:1px solid var(--line);padding-top:18px}
+.editor-actions {display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+@media(max-width:760px) {
+  .layout {grid-template-columns:1fr}
+  nav {position:static;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .navbtn {font-size:13px;padding:9px}
+  .form-grid {grid-template-columns:1fr}
+  .full {grid-column:auto}
+  .panel {padding:15px}
+  .item {flex-wrap:wrap}
+  .item-actions {width:100%}
+}
+</style>
 </head>
 <body>
+
 <header>
-  <div class="container">
-    <h1>ЗВЯГЕЛЬ <span>ТУРИСТИЧНИЙ</span> — адмінпанель</h1>
+  <div>
+    <h1>Звягель Туристичний</h1>
+    <p>Панель керування контентом</p>
+  </div>
+  <div class="header-actions">
+    <a href="./" style="color:white;align-self:center" target="_blank" rel="noopener">Відкрити сайт ↗</a>
+    <button id="logoutBtn" class="secondary hidden">Вийти</button>
   </div>
 </header>
 
-<main class="container">
-  <section id="login-panel" class="panel">
-    <h2>Вхід адміністратора</h2>
-    <p class="hint">Увійдіть за допомогою email і пароля, зареєстрованих у Firebase Authentication.</p>
-    <form id="login-form">
+<main>
+  <section id="loginView" class="panel">
+    <div class="login-logo">🏰</div>
+    <h2 style="margin:0">Вхід адміністратора</h2>
+    <p class="muted">Увійдіть через свій обліковий запис Firebase.</p>
+
+    <form id="loginForm">
       <label for="email">Електронна пошта</label>
       <input id="email" type="email" autocomplete="username" required>
+
       <label for="password">Пароль</label>
       <input id="password" type="password" autocomplete="current-password" required>
-      <button id="login-button" type="submit">Увійти</button>
+
+      <button class="primary" style="width:100%;margin-top:16px" type="submit">
+        Увійти
+      </button>
+      <div id="loginStatus" class="status" role="status"></div>
     </form>
-    <div id="login-status" class="status" role="status">Очікується вхід.</div>
   </section>
 
-  <section id="editor-panel" class="panel hidden">
-    <div class="row">
-      <h2 style="margin:0; flex:1">Редагування сайту</h2>
-      <button id="logout-button" class="secondary" type="button">Вийти</button>
+  <section id="appView" class="hidden">
+    <div class="notice">
+      Записи зберігаються у Firestore. Щоб вони з'являлися на головному сайті,
+      файл index.html також потрібно підключити до відповідних колекцій.
     </div>
-    <p class="hint">Увійшли як: <strong id="user-email"></strong></p>
 
-    <form id="content-form">
-      <h3>Головна сторінка</h3>
-      <label for="hero-title">Заголовок головної сторінки</label>
-      <input id="hero-title" maxlength="180" required>
+    <div class="layout">
+      <nav aria-label="Розділи адмінпанелі">
+        <button class="navbtn active" data-section="tours">🧭 Екскурсії</button>
+        <button class="navbtn" data-section="events">📅 Афіша та події</button>
+        <button class="navbtn" data-section="places">🏰 Визначні місця</button>
+        <button class="navbtn" data-section="news">📰 Новини</button>
+        <button class="navbtn" data-section="pages">📄 Тексти сторінок</button>
+        <button class="navbtn" data-section="settings">⚙️ Контакти й налаштування</button>
+      </nav>
 
-      <label for="hero-subtitle">Підзаголовок</label>
-      <textarea id="hero-subtitle" maxlength="1000"></textarea>
+      <div class="panel">
+        <div class="section-head">
+          <div>
+            <h2 id="sectionTitle">Екскурсії</h2>
+            <div id="sectionDesc" class="muted">Керування туристичними пропозиціями.</div>
+          </div>
+          <button id="addBtn" class="primary">＋ Додати</button>
+        </div>
 
-      <hr class="divider">
-      <h3>Про місто</h3>
-      <label for="about-text-1">Перший абзац</label>
-      <textarea id="about-text-1" maxlength="5000"></textarea>
+        <div id="list" class="item-list"></div>
 
-      <label for="about-text-2">Другий абзац</label>
-      <textarea id="about-text-2" maxlength="5000"></textarea>
-
-      <hr class="divider">
-      <h3>Контакти</h3>
-      <label for="contact-phone">Телефон</label>
-      <input id="contact-phone" maxlength="60">
-
-      <label for="contact-address">Адреса</label>
-      <input id="contact-address" maxlength="250">
-
-      <label for="contact-extra">Додаткова інформація</label>
-      <textarea id="contact-extra" maxlength="1000"></textarea>
-
-      <hr class="divider">
-      <h3>Туристичні картки</h3>
-      <p class="hint">
-        Відредагуйте JSON. Для кожної картки потрібні title і description.
-        Поле image — пряме HTTPS-посилання на зображення; його можна залишити порожнім.
-      </p>
-      <label for="cards-json">Картки у форматі JSON</label>
-      <textarea id="cards-json" class="cards-json" spellcheck="false" required></textarea>
-
-      <div class="row">
-        <button id="save-button" type="submit">Зберегти в Firebase</button>
-        <button id="reload-button" class="secondary" type="button">Завантажити з Firebase</button>
+        <div id="editor" class="hidden">
+          <h3 id="editorTitle">Новий запис</h3>
+          <form id="recordForm">
+            <div id="fields" class="form-grid"></div>
+            <div class="editor-actions">
+              <button type="submit" class="primary">Зберегти</button>
+              <button type="button" id="cancelBtn" class="secondary">Скасувати</button>
+              <button type="button" id="deleteCurrentBtn" class="danger hidden">Видалити</button>
+            </div>
+            <div id="editorStatus" class="status" role="status"></div>
+          </form>
+        </div>
       </div>
-    </form>
-
-    <div id="editor-status" class="status" role="status">Дані ще не завантажено.</div>
-    <p><a class="button-link" href="./index.html" target="_blank" rel="noopener">Переглянути сайт</a></p>
+    </div>
   </section>
 </main>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <script>
-(() => {
-  "use strict";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
+  authDomain: "zviahel-tourist.firebaseapp.com",
+  projectId: "zviahel-tourist",
+  storageBucket: "zviahel-tourist.firebasestorage.app",
+  messagingSenderId: "914549612868",
+  appId: "1:914549612868:web:3abce6606a89167134b711",
+  measurementId: "G-DV5YF43W24"
+};
 
-  const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
-    authDomain: "zviahel-tourist.firebaseapp.com",
-    projectId: "zviahel-tourist",
-    storageBucket: "zviahel-tourist.firebasestorage.app",
-    messagingSenderId: "914549612868",
-    appId: "1:914549612868:web:3abce6606a89167134b711",
-    measurementId: "G-DV5YF43W24"
-  };
+const ADMIN_UID = "6l0nN1oKvCYorigm0MHGycuBV9j1";
 
-  const ADMIN_UID = "6l0nN1oKvCYorigm0MHGycuBV9j1";
-  const docRef = () =>
-    firebase.firestore().collection("siteContent").doc("homepage");
+firebase.initializeApp(FIREBASE_CONFIG);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-  if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
-  const auth = firebase.auth();
+const configs = {
+  tours: {
+    title:"Екскурсії",
+    desc:"Створення та редагування екскурсій.",
+    collection:"tours",
+    fields:[
+      ["title","Назва екскурсії","text",true],
+      ["subtitle","Короткий підзаголовок","text"],
+      ["duration","Тривалість","text"],
+      ["price","Вартість / умови","text"],
+      ["image","Посилання на фото","url"],
+      ["description","Опис","textarea",true],
+      ["booking","Як замовити / контакти","text"],
+      ["published","Опубліковано","checkbox"]
+    ]
+  },
+  events: {
+    title:"Афіша та події",
+    desc:"Анонси, дати та місця проведення подій.",
+    collection:"events",
+    fields:[
+      ["title","Назва події","text",true],
+      ["date","Дата та час","text"],
+      ["location","Місце проведення","text"],
+      ["image","Посилання на афішу або фото","url"],
+      ["description","Опис події","textarea",true],
+      ["link","Посилання на подробиці","url"],
+      ["published","Опубліковано","checkbox"]
+    ]
+  },
+  places: {
+    title:"Визначні місця",
+    desc:"Картки туристичних локацій і пам'яток.",
+    collection:"places",
+    fields:[
+      ["title","Назва локації","text",true],
+      ["address","Адреса","text"],
+      ["image","Посилання на фото","url"],
+      ["description","Опис","textarea",true],
+      ["hours","Графік відвідування","text"],
+      ["link","Посилання на мапу або сторінку","url"],
+      ["published","Опубліковано","checkbox"]
+    ]
+  },
+  news: {
+    title:"Новини",
+    desc:"Новини туристичного центру.",
+    collection:"news",
+    fields:[
+      ["title","Заголовок","text",true],
+      ["date","Дата","text"],
+      ["image","Посилання на фото","url"],
+      ["summary","Короткий опис","textarea",true],
+      ["body","Повний текст","textarea"],
+      ["link","Посилання на матеріал","url"],
+      ["published","Опубліковано","checkbox"]
+    ]
+  },
+  pages: {
+    title:"Тексти сторінок",
+    desc:"Основні тексти сторінок сайту.",
+    collection:"siteContent",
+    fields:[
+      ["key","Ключ сторінки, наприклад about","text",true],
+      ["title","Заголовок","text",true],
+      ["subtitle","Підзаголовок","text"],
+      ["body","Основний текст","textarea",true],
+      ["image","Посилання на зображення","url"],
+      ["published","Опубліковано","checkbox"]
+    ]
+  },
+  settings: {
+    title:"Контакти й налаштування",
+    desc:"Контактні дані та відомості центру.",
+    collection:"siteContent",
+    fields:[
+      ["key","Ключ запису — siteSettings","text",true],
+      ["title","Назва центру","text"],
+      ["address","Адреса","text"],
+      ["phone","Телефон","text"],
+      ["email","Електронна пошта","email"],
+      ["facebook","Facebook URL","url"],
+      ["instagram","Instagram URL","url"],
+      ["body","Додаткова інформація","textarea"],
+      ["published","Опубліковано","checkbox"]
+    ]
+  }
+};
 
-  const $ = id => document.getElementById(id);
-  const loginPanel = $("login-panel");
-  const editorPanel = $("editor-panel");
+let currentSection = "tours";
+let editingId = null;
+let records = [];
 
-  const defaultTexts = {
-    hero_title: "Відкрийте стародавній Звягель",
-    hero_subtitle: "Місто історії, легенд і незламного духу на берегах Случі.",
-    about_text_1: "Звягель — місто з багатою історією, археологічною спадщиною та особливою атмосферою на берегах річки Случ.",
-    about_text_2: "Звягель тісно пов'язаний з ім'ям Лесі Українки та родиною Косачів.",
-    contact_phone: "+38 067 300 4470",
-    contact_address: "вул. Героїв Майдану, 13, Звягель",
-    contact_extra: "Дізнавайтеся про екскурсії, туристичні маршрути та події міста."
-  };
+const $ = id => document.getElementById(id);
 
-  const defaultCards = [
-    {
-      title: "Звягельське городище",
-      description: "Доторкніться до історії літописного Возвягля.",
-      image: ""
-    },
-    {
-      title: "Місця Лесі Українки",
-      description: "Відкрийте місто, де минули дитячі роки поетеси.",
-      image: ""
-    },
-    {
-      title: "Річка Случ",
-      description: "Відчуйте природну красу Звягеля.",
-      image: ""
+function status(id, message, type="") {
+  const el = $(id);
+  el.textContent = message;
+  el.className = "status " + type;
+}
+
+function safe(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+function showApp() {
+  $("loginView").classList.add("hidden");
+  $("appView").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden");
+  loadSection(currentSection);
+}
+
+function showLogin() {
+  $("appView").classList.add("hidden");
+  $("loginView").classList.remove("hidden");
+  $("logoutBtn").classList.add("hidden");
+}
+
+auth.onAuthStateChanged(async user => {
+  if (!user) {
+    showLogin();
+    return;
+  }
+
+  if (user.uid !== ADMIN_UID) {
+    await auth.signOut();
+    status("loginStatus","Доступ заборонено: цей обліковий запис не є адміністратором.","error");
+    showLogin();
+    return;
+  }
+
+  showApp();
+});
+
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  status("loginStatus","Перевіряємо облікові дані…");
+
+  try {
+    const credential = await auth.signInWithEmailAndPassword(
+      $("email").value.trim(),
+      $("password").value
+    );
+
+    if (credential.user.uid !== ADMIN_UID) {
+      await auth.signOut();
+      throw new Error("Цей обліковий запис не має прав адміністратора.");
     }
-  ];
 
-  function status(message, isError = false) {
-    const el = $("editor-status");
-    el.textContent = message;
-    el.style.background = isError ? "#fff0f0" : "#eef2f8";
-    el.style.color = isError ? "#a52c2c" : "#101d35";
+    status("loginStatus","Вхід успішний.","success");
+  } catch (error) {
+    console.error(error);
+    status(
+      "loginStatus",
+      error.code === "auth/invalid-credential" ||
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/user-not-found"
+        ? "Неправильна електронна пошта або пароль."
+        : error.message || "Не вдалося увійти.",
+      "error"
+    );
+  }
+});
+
+$("logoutBtn").addEventListener("click", () => auth.signOut());
+
+document.querySelectorAll(".navbtn").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".navbtn").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+    loadSection(button.dataset.section);
+  });
+});
+
+$("addBtn").addEventListener("click", () => openEditor(null));
+$("cancelBtn").addEventListener("click", closeEditor);
+$("deleteCurrentBtn").addEventListener("click", deleteCurrent);
+$("recordForm").addEventListener("submit", saveRecord);
+
+async function loadSection(section) {
+  currentSection = section;
+  editingId = null;
+  closeEditor();
+
+  const config = configs[section];
+  $("sectionTitle").textContent = config.title;
+  $("sectionDesc").textContent = config.desc;
+  $("list").innerHTML = '<div class="empty">Завантаження…</div>';
+
+  try {
+    const snapshot = await db.collection(config.collection).get();
+    records = snapshot.docs.map(doc => ({id:doc.id,...doc.data()}));
+    records.sort((a,b) =>
+      String(a.title || a.key || "").localeCompare(
+        String(b.title || b.key || ""), "uk"
+      )
+    );
+    renderList();
+  } catch (error) {
+    console.error(error);
+    $("list").innerHTML =
+      '<div class="empty error">Не вдалося завантажити записи. Перевірте правила доступу Firestore та назву колекції.</div>';
+  }
+}
+
+function renderList() {
+  if (!records.length) {
+    $("list").innerHTML =
+      '<div class="empty">Поки немає записів. Натисніть «＋ Додати», щоб створити перший.</div>';
+    return;
   }
 
-  function loginStatus(message) {
-    $("login-status").textContent = message;
-  }
+  $("list").innerHTML = records.map(record => {
+    const title = record.title || record.key || "(без назви)";
+    const description =
+      record.description || record.summary || record.body ||
+      record.address || record.date || "";
+    const image = record.image
+      ? `<img class="thumb" src="${safe(record.image)}" alt="">`
+      : "";
 
-  function showEditor(user) {
-    loginPanel.classList.add("hidden");
-    editorPanel.classList.remove("hidden");
-    $("user-email").textContent = user.email || "";
-  }
+    return `
+      <article class="item">
+        ${image}
+        <div class="item-main">
+          <h3>${safe(title)}
+            ${record.published
+              ? '<span class="badge">Опубліковано</span>'
+              : '<span class="muted" style="font-size:12px">Чернетка</span>'}
+          </h3>
+          <p>${safe(String(description).slice(0,220))}</p>
+          <p style="font-size:12px;margin-top:5px">ID: ${safe(record.id)}</p>
+        </div>
+        <div class="item-actions">
+          <button class="secondary small" data-edit="${safe(record.id)}">Редагувати</button>
+          <button class="danger small" data-delete="${safe(record.id)}">Видалити</button>
+        </div>
+      </article>`;
+  }).join("");
 
-  function showLogin() {
-    editorPanel.classList.add("hidden");
-    loginPanel.classList.remove("hidden");
-  }
+  $("list").querySelectorAll("[data-edit]").forEach(button => {
+    button.addEventListener("click", () => {
+      openEditor(records.find(record => record.id === button.dataset.edit));
+    });
+  });
 
-  function readTexts() {
-    return {
-      hero_title: $("hero-title").value.trim(),
-      hero_subtitle: $("hero-subtitle").value.trim(),
-      about_text_1: $("about-text-1").value.trim(),
-      about_text_2: $("about-text-2").value.trim(),
-      contact_phone: $("contact-phone").value.trim(),
-      contact_address: $("contact-address").value.trim(),
-      contact_extra: $("contact-extra").value.trim()
-    };
-  }
+  $("list").querySelectorAll("[data-delete]").forEach(button => {
+    button.addEventListener("click", async () => {
+      const record = records.find(item => item.id === button.dataset.delete);
+      if (!record) return;
 
-  function fillTexts(texts) {
-    const data = { ...defaultTexts, ...(texts || {}) };
-    $("hero-title").value = data.hero_title;
-    $("hero-subtitle").value = data.hero_subtitle;
-    $("about-text-1").value = data.about_text_1;
-    $("about-text-2").value = data.about_text_2;
-    $("contact-phone").value = data.contact_phone;
-    $("contact-address").value = data.contact_address;
-    $("contact-extra").value = data.contact_extra;
-  }
-
-  function validateCards(cards) {
-    if (!Array.isArray(cards)) throw new Error("Картки мають бути JSON-масивом.");
-    if (cards.length > 100) throw new Error("Дозволено не більше 100 карток.");
-
-    return cards.map((card, index) => {
-      if (!card || typeof card.title !== "string" ||
-          typeof card.description !== "string") {
-        throw new Error("Картка №" + (index + 1) +
-          ": потрібні текстові поля title та description.");
-      }
-
-      const image = typeof card.image === "string" ? card.image.trim() : "";
-      if (image) {
-        let url;
-        try { url = new URL(image); }
-        catch { throw new Error("Некоректне посилання на фото в картці №" + (index + 1)); }
-
-        if (url.protocol !== "https:") {
-          throw new Error("Посилання на фото має починатися з https://");
+      if (confirm(`Видалити «${record.title || record.key || record.id}»?`)) {
+        try {
+          await db.collection(configs[currentSection].collection)
+            .doc(record.id).delete();
+          await loadSection(currentSection);
+        } catch (error) {
+          alert("Не вдалося видалити запис: " + error.message);
         }
       }
-
-      return {
-        title: card.title.slice(0, 180),
-        description: card.description.slice(0, 3000),
-        image
-      };
     });
+  });
+}
+
+function openEditor(record) {
+  editingId = record ? record.id : null;
+  const config = configs[currentSection];
+
+  $("editor").classList.remove("hidden");
+  $("editorTitle").textContent = record ? "Редагувати запис" : "Новий запис";
+  $("deleteCurrentBtn").classList.toggle("hidden", !record);
+  status("editorStatus","");
+
+  $("fields").innerHTML = config.fields.map(([name,label,type,required]) => {
+    const value = record?.[name] ?? (type === "checkbox" ? false : "");
+
+    if (type === "checkbox") {
+      return `<div class="full">
+        <label>
+          <input style="width:auto;margin-right:8px" type="checkbox"
+            name="${name}" ${value ? "checked" : ""}>
+          ${safe(label)}
+        </label>
+      </div>`;
+    }
+
+    if (type === "textarea") {
+      return `<div class="full">
+        <label for="field_${name}">${safe(label)}${required ? " *" : ""}</label>
+        <textarea id="field_${name}" name="${name}" ${required ? "required" : ""}>${safe(value)}</textarea>
+      </div>`;
+    }
+
+    return `<div class="${["title","key","image","address"].includes(name) ? "full" : ""}">
+      <label for="field_${name}">${safe(label)}${required ? " *" : ""}</label>
+      <input id="field_${name}" name="${name}" type="${type}"
+        value="${safe(value)}" ${required ? "required" : ""}>
+    </div>`;
+  }).join("");
+
+  $("editor").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function closeEditor() {
+  $("editor").classList.add("hidden");
+  $("fields").innerHTML = "";
+  editingId = null;
+}
+
+async function saveRecord(event) {
+  event.preventDefault();
+
+  const config = configs[currentSection];
+  const data = {};
+
+  for (const [name,label,type] of config.fields) {
+    const element = $("fields").querySelector(`[name="${name}"]`);
+    data[name] = type === "checkbox"
+      ? element.checked
+      : element.value.trim();
   }
 
-  async function loadContent() {
-    status("Завантаження даних…");
-    $("reload-button").disabled = true;
+  data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
 
-    try {
-      const snapshot = await docRef().get();
-
-      if (snapshot.exists) {
-        const data = snapshot.data();
-        fillTexts(data.texts || defaultTexts);
-        $("cards-json").value = JSON.stringify(
-          Array.isArray(data.cards) ? data.cards : defaultCards,
-          null, 2
-        );
-        status("Дані успішно завантажено з Firestore.");
-      } else {
-        fillTexts(defaultTexts);
-        $("cards-json").value = JSON.stringify(defaultCards, null, 2);
-        status("Документ ще не створено. Перевірте дані та натисніть «Зберегти в Firebase».");
-      }
-    } catch (error) {
-      console.error(error);
-      status("Помилка завантаження: " + error.message, true);
-    } finally {
-      $("reload-button").disabled = false;
-    }
+  if (!editingId) {
+    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   }
 
-  $("login-form").addEventListener("submit", async event => {
-    event.preventDefault();
-    $("login-button").disabled = true;
-    loginStatus("Перевірка облікових даних…");
+  status("editorStatus","Зберігаємо…");
 
-    try {
-      const result = await auth.signInWithEmailAndPassword(
-        $("email").value.trim(),
-        $("password").value
-      );
-
-      if (result.user.uid !== ADMIN_UID) {
-        await auth.signOut();
-        loginStatus("Цей обліковий запис не є адміністратором.");
-        return;
-      }
-
-      showEditor(result.user);
-      await loadContent();
-    } catch (error) {
-      console.error(error);
-      loginStatus("Помилка входу: " + error.message);
-    } finally {
-      $("login-button").disabled = false;
-    }
-  });
-
-  $("content-form").addEventListener("submit", async event => {
-    event.preventDefault();
-
-    const user = auth.currentUser;
-    if (!user || user.uid !== ADMIN_UID) {
-      status("Сесія адміністратора відсутня. Увійдіть повторно.", true);
-      return;
-    }
-
-    $("save-button").disabled = true;
-    status("Збереження…");
-
-    try {
-      const cards = validateCards(JSON.parse($("cards-json").value));
-      const texts = readTexts();
-
-      if (!texts.hero_title) {
-        throw new Error("Заповніть заголовок головної сторінки.");
-      }
-
-      await docRef().set({
-        texts,
-        cards,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge: true });
-
-      status("Успішно збережено! Оновіть публічну сторінку, щоб побачити зміни.");
-    } catch (error) {
-      console.error(error);
-      status("Не вдалося зберегти: " + error.message, true);
-    } finally {
-      $("save-button").disabled = false;
-    }
-  });
-
-  $("reload-button").addEventListener("click", loadContent);
-
-  $("logout-button").addEventListener("click", async () => {
-    try {
-      await auth.signOut();
-      showLogin();
-      loginStatus("Ви вийшли з адмінпанелі.");
-    } catch (error) {
-      status("Помилка виходу: " + error.message, true);
-    }
-  });
-
-  auth.onAuthStateChanged(async user => {
-    if (user && user.uid === ADMIN_UID) {
-      showEditor(user);
-      await loadContent();
+  try {
+    if (editingId) {
+      await db.collection(config.collection)
+        .doc(editingId).set(data,{merge:true});
     } else {
-      if (user) await auth.signOut();
-      showLogin();
+      await db.collection(config.collection).add(data);
     }
-  });
-})();
+
+    await loadSection(currentSection);
+    closeEditor();
+  } catch (error) {
+    console.error(error);
+    status("editorStatus","Помилка збереження: " + error.message,"error");
+  }
+}
+
+async function deleteCurrent() {
+  if (!editingId) return;
+  if (!confirm("Ви впевнені, що хочете видалити цей запис?")) return;
+
+  try {
+    await db.collection(configs[currentSection].collection)
+      .doc(editingId).delete();
+    closeEditor();
+    await loadSection(currentSection);
+  } catch (error) {
+    status("editorStatus","Не вдалося видалити: " + error.message,"error");
+  }
+}
 </script>
 </body>
 </html>
