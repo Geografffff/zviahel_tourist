@@ -9,174 +9,162 @@
 
 <style>
 :root {
-  --navy:#10213b;
-  --orange:#f58220;
-  --bg:#f2f5f9;
-  --line:#dce3ec;
-  --muted:#687487;
-  --red:#b42318;
-  --green:#167647;
+  --navy: #10213b;
+  --orange: #f58220;
+  --bg: #f2f5f9;
+  --line: #dce3ec;
+  --muted: #687487;
+  --red: #b42318;
+  --green: #167647;
 }
-* { box-sizing:border-box; }
+* { box-sizing: border-box; }
 body {
-  margin:0;
-  font:15px/1.5 Arial,sans-serif;
-  background:var(--bg);
-  color:var(--navy);
+  margin: 0;
+  font: 15px/1.5 Arial, sans-serif;
+  background: var(--bg);
+  color: var(--navy);
 }
-button,input,textarea { font:inherit; }
+button, input, textarea { font: inherit; }
 button {
-  cursor:pointer;
-  border:0;
-  border-radius:8px;
-  padding:10px 14px;
-  font-weight:bold;
+  cursor: pointer;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: bold;
 }
-button:disabled { opacity:.6;cursor:wait; }
-.primary { background:var(--orange);color:white; }
-.secondary { background:#e7edf5;color:var(--navy); }
-.danger { background:#fde8e7;color:var(--red); }
-.hidden { display:none!important; }
+button:disabled { opacity: .6; cursor: wait; }
+.primary { background: var(--orange); color: white; }
+.secondary { background: #e7edf5; color: var(--navy); }
+.danger { background: #fde8e7; color: var(--red); }
+.hidden { display: none !important; }
 
 header {
-  background:var(--navy);
-  color:white;
-  padding:18px max(18px,calc((100vw - 1200px)/2));
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
+  background: var(--navy);
+  color: white;
+  padding: 18px max(18px, calc((100vw - 1200px) / 2));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
-header h1 { font-size:23px;margin:0; }
-header a { color:white;margin-right:12px; }
+header h1 { font-size: 23px; margin: 0; }
+header a { color: white; margin-right: 12px; }
 
 main {
-  max-width:1250px;
-  margin:25px auto;
-  padding:0 16px 50px;
+  max-width: 1250px;
+  margin: 25px auto;
+  padding: 0 16px 50px;
 }
 .panel {
-  background:white;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:20px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
 }
-#loginView { max-width:440px;margin:55px auto; }
+#loginView { max-width: 440px; margin: 55px auto; }
 
 label {
-  display:block;
-  font-weight:bold;
-  margin:12px 0 5px;
+  display: block;
+  font-weight: bold;
+  margin: 12px 0 5px;
 }
-input:not([type=checkbox]),textarea {
-  width:100%;
-  padding:11px;
-  border:1px solid #cbd5e1;
-  border-radius:8px;
-  color:var(--navy);
-  background:white;
+input:not([type=checkbox]), textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: var(--navy);
+  background: white;
 }
-input[type=checkbox] { width:auto; }
-textarea { min-height:100px;resize:vertical; }
+input[type=checkbox] { width: auto; }
+textarea { min-height: 100px; resize: vertical; }
 
 .layout {
-  display:grid;
-  grid-template-columns:230px minmax(0,1fr);
-  gap:18px;
-  align-items:start;
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
 }
-nav {
-  display:grid;
-  gap:7px;
-  position:sticky;
-  top:15px;
-}
+nav { display: grid; gap: 7px; position: sticky; top: 15px; }
 .navbtn {
-  text-align:left;
-  background:transparent;
-  color:var(--navy);
-  border:1px solid transparent;
+  text-align: left;
+  background: transparent;
+  color: var(--navy);
+  border: 1px solid transparent;
 }
 .navbtn.active {
-  background:#fff0df;
-  border-color:#ffd2a1;
+  background: #fff0df;
+  border-color: #ffd2a1;
 }
 .section-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
-.section-head h2 { margin:0; }
-.muted { color:var(--muted); }
+.section-head h2 { margin: 0; }
+.muted { color: var(--muted); }
 .note {
-  background:#fff5e8;
-  padding:12px;
-  border-radius:8px;
-  margin:15px 0;
-  color:#75430c;
+  background: #fff5e8;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 15px 0;
+  color: #75430c;
 }
-.item-list { display:grid;gap:10px;margin-top:15px; }
+.item-list { display: grid; gap: 10px; margin-top: 15px; }
 .item {
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:13px;
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:flex-start;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 13px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
 }
 .item-main {
-  min-width:0;
-  flex:1;
-  overflow-wrap:anywhere;
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
 }
-.item h3 { margin:0 0 5px; }
+.item h3 { margin: 0 0 5px; }
 .item p {
-  margin:0;
-  color:var(--muted);
-  white-space:pre-wrap;
+  margin: 0;
+  color: var(--muted);
+  white-space: pre-wrap;
 }
-.item-actions { display:flex;gap:6px;flex-wrap:wrap; }
-.small { padding:7px 10px;font-size:13px; }
-.editor { margin-top:22px;padding-top:18px;border-top:1px solid var(--line); }
+.item-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.small { padding: 7px 10px; font-size: 13px; }
+.editor { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
 .form-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:0 15px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 15px;
 }
-.full { grid-column:1/-1; }
-.editor-actions { display:flex;gap:8px;flex-wrap:wrap;margin-top:15px; }
-.status { font-size:14px;margin-top:12px;overflow-wrap:anywhere; }
-.error { color:var(--red); }
-.success { color:var(--green); }
+.full { grid-column: 1 / -1; }
+.editor-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 15px; }
+.status { font-size: 14px; margin-top: 12px; overflow-wrap: anywhere; }
+.error { color: var(--red); }
+.success { color: var(--green); }
 .empty {
-  padding:20px;
-  border:1px dashed var(--line);
-  border-radius:8px;
-  color:var(--muted);
+  padding: 20px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
 }
-.badge { color:var(--green);font-size:12px; }
-.help { font-size:13px;color:var(--muted);margin:5px 0 12px; }
-.preview {
-  width:100%;
-  max-width:260px;
-  max-height:160px;
-  object-fit:cover;
-  border-radius:8px;
-  margin-top:8px;
-}
-@media(max-width:800px) {
-  .layout { grid-template-columns:1fr; }
-  nav { position:static;grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .navbtn { font-size:13px;padding:9px; }
-  .form-grid { grid-template-columns:1fr; }
-  .full { grid-column:auto; }
-  .item { flex-wrap:wrap; }
-  .item-actions { width:100%; }
-  .panel { padding:14px; }
+.badge { color: var(--green); font-size: 12px; }
+.help { font-size: 13px; color: var(--muted); margin: 5px 0 12px; }
+
+@media(max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+  nav { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .navbtn { font-size: 13px; padding: 9px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .full { grid-column: auto; }
+  .item { flex-wrap: wrap; }
+  .item-actions { width: 100%; }
+  .panel { padding: 14px; }
 }
 </style>
 </head>
@@ -214,10 +202,9 @@ nav {
 
   <section id="appView" class="hidden">
     <div class="note">
-      Публічний сайт показує лише записи з увімкненим прапорцем «Опубліковано».
-      Для фотографій використовуйте прямі HTTPS-посилання на зображення.
-      Додаткові фотографії вводьте по одному посиланню в кожному рядку.
-      Для карт вставляйте повні посилання Google Maps.
+      Публічний сайт має показувати лише опубліковані записи.
+      Для фотографій використовуйте прямі HTTPS-посилання.
+      Додаткові фотографії вказуйте по одному посиланню в кожному рядку.
     </div>
 
     <div class="layout">
@@ -265,7 +252,6 @@ nav {
   </section>
 </main>
 
-<!-- Firebase SDK через CDN: npm install не потрібен -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -273,13 +259,6 @@ nav {
 <script>
 "use strict";
 
-/*
-  ВАЖЛИВО:
-  Якщо Firebase показує auth/api-key-not-valid,
-  скопіюйте apiKey зі свого вебдодатка:
-  Firebase Console → Project settings → Your apps → Config.
-  Сам код не може виправити недійсний або відкликаний API-ключ.
-*/
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
   authDomain: "zviahel-tourist.firebaseapp.com",
@@ -290,11 +269,15 @@ const FIREBASE_CONFIG = {
   measurementId: "G-DV5YF43W24"
 };
 
-/*
-  UID адміністратора з Firebase Authentication.
-  Цей UID має відповідати користувачу, якому дозволено керувати сайтом.
-*/
-const ADMIN_UID = "6l0nN1oKvCYorigm0MHGycuBV9j1";
+/* ДВА ДОЗВОЛЕНИХ АДМІНІСТРАТОРИ */
+const ADMIN_UIDS = [
+  "6l0nN1oKvCYorigm0MHGycuBV9j1",
+  "ODzRXdYQJjMqV7k6jquwZMj1hnd2"
+];
+
+function isAdmin(user) {
+  return !!user && ADMIN_UIDS.includes(user.uid);
+}
 
 const $ = id => document.getElementById(id);
 
@@ -358,12 +341,12 @@ const configs = {
     collection: "siteContent",
     doc: "about",
     add: false,
-    note: "Основний текст, який відображається в розділі «Про місто».",
+    note: "Основний текст розділу «Про місто».",
     fields: [
       ["title", "Заголовок розділу", "text"],
       ["body", "Повний текст про місто", "textarea"],
-      ["text1", "Перший абзац (старий формат)", "textarea"],
-      ["text2", "Другий абзац (старий формат)", "textarea"],
+      ["text1", "Перший абзац", "textarea"],
+      ["text2", "Другий абзац", "textarea"],
       ["box_title", "Заголовок виділеного блоку", "text"],
       ["box_text", "Текст виділеного блоку", "textarea"]
     ]
@@ -376,7 +359,7 @@ const configs = {
     collection: "siteContent",
     doc: "contacts",
     add: false,
-    note: "Використовуйте лише актуальні контактні дані.",
+    note: "Використовуйте актуальні контактні дані.",
     fields: [
       ["title", "Заголовок контактів", "text"],
       ["address", "Адреса", "text"],
@@ -505,12 +488,8 @@ function explainError(error) {
   const message = error?.message || "Невідома помилка.";
 
   const known = {
-    "auth/api-key-not-valid":
-      "Firebase відхиляє API-ключ. Перевірте apiKey у Firebase → Project settings → Your apps → Config, а також статус і обмеження ключа в Google Cloud.",
-    "auth/invalid-api-key":
-      "API-ключ Firebase недійсний. Скопіюйте актуальний ключ із налаштувань вебдодатка.",
     "auth/operation-not-allowed":
-      "Вхід через Email/Password вимкнений. Увімкніть його у Firebase Authentication → Sign-in method.",
+      "Вхід через Email/Password вимкнений у Firebase Authentication.",
     "auth/invalid-credential":
       "Неправильна електронна пошта або пароль.",
     "auth/user-not-found":
@@ -520,7 +499,9 @@ function explainError(error) {
     "auth/too-many-requests":
       "Забагато спроб входу. Спробуйте пізніше.",
     "auth/network-request-failed":
-      "Не вдалося з’єднатися з Firebase. Перевірте інтернет-з’єднання."
+      "Не вдалося з’єднатися з Firebase. Перевірте інтернет-з’єднання.",
+    "permission-denied":
+      "Firebase заборонив доступ. Перевірте правила Firestore."
   };
 
   return known[code] || message;
@@ -558,7 +539,7 @@ function initFirebase() {
         return;
       }
 
-      if (user.uid !== ADMIN_UID) {
+      if (!isAdmin(user)) {
         try {
           await auth.signOut();
         } catch (error) {
@@ -568,7 +549,7 @@ function initFirebase() {
         showLogin();
         setStatus(
           "loginStatus",
-          "Цей акаунт не має прав адміністратора.",
+          "Вхід заборонено: цей акаунт не має прав адміністратора.",
           "error"
         );
         return;
@@ -591,12 +572,9 @@ $("loginForm").addEventListener("submit", async event => {
   event.preventDefault();
 
   if (busy) return;
+
   if (!auth) {
-    setStatus(
-      "loginStatus",
-      "Firebase не ініціалізовано. Перевірте API-ключ і підключення SDK.",
-      "error"
-    );
+    setStatus("loginStatus", "Firebase не ініціалізовано.", "error");
     return;
   }
 
@@ -610,7 +588,7 @@ $("loginForm").addEventListener("submit", async event => {
 
     const result = await auth.signInWithEmailAndPassword(email, password);
 
-    if (result.user.uid !== ADMIN_UID) {
+    if (!isAdmin(result.user)) {
       await auth.signOut();
       setStatus(
         "loginStatus",
@@ -669,14 +647,15 @@ async function loadSection(section) {
   try {
     if (config.mode === "doc") {
       const snap = await db.collection(config.collection).doc(config.doc).get();
+      const data = snap.exists ? snap.data() : {};
 
       records = [{
         id: config.doc,
-        ...(snap.exists ? snap.data() : {})
+        ...data
       }];
 
-      if (section === "home" && records[0].texts) {
-        records[0] = { ...records[0], ...records[0].texts };
+      if (section === "home" && data.texts) {
+        records[0] = { ...records[0], ...data.texts };
       }
     } else {
       const snap = await db.collection(config.collection).get();
@@ -719,9 +698,7 @@ function renderList() {
         '<div class="item-main">' +
           '<h3>' + esc(config.title) + '</h3>' +
           '<p>' +
-            (hasData
-              ? "Налаштування збережені."
-              : "Поки використовуються стандартні тексти.") +
+            (hasData ? "Налаштування збережені." : "Дані ще не заповнені.") +
           '</p>' +
         '</div>' +
         '<button class="primary small" id="editPage" type="button">Редагувати</button>' +
@@ -738,9 +715,7 @@ function renderList() {
   }
 
   $("list").innerHTML = records.map(record => {
-    const photoCount = Array.isArray(record.images)
-      ? record.images.length
-      : 0;
+    const photoCount = Array.isArray(record.images) ? record.images.length : 0;
 
     return (
       '<article class="item">' +
@@ -784,9 +759,7 @@ function renderList() {
       const record = records.find(item => item.id === button.dataset.delete);
       if (!record) return;
 
-      if (!confirm("Видалити «" + (record.title || record.id) + "»?")) {
-        return;
-      }
+      if (!confirm("Видалити «" + (record.title || record.id) + "»?")) return;
 
       try {
         await db.collection(config.collection).doc(record.id).delete();
@@ -828,7 +801,7 @@ function openEditor(record) {
 
     if (type === "textarea") {
       const help = name === "images"
-        ? '<p class="help">Вставте прямі HTTPS-посилання на фото, кожне з нового рядка. Основне фото вказується окремо.</p>'
+        ? '<p class="help">Вставте прямі HTTPS-посилання на фото, кожне з нового рядка.</p>'
         : "";
 
       return (
@@ -921,8 +894,7 @@ async function saveRecord(event) {
     }
   }
 
-  const imageUrl = data.image;
-  if (imageUrl && !validHttpsOrEmpty(imageUrl, "Основне фото")) return;
+  if (data.image && !validHttpsOrEmpty(data.image, "Основне фото")) return;
 
   $("saveBtn").disabled = true;
   setStatus("editorStatus", "Зберігаємо…");
