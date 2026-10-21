@@ -2,156 +2,51 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101d35">
-  <meta name="description" content="Звягель Туристичний — історія, екскурсії та туристичні місця міста на берегах Случі.">
-  <title>Звягель Туристичний</title>
-  <style>
-    :root {
-      --navy: #101d35;
-      --navy2: #1b2e4d;
-      --orange: #f58220;
-      --cream: #f7f5f0;
-      --white: #fff;
-      --muted: #657084;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--navy);
-      background: var(--cream);
-      line-height: 1.6;
-    }
-    a { color: inherit; }
-    .container { width: min(1120px, 92%); margin: auto; }
-    header {
-      background: var(--navy);
-      color: white;
-      padding: 16px 0;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .brand { font-size: 21px; font-weight: 800; }
-    .brand span { color: var(--orange); }
-    nav { display: flex; gap: 20px; flex-wrap: wrap; }
-    nav a { color: white; text-decoration: none; font-size: 14px; }
-    nav a:hover { color: var(--orange); }
-    .hero {
-      background: linear-gradient(120deg, rgba(16,29,53,.96), rgba(27,46,77,.83));
-      color: white;
-      padding: 100px 0;
-      min-height: 440px;
-      display: flex;
-      align-items: center;
-    }
-    .eyebrow {
-      color: var(--orange);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-    h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.08; margin: 14px 0; }
-    h2 { font-size: clamp(27px, 4vw, 38px); line-height: 1.2; }
-    .hero p { max-width: 650px; font-size: 19px; color: #e1e8f2; }
-    .btn {
-      display: inline-block;
-      background: var(--orange);
-      color: #fff;
-      border: 0;
-      padding: 13px 21px;
-      border-radius: 7px;
-      text-decoration: none;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .btn:hover { filter: brightness(1.08); }
-    section { padding: 65px 0; }
-    .section-intro { max-width: 720px; color: var(--muted); }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
-      gap: 22px;
-      margin-top: 28px;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 5px 20px #101d3510;
-    }
-    .card img {
-      display: block;
-      width: 100%;
-      height: 190px;
-      object-fit: cover;
-      background: #e0e5ed;
-    }
-    .card-body { padding: 20px; }
-    .card h3 { margin: 0 0 8px; font-size: 21px; }
-    .card p { margin: 0; color: var(--muted); white-space: pre-line; }
-    .placeholder {
-      height: 190px;
-      display: grid;
-      place-items: center;
-      background: var(--navy2);
-      color: var(--orange);
-      font-size: 44px;
-    }
-    .about { background: white; }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-    .about-box {
-      background: var(--navy);
-      color: white;
-      border-radius: 14px;
-      padding: 30px;
-      border-left: 6px solid var(--orange);
-    }
-    .about-box p { color: #e0e7f1; }
-    .contact {
-      background: var(--navy);
-      color: white;
-    }
-    .contact a { color: var(--orange); }
-    footer {
-      background: #0a1325;
-      color: #cbd3df;
-      padding: 22px 0;
-      font-size: 14px;
-    }
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    #status {
-      padding: 10px 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    @media (max-width: 650px) {
-      .hero { padding: 65px 0; min-height: 380px; }
-      .about-grid { grid-template-columns: 1fr; }
-      nav { gap: 12px; }
-      .brand { width: 100%; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10213b">
+<meta name="description" content="Звягель Туристичний — відкрий історію, екскурсії та цікаві місця Звягеля.">
+<title>Звягель Туристичний</title>
+<style>
+:root{--navy:#10213b;--blue:#1c385d;--orange:#f58220;--cream:#f7f5f0;--muted:#687487}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{margin:0;font:16px/1.65 Arial,sans-serif;color:var(--navy);background:var(--cream)}
+.container{width:min(1120px,92%);margin:auto}
+header{position:sticky;top:0;z-index:10;background:var(--navy);color:white}
+.nav{min-height:72px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding:12px 0}
+.brand{font-size:20px;font-weight:800}.brand span{color:var(--orange)}
+nav{display:flex;gap:17px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-size:14px}
+nav a:hover{color:var(--orange)}
+.hero{min-height:440px;display:flex;align-items:center;color:white;background:linear-gradient(110deg,rgba(16,33,59,.96),rgba(16,33,59,.70)),var(--hero-image,none) center/cover;padding:80px 0}
+.eyebrow{color:var(--orange);font-weight:bold;text-transform:uppercase;letter-spacing:2px}
+h1{font-size:clamp(38px,6vw,66px);line-height:1.1;margin:14px 0}
+h2{font-size:clamp(28px,4vw,39px);line-height:1.2;margin:12px 0}
+.hero p{font-size:19px;max-width:680px;color:#e2e8f1}
+.btn{display:inline-block;background:var(--orange);color:white;padding:12px 20px;border-radius:7px;text-decoration:none;font-weight:bold;border:0}
+section{padding:64px 0}
+.intro{color:var(--muted);max-width:760px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:22px;margin-top:28px}
+.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 5px 22px #10213b12}
+.card img,.placeholder{width:100%;height:195px;object-fit:cover}
+.placeholder{display:grid;place-items:center;background:var(--blue);color:var(--orange);font-size:42px}
+.card-body{padding:19px}
+.card h3{margin:0 0 9px;font-size:21px}
+.card p{white-space:pre-line;color:var(--muted);margin:0 0 14px}
+.about{background:white}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+.about-box{background:var(--navy);color:white;border-left:6px solid var(--orange);padding:28px;border-radius:12px}
+.about-box p{color:#e0e7f0}
+.contact{background:var(--navy);color:white}
+.contact a{color:var(--orange)}
+.contact p{margin:6px 0}
+footer{background:#091326;color:#d6dce5;padding:22px 0;font-size:14px}
+.footer-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.empty{padding:18px 0;color:var(--muted)}
+#load-status{font-size:13px;color:var(--muted)}
+@media(max-width:700px){.hero{padding:60px 0;min-height:360px}.about-grid{grid-template-columns:1fr}.nav{justify-content:center}nav{justify-content:center;gap:11px}}
+</style>
 </head>
 <body>
 <header>
@@ -161,206 +56,216 @@
       <a href="#home">Головна</a>
       <a href="#places">Цікавинки</a>
       <a href="#about">Про місто</a>
+      <a href="#tours">Екскурсії</a>
+      <a href="#news">Новини</a>
       <a href="#contacts">Контакти</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <section class="hero" id="home">
-    <div class="container">
-      <div class="eyebrow">Відкрий своє місто</div>
-      <h1 id="hero-title">Відкрийте стародавній Звягель</h1>
-      <p id="hero-subtitle">Місто історії, легенд і незламного духу на берегах Случі.</p>
-      <a class="btn" href="#places">Плануй подорож</a>
-    </div>
-  </section>
+<section class="hero" id="home">
+  <div class="container">
+    <div class="eyebrow">Відкрий своє місто</div>
+    <h1 id="hero-title">Відкрийте стародавній Звягель</h1>
+    <p id="hero-subtitle">Місто історії, легенд і незламного духу на берегах Случі.</p>
+    <a class="btn" href="#places">Плануй подорож</a>
+  </div>
+</section>
 
-  <section id="places">
-    <div class="container">
-      <div class="eyebrow">Маршрути та відкриття</div>
-      <h2>Цікавинки Звягеля</h2>
-      <p class="section-intro">Відкрийте історичні пам'ятки, культурні місця та особливі куточки нашого міста.</p>
-      <div id="cards" class="cards">
-        <article class="card">
-          <div class="placeholder">⌖</div>
-          <div class="card-body">
-            <h3>Звягельське городище</h3>
-            <p>Доторкніться до історії літописного Возвягля.</p>
-          </div>
-        </article>
-        <article class="card">
-          <div class="placeholder">⌖</div>
-          <div class="card-body">
-            <h3>Місця Лесі Українки</h3>
-            <p>Відкрийте місто, де минули дитячі роки поетеси.</p>
-          </div>
-        </article>
-        <article class="card">
-          <div class="placeholder">⌖</div>
-          <div class="card-body">
-            <h3>Річка Случ</h3>
-            <p>Відчуйте природну красу Звягеля.</p>
-          </div>
-        </article>
-      </div>
-      <div id="status">Завантаження туристичної інформації…</div>
-    </div>
-  </section>
+<section id="places">
+  <div class="container">
+    <div class="eyebrow">Маршрути та відкриття</div>
+    <h2 id="places-title">Цікавинки Звягеля</h2>
+    <p class="intro" id="places-intro">Відкрийте історичні пам'ятки, культурні місця та особливі куточки нашого міста.</p>
+    <div id="places-list" class="cards"><p class="empty">Завантаження…</p></div>
+  </div>
+</section>
 
-  <section class="about" id="about">
-    <div class="container about-grid">
-      <div>
-        <div class="eyebrow">Місто з історією</div>
-        <h2>Звягель — більше, ніж точка на карті</h2>
-        <p id="about-text-1">Звягель — місто з багатою історією, археологічною спадщиною та особливою атмосферою на берегах річки Случ.</p>
-        <p id="about-text-2">Звягель тісно пов'язаний з ім'ям Лесі Українки та родиною Косачів. Тут історія оживає в маршрутах, пам'ятках і міських легендах.</p>
-      </div>
-      <div class="about-box">
-        <h2>Відчуй код Звягеля</h2>
-        <p>Археологія, слово, сила та пам'ять. Досліджуй минуле, відкривай нові маршрути й знайомся з містом через його історії.</p>
-        <a class="btn" href="#contacts">Замовити екскурсію</a>
-      </div>
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div>
+      <div class="eyebrow">Місто з історією</div>
+      <h2 id="about-title">Звягель — більше, ніж точка на карті</h2>
+      <p id="about-text1">Звягель має багату історію, археологічну спадщину та особливу атмосферу на берегах річки Случ.</p>
+      <p id="about-text2">Місто тісно пов'язане з іменем Лесі Українки та родиною Косачів.</p>
     </div>
-  </section>
+    <div class="about-box">
+      <h2 id="about-box-title">Відчуй код Звягеля</h2>
+      <p id="about-box-text">Археологія, слово, сила та пам'ять. Досліджуй минуле й відкривай нові маршрути.</p>
+    </div>
+  </div>
+</section>
 
-  <section id="contacts" class="contact">
-    <div class="container">
-      <div class="eyebrow">Ми допоможемо спланувати подорож</div>
-      <h2>Контакти туристичного центру</h2>
-      <p>Телефон: <a id="contact-phone" href="tel:+380673004470">+38 067 300 4470</a></p>
-      <p>Адреса: <span id="contact-address">вул. Героїв Майдану, 13, Звягель</span></p>
-      <p id="contact-extra">Дізнавайтеся про екскурсії, туристичні маршрути та події міста.</p>
-    </div>
-  </section>
+<section id="tours">
+  <div class="container">
+    <div class="eyebrow">Відкривай разом з нами</div>
+    <h2 id="tours-title">Екскурсії Звягелем</h2>
+    <p class="intro" id="tours-intro">Обирайте маршрут і відкривайте історії нашого міста.</p>
+    <div id="tours-list" class="cards"><p class="empty">Завантаження…</p></div>
+  </div>
+</section>
+
+<section class="about" id="news">
+  <div class="container">
+    <div class="eyebrow">Будьте в курсі</div>
+    <h2 id="news-title">Новини та оголошення</h2>
+    <p class="intro" id="news-intro">Новини туристичного центру та події міста.</p>
+    <div id="news-list" class="cards"><p class="empty">Завантаження…</p></div>
+  </div>
+</section>
+
+<section class="contact" id="contacts">
+  <div class="container">
+    <div class="eyebrow">Плануй подорож до Звягеля</div>
+    <h2 id="contacts-title">Контакти туристичного центру</h2>
+    <p>Телефон: <a id="contact-phone" href="tel:+380673004470">+38 067 300 4470</a></p>
+    <p>Адреса: <span id="contact-address">вул. Героїв Майдану, 13, Звягель</span></p>
+    <p>Графік роботи: <span id="contact-hours">Пн–Пт, 09:00–18:00</span></p>
+    <p id="contact-extra">Дізнавайтеся про екскурсії, туристичні маршрути та події міста.</p>
+    <p><a id="contact-email" hidden></a> <a id="contact-facebook" hidden target="_blank" rel="noopener">Facebook</a> <a id="contact-instagram" hidden target="_blank" rel="noopener">Instagram</a></p>
+  </div>
+</section>
 </main>
 
-<footer>
-  <div class="container footer-row">
-    <span>© <span id="year"></span> Звягель Туристичний</span>
-    <span>Відкривай. Досліджуй. Повертайся.</span>
-  </div>
-</footer>
+<footer><div class="container footer-row"><span>© <span id="year"></span> Звягель Туристичний</span><span>Відкривай. Досліджуй. Повертайся.</span></div></footer>
+<div class="container"><p id="load-status"></p></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-(() => {
-  const config = {
-    apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
-    authDomain: "zviahel-tourist.firebaseapp.com",
-    projectId: "zviahel-tourist",
-    storageBucket: "zviahel-tourist.firebasestorage.app",
-    messagingSenderId: "914549612868",
-    appId: "1:914549612868:web:3abce6606a89167134b711",
-    measurementId: "G-DV5YF43W24"
-  };
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
+  authDomain: "zviahel-tourist.firebaseapp.com",
+  projectId: "zviahel-tourist",
+  storageBucket: "zviahel-tourist.firebasestorage.app",
+  messagingSenderId: "914549612868",
+  appId: "1:914549612868:web:3abce6606a89167134b711",
+  measurementId: "G-DV5YF43W24"
+};
 
-  if (!firebase.apps.length) firebase.initializeApp(config);
-  const db = firebase.firestore();
-  document.getElementById("year").textContent = new Date().getFullYear();
+if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+const db = firebase.firestore();
+document.getElementById("year").textContent = new Date().getFullYear();
 
-  function setText(id, value) {
-    if (typeof value === "string") {
-      const element = document.getElementById(id);
-      if (element) element.textContent = value;
-    }
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el && typeof value === "string" && value.trim()) el.textContent = value;
+}
+function safeHttps(value) {
+  try {
+    const u = new URL(value);
+    return u.protocol === "https:" ? u.href : "";
+  } catch { return ""; }
+}
+function setLink(id, value, prefix) {
+  const el = document.getElementById(id);
+  if (!el || !value) return;
+  el.textContent = value;
+  el.href = prefix ? prefix + value.replace(/[^\d+]/g, "") : value;
+  el.hidden = false;
+}
+function applyHomepage(doc) {
+  const t = doc.texts || doc;
+  setText("hero-title", t.hero_title);
+  setText("hero-subtitle", t.hero_subtitle);
+  setText("places-title", t.places_title);
+  setText("places-intro", t.places_intro);
+  setText("tours-title", t.tours_title);
+  setText("tours-intro", t.tours_intro);
+  setText("news-title", t.news_title);
+  setText("news-intro", t.news_intro);
+  const image = safeHttps(t.hero_image);
+  if (image) document.querySelector(".hero").style.setProperty("--hero-image", 'url("' + image + '")');
+}
+function applyAbout(d) {
+  setText("about-title", d.title);
+  setText("about-text1", d.text1 || d.body);
+  setText("about-text2", d.text2);
+  setText("about-box-title", d.box_title);
+  setText("about-box-text", d.box_text);
+}
+function applyContacts(d) {
+  setText("contacts-title", d.title);
+  setText("contact-address", d.address);
+  setText("contact-hours", d.hours);
+  setText("contact-extra", d.extra);
+  if (d.phone) setLink("contact-phone", d.phone, "tel:");
+  if (d.email) setLink("contact-email", d.email, "mailto:");
+  for (const key of ["facebook", "instagram"]) {
+    const url = safeHttps(d[key]);
+    if (url) setLink("contact-" + key, key === "facebook" ? "Facebook" : "Instagram", null);
+    const el = document.getElementById("contact-" + key);
+    if (url) { el.href = url; el.target = "_blank"; el.rel = "noopener"; }
   }
-
-  function safeImageUrl(value) {
-    try {
-      const url = new URL(value);
-      return url.protocol === "https:" ? url.href : "";
-    } catch {
-      return "";
-    }
+}
+function renderCards(id, docs, type) {
+  const root = document.getElementById(id);
+  root.replaceChildren();
+  if (!docs.length) {
+    const p = document.createElement("p");
+    p.className = "empty";
+    p.textContent = "Незабаром тут з’явиться нова інформація.";
+    root.appendChild(p);
+    return;
   }
+  docs.forEach(d => {
+    const article = document.createElement("article");
+    article.className = "card";
+    const image = safeHttps(d.image);
+    if (image) {
+      const img = document.createElement("img");
+      img.src = image; img.alt = d.title || ""; img.loading = "lazy";
+      img.onerror = () => { img.replaceWith(makePlaceholder(type)); };
+      article.appendChild(img);
+    } else article.appendChild(makePlaceholder(type));
 
-  function renderCards(cards) {
-    const container = document.getElementById("cards");
-    container.replaceChildren();
-
-    if (!Array.isArray(cards) || cards.length === 0) {
-      container.textContent = "Незабаром тут з'являться нові туристичні місця.";
-      return;
+    const body = document.createElement("div"); body.className = "card-body";
+    const h = document.createElement("h3"); h.textContent = d.title || "Без назви";
+    body.appendChild(h);
+    let details = "";
+    if (type === "tour") details = [d.subtitle, d.duration, d.price, d.description, d.booking].filter(Boolean).join("\n");
+    else if (type === "news") details = [d.date, d.summary || d.body].filter(Boolean).join("\n");
+    else details = [d.address, d.description, d.hours].filter(Boolean).join("\n");
+    const p = document.createElement("p"); p.textContent = details; body.appendChild(p);
+    const url = safeHttps(d.link);
+    if (url) {
+      const a = document.createElement("a"); a.className = "btn";
+      a.href = url; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = type === "news" ? "Читати далі" : "Детальніше";
+      body.appendChild(a);
     }
-
-    cards.forEach(item => {
-      if (!item || typeof item.title !== "string") return;
-
-      const article = document.createElement("article");
-      article.className = "card";
-
-      const imageUrl = safeImageUrl(item.image || "");
-      if (imageUrl) {
-        const img = document.createElement("img");
-        img.src = imageUrl;
-        img.alt = item.title;
-        img.loading = "lazy";
-        img.onerror = () => {
-          const placeholder = document.createElement("div");
-          placeholder.className = "placeholder";
-          placeholder.textContent = "⌖";
-          img.replaceWith(placeholder);
-        };
-        article.appendChild(img);
-      } else {
-        const placeholder = document.createElement("div");
-        placeholder.className = "placeholder";
-        placeholder.textContent = "⌖";
-        article.appendChild(placeholder);
-      }
-
-      const body = document.createElement("div");
-      body.className = "card-body";
-
-      const title = document.createElement("h3");
-      title.textContent = item.title;
-
-      const description = document.createElement("p");
-      description.textContent = item.description || "";
-
-      body.append(title, description);
-      article.appendChild(body);
-      container.appendChild(article);
-    });
-  }
-
-  db.collection("siteContent").doc("homepage").get()
-    .then(snapshot => {
-      if (!snapshot.exists) {
-        document.getElementById("status").textContent =
-          "Показано початковий вміст. Опублікований контент ще не додано.";
-        return;
-      }
-
-      const data = snapshot.data();
-      const texts = data.texts || {};
-
-      setText("hero-title", texts.hero_title);
-      setText("hero-subtitle", texts.hero_subtitle);
-      setText("about-text-1", texts.about_text_1);
-      setText("about-text-2", texts.about_text_2);
-      setText("contact-address", texts.contact_address);
-      setText("contact-extra", texts.contact_extra);
-
-      if (typeof texts.contact_phone === "string") {
-        setText("contact-phone", texts.contact_phone);
-        const digits = texts.contact_phone.replace(/[^\d+]/g, "");
-        document.getElementById("contact-phone").href = "tel:" + digits;
-      }
-
-      if (Array.isArray(data.cards)) renderCards(data.cards);
-
-      document.getElementById("status").textContent =
-        "Туристичну інформацію завантажено.";
-    })
-    .catch(error => {
-      console.error("Firestore:", error);
-      document.getElementById("status").textContent =
-        "Не вдалося завантажити оновлення. Показано початковий вміст.";
-    });
-})();
+    article.appendChild(body); root.appendChild(article);
+  });
+}
+function makePlaceholder(type) {
+  const div = document.createElement("div"); div.className = "placeholder";
+  div.textContent = type === "tour" ? "🧭" : type === "news" ? "📰" : "🏰";
+  return div;
+}
+function showError(err) {
+  console.error(err);
+  document.getElementById("load-status").textContent =
+    "Не вдалося завантажити частину інформації. Перевірте інтернет або правила Firebase.";
+}
+db.collection("siteContent").doc("homepage").onSnapshot(s => {
+  if (s.exists) applyHomepage(s.data());
+}, showError);
+db.collection("siteContent").doc("about").onSnapshot(s => {
+  if (s.exists) applyAbout(s.data());
+}, showError);
+db.collection("siteContent").doc("contacts").onSnapshot(s => {
+  if (s.exists) applyContacts(s.data());
+}, showError);
+db.collection("places").where("published", "==", true).onSnapshot(s => {
+  renderCards("places-list", s.docs.map(x => x.data()), "place");
+}, showError);
+db.collection("tours").where("published", "==", true).onSnapshot(s => {
+  renderCards("tours-list", s.docs.map(x => x.data()), "tour");
+}, showError);
+db.collection("news").where("published", "==", true).onSnapshot(s => {
+  renderCards("news-list", s.docs.map(x => x.data()), "news");
+}, showError);
 </script>
 </body>
 </html>
