@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10213b">
-<meta name="description" content="Звягель Туристичний — екскурсії, історичні пам’ятки, де поїсти, де переночувати та як дістатися до Звягеля.">
+<meta name="description" content="Звягель Туристичний — екскурсії, історичні пам’ятки, де поїсти ?, де переночувати ? та як дістатися до Звягеля ?.">
 <title>Звягель Туристичний — відкрий місто</title>
 
 <style>
@@ -246,9 +246,9 @@ h2 {
       <a href="#about">Про місто</a>
       <a href="#tours">Екскурсії</a>
       <a href="#news">Новини</a>
-      <a href="#food">Де поїсти</a>
-      <a href="#stay">Де переночувати</a>
-      <a href="#getting-here">Як дістатися</a>
+      <a href="#food">Де поїсти ?</a>
+      <a href="#stay">Де переночувати ? </a>
+      <a href="#getting-here">Як дістатися? </a>
       <a href="#contacts">Контакти</a>
     </nav>
   </div>
@@ -379,11 +379,6 @@ h2 {
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-/*
-  Конфігурація Firebase проєкту zwiahel-tourist.
-  Firebase web config є публічною конфігурацією клієнта;
-  безпеку забезпечують правила Firestore та Authentication.
-*/
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
   authDomain: "zviahel-tourist.firebaseapp.com",
@@ -407,10 +402,14 @@ function safeHttps(value) {
     return "";
   }
 }
+
 function setText(id, value) {
   const el = $(id);
-  if (el && typeof value === "string" && value.trim()) el.textContent = value;
+  if (el && typeof value === "string" && value.trim()) {
+    el.textContent = value;
+  }
 }
+
 function setExternalLink(id, value) {
   const el = $(id);
   const url = safeHttps(value);
@@ -419,8 +418,10 @@ function setExternalLink(id, value) {
     el.hidden = false;
   }
 }
+
 function applyHomepage(data) {
   const t = data.texts || data;
+
   setText("hero-title", t.hero_title);
   setText("hero-subtitle", t.hero_subtitle);
   setText("places-title", t.places_title);
@@ -438,12 +439,17 @@ function applyHomepage(data) {
     document.querySelector(".hero").style.backgroundPosition = "center";
   }
 }
+
 function applyAbout(data) {
   setText("about-title", data.title);
-  setText("about-text", data.body || [data.text1, data.text2].filter(Boolean).join("\n\n"));
+  setText(
+    "about-text",
+    data.body || [data.text1, data.text2].filter(Boolean).join("\n\n")
+  );
   setText("about-box-title", data.box_title);
   setText("about-box-text", data.box_text);
 }
+
 function applyContacts(data) {
   setText("contacts-title", data.title);
   setText("contact-address", data.address);
@@ -455,33 +461,45 @@ function applyContacts(data) {
     $("contact-phone").textContent = data.phone;
     $("contact-phone").href = "tel:" + digits;
   }
+
   if (data.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     $("contact-email").href = "mailto:" + data.email;
     $("contact-email").textContent = data.email;
     $("contact-email").hidden = false;
   }
+
   setExternalLink("contact-facebook", data.facebook);
   setExternalLink("contact-instagram", data.instagram);
 }
+
 function placeholder(type) {
   const div = document.createElement("div");
   div.className = "placeholder";
   div.textContent = ({
-    tour: "🧭", news: "📰", food: "🍽️", stay: "🛏️", place: "🏰"
+    tour: "🧭",
+    news: "📰",
+    food: "🍽️",
+    stay: "🛏️",
+    place: "🏰"
   })[type] || "📍";
+
   return div;
 }
+
 function makeLink(text, href, className) {
   const a = document.createElement("a");
   a.className = className || "btn";
   a.textContent = text;
   a.href = href;
+
   if (href.startsWith("https://")) {
     a.target = "_blank";
     a.rel = "noopener noreferrer";
   }
+
   return a;
 }
+
 function renderCards(rootId, docs, type) {
   const root = $(rootId);
   root.replaceChildren();
@@ -494,6 +512,7 @@ function renderCards(rootId, docs, type) {
       : type === "stay"
       ? "Інформація про місця проживання незабаром з’явиться."
       : "Інформація незабаром з’явиться. Слідкуйте за оновленнями.";
+
     root.appendChild(p);
     return;
   }
@@ -503,6 +522,7 @@ function renderCards(rootId, docs, type) {
     article.className = "card";
 
     const imageUrl = safeHttps(data.image);
+
     if (imageUrl) {
       const img = document.createElement("img");
       img.src = imageUrl;
@@ -530,6 +550,7 @@ function renderCards(rootId, docs, type) {
     if (["tour", "food", "stay"].includes(type)) {
       const meta = document.createElement("div");
       meta.className = "meta";
+
       const values = type === "tour"
         ? [["◷ ", data.duration], ["₴ ", data.price]]
         : [["📍 ", data.address], ["₴ ", data.price], ["◷ ", data.hours]];
@@ -540,6 +561,7 @@ function renderCards(rootId, docs, type) {
         chip.textContent = prefix + value;
         meta.appendChild(chip);
       });
+
       if (meta.childNodes.length) body.appendChild(meta);
     }
 
@@ -550,44 +572,74 @@ function renderCards(rootId, docs, type) {
     if (description) {
       const p = document.createElement("p");
       const fullText = String(description);
+
       p.textContent = fullText.length > 230
         ? fullText.slice(0, 227).trimEnd() + "…"
         : fullText;
+
       body.appendChild(p);
     }
 
     const actions = document.createElement("div");
     actions.className = "actions";
-    const detailUrl = safeHttps(data.link);
-    if (detailUrl) {
+
+    // НОВЕ: новини та цікавинки відкриваються на окремій сторінці сайту.
+    if (type === "news" || type === "place") {
+      const detailType = type === "news" ? "news" : "places";
+
+      const detailUrl =
+        "article.html?type=" + encodeURIComponent(detailType) +
+        "&id=" + encodeURIComponent(data.id || "");
+
       actions.appendChild(makeLink(
-        type === "news" ? "Читати новину ↗" : "Детальніше ↗",
+        type === "news" ? "Читати новину →" : "Детальніше →",
         detailUrl,
         "btn secondary"
       ));
+    } else {
+      const detailUrl = safeHttps(data.link);
+
+      if (detailUrl) {
+        actions.appendChild(makeLink(
+          "Детальніше ↗",
+          detailUrl,
+          "btn secondary"
+        ));
+      }
     }
 
     if (["tour", "food", "stay"].includes(type)) {
       const phoneText = String(data.phone || data.booking || "");
       const match = phoneText.match(/\+?[\d\s().-]{9,}/);
       const phone = match ? match[0].replace(/[^\d+]/g, "") : "";
+
       if (phone && phone.replace(/\D/g, "").length >= 10) {
-        actions.appendChild(makeLink("☎ Зателефонувати", "tel:" + phone, "btn"));
+        actions.appendChild(
+          makeLink("☎ Зателефонувати", "tel:" + phone, "btn")
+        );
       } else if (type === "tour") {
-        actions.appendChild(makeLink("☎ Записатися", "tel:+380673004470", "btn"));
+        actions.appendChild(
+          makeLink("☎ Записатися", "tel:+380673004470", "btn")
+        );
       }
 
       const mapUrl = safeHttps(data.mapLink);
-      if (mapUrl) actions.appendChild(makeLink("На карті ↗", mapUrl, "btn secondary"));
+      if (mapUrl) {
+        actions.appendChild(makeLink("На карті ↗", mapUrl, "btn secondary"));
+      }
     }
 
     if (actions.childNodes.length) body.appendChild(actions);
+
     article.appendChild(body);
     root.appendChild(article);
   });
 }
 
-$("backTop").addEventListener("click", () => window.scrollTo({top: 0, behavior: "smooth"}));
+$("backTop").addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
 window.addEventListener("scroll", () => {
   $("backTop").classList.toggle("visible", window.scrollY > 450);
 });
@@ -599,15 +651,23 @@ function reportError(error) {
 }
 
 db.collection("siteContent").doc("homepage").onSnapshot(
-  snap => { if (snap.exists) applyHomepage(snap.data()); },
+  snap => {
+    if (snap.exists) applyHomepage(snap.data());
+  },
   reportError
 );
+
 db.collection("siteContent").doc("about").onSnapshot(
-  snap => { if (snap.exists) applyAbout(snap.data()); },
+  snap => {
+    if (snap.exists) applyAbout(snap.data());
+  },
   reportError
 );
+
 db.collection("siteContent").doc("contacts").onSnapshot(
-  snap => { if (snap.exists) applyContacts(snap.data()); },
+  snap => {
+    if (snap.exists) applyContacts(snap.data());
+  },
   reportError
 );
 
@@ -621,7 +681,14 @@ db.collection("siteContent").doc("contacts").onSnapshot(
   db.collection(collection)
     .where("published", "==", true)
     .onSnapshot(
-      snapshot => renderCards(rootId, snapshot.docs.map(doc => doc.data()), type),
+      snapshot => renderCards(
+        rootId,
+        snapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        })),
+        type
+      ),
       reportError
     );
 });
@@ -629,10 +696,13 @@ db.collection("siteContent").doc("contacts").onSnapshot(
 db.collection("siteContent").doc("gettingHere").onSnapshot(
   snap => {
     if (!snap.exists) return;
+
     const data = snap.data();
     setText("getting-here-text", data.body);
+
     const map = safeHttps(data.mapLink);
     const directions = safeHttps(data.directionsLink);
+
     if (map) $("google-map-link").href = map;
     if (directions) $("directions-link").href = directions;
   },
