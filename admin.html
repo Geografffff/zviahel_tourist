@@ -1,0 +1,1336 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Звягель — Адмін</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+
+<style>
+/*
+  LAYOUT: sidebar nav + main content area
+  PALETTE: navy deep (#0A2240) + orange accent (#E8620A) + neutral bg (#F4F6FA)
+*/
+:root {
+  --navy:      #0A2240;
+  --navy-mid:  #163559;
+  --navy-soft: #1E4A7A;
+  --orange:    #E8620A;
+  --orange-l:  #FF7722;
+  --orange-bg: #FFF3EC;
+  --bg:        #F4F6FA;
+  --surface:   #FFFFFF;
+  --border:    #D4DCE8;
+  --border-l:  #E8EEF6;
+  --fg:        #0A2240;
+  --fg-mid:    #334E6A;
+  --fg-soft:   #5C7A9A;
+  --success:   #1A7A3A;
+  --success-bg:#E8F5EE;
+  --danger:    #C42A2A;
+  --danger-bg: #FDECEA;
+  --warning:   #B85A00;
+  --warning-bg:#FFF4E0;
+  --sh:        0 1px 4px rgba(10,34,64,0.08);
+  --sh-md:     0 4px 16px rgba(10,34,64,0.10);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --navy:      #C8DEFA; --navy-mid: #A0C0E8; --navy-soft: #7AAAD8;
+    --orange:    #FF7722; --orange-l: #FF9944; --orange-bg: #3A1A06;
+    --bg:        #060E1A; --surface: #0E1E30; --border: #1C3450; --border-l: #162840;
+    --fg:        #E8F2FF; --fg-mid: #A8C4E0; --fg-soft: #607A96;
+    --success:   #4ACA7A; --success-bg: #06200E;
+    --danger:    #FF6B6B; --danger-bg: #2A0808;
+    --warning:   #FFB84A; --warning-bg: #2A1800;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --navy:      #C8DEFA; --navy-mid: #A0C0E8; --navy-soft: #7AAAD8;
+  --orange:    #FF7722; --orange-l: #FF9944; --orange-bg: #3A1A06;
+  --bg:        #060E1A; --surface: #0E1E30; --border: #1C3450; --border-l: #162840;
+  --fg:        #E8F2FF; --fg-mid: #A8C4E0; --fg-soft: #607A96;
+  --success:   #4ACA7A; --success-bg: #06200E;
+  --danger:    #FF6B6B; --danger-bg: #2A0808;
+  --warning:   #FFB84A; --warning-bg: #2A1800;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--fg);
+}
+body {
+  padding-left: max(0px, env(safe-area-inset-left, 0px));
+  padding-right: max(0px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--navy);
+  z-index: 1000;
+}
+
+/* ─── APP SHELL ─── */
+#app { display: flex; height: 100%; }
+#login-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-logo {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar-logo-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+}
+.sidebar-logo-name span { color: var(--orange); }
+.sidebar-logo-sub {
+  font-size: 0.72rem;
+  color: rgba(200,222,250,0.5);
+  margin-top: 2px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: rgba(200,222,250,0.7);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+.nav-item:hover { background: rgba(255,255,255,0.07); color: #fff; }
+.nav-item.active { background: rgba(232,98,10,0.2); color: #fff; border-left: 3px solid var(--orange); padding-left: 9px; }
+.nav-item .nav-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-sep { height: 1px; background: rgba(255,255,255,0.07); margin: 8px 10px; }
+
+.sidebar-footer {
+  padding: 14px 10px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+.user-avatar {
+  width: 32px; height: 32px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.user-email {
+  font-size: 0.75rem;
+  color: rgba(200,222,250,0.65);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+.btn-logout {
+  background: rgba(255,255,255,0.07);
+  border: none;
+  cursor: pointer;
+  color: rgba(200,222,250,0.6);
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.btn-logout:hover { background: rgba(255,80,80,0.2); color: #FF8080; }
+
+/* ─── MAIN CONTENT ─── */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  min-width: 0;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  box-shadow: var(--sh);
+}
+.topbar-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+.topbar-actions { display: flex; gap: 10px; align-items: center; }
+
+.content-area {
+  padding: 28px;
+  max-width: 1100px;
+}
+
+/* ─── TABS ─── */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ─── CARDS / PANELS ─── */
+.panel {
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: var(--sh);
+}
+.panel-header {
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border-l);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.panel-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+.panel-body { padding: 22px; }
+
+/* ─── STATS STRIP ─── */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  box-shadow: var(--sh);
+}
+.stat-val {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.stat-val.orange { color: var(--orange); }
+.stat-label { font-size: 0.78rem; color: var(--fg-soft); margin-top: 4px; }
+.stat-delta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 6px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  display: inline-block;
+}
+.stat-delta.up { background: var(--success-bg); color: var(--success); }
+.stat-delta.neutral { background: var(--border-l); color: var(--fg-soft); }
+
+/* ─── TABLE ─── */
+.tbl-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+thead th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--fg-soft);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+tbody tr { transition: background 0.1s; }
+tbody tr:hover { background: var(--border-l); }
+tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-l);
+  color: var(--fg-mid);
+  vertical-align: middle;
+}
+tbody td:first-child { color: var(--fg); font-weight: 500; }
+tbody tr:last-child td { border-bottom: none; }
+
+.cell-emoji { font-size: 1.4rem; }
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.badge-arch  { background: #E8F0FF; color: #1A3A80; }
+.badge-nat   { background: #E8F5EE; color: #1A6A3A; }
+.badge-cult  { background: #F5E8FF; color: #6A1A80; }
+.badge-rest  { background: #FFF3E8; color: #804A1A; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .badge-arch { background: #0A1A40; color: #80AAFF; }
+  :root:not([data-theme="light"]) .badge-nat  { background: #0A200E; color: #60CC80; }
+  :root:not([data-theme="light"]) .badge-cult { background: #200A40; color: #CC80FF; }
+  :root:not([data-theme="light"]) .badge-rest { background: #3A1800; color: #FFB880; }
+}
+
+.tbl-actions { display: flex; gap: 6px; }
+.btn-icon {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 8px;
+  font-size: 0.8rem;
+  color: var(--fg-soft);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn-icon:hover { background: var(--border-l); color: var(--fg); }
+.btn-icon.danger:hover { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.btn-icon.primary:hover { background: var(--orange-bg); border-color: var(--orange); color: var(--orange); }
+
+/* ─── FORM ELEMENTS ─── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+.form-full { grid-column: 1 / -1; }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--fg-mid);
+  letter-spacing: 0.03em;
+}
+.field input,
+.field select,
+.field textarea {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--fg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+  width: 100%;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(232,98,10,0.12);
+}
+.field textarea { resize: vertical; min-height: 90px; }
+.field-hint { font-size: 0.75rem; color: var(--fg-soft); }
+
+/* ─── BUTTONS ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--orange); color: #fff; }
+.btn-primary:hover { background: var(--orange-l); }
+.btn-secondary { background: var(--surface); border-color: var(--border); color: var(--fg-mid); }
+.btn-secondary:hover { border-color: var(--navy-soft); color: var(--fg); }
+.btn-danger { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.btn-danger:hover { background: var(--danger); color: #fff; }
+.btn-navy { background: var(--navy); color: #fff; }
+.btn-navy:hover { background: var(--navy-mid); }
+.btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+
+/* ─── STAR RATING ─── */
+.star-row { display: flex; gap: 4px; }
+.star-btn {
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s;
+  color: var(--border);
+  line-height: 1;
+}
+.star-btn.on { color: var(--orange); }
+.star-btn:hover { transform: scale(1.2); }
+
+/* ─── MEDIA GRID ─── */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+.media-item {
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  background: var(--bg);
+}
+.media-thumb {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: var(--border-l);
+}
+.media-info {
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+.media-name {
+  font-size: 0.72rem;
+  color: var(--fg-mid);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ─── UPLOAD ZONE ─── */
+.upload-zone {
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  padding: 40px 24px;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.upload-zone:hover, .upload-zone.drag { border-color: var(--orange); background: var(--orange-bg); }
+.upload-zone input[type=file] { display: none; }
+.upload-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.upload-label { font-size: 0.9rem; font-weight: 600; color: var(--fg-mid); }
+.upload-hint { font-size: 0.78rem; color: var(--fg-soft); margin-top: 4px; }
+
+/* ─── TEXTS SECTION ─── */
+.texts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 700px) { .texts-grid { grid-template-columns: 1fr; } }
+
+/* ─── MODAL ─── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4,12,28,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.18s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: var(--surface);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(4,12,28,0.35);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.2s ease;
+}
+@keyframes slideUp { from { transform: translateY(16px); opacity: 0.5; } to { transform: none; opacity: 1; } }
+
+.modal-header {
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--border-l);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title { font-size: 1rem; font-weight: 700; color: var(--fg); }
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--fg-soft);
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+  line-height: 1;
+}
+.modal-close:hover { background: var(--border-l); color: var(--fg); }
+.modal-body { padding: 22px; }
+.modal-footer {
+  padding: 14px 22px;
+  border-top: 1px solid var(--border-l);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ─── TOAST ─── */
+#toast-container {
+  position: fixed;
+  top: max(24px, env(safe-area-inset-top, 24px));
+  right: max(20px, env(safe-area-inset-right, 20px));
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 18px 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: var(--sh-md);
+  min-width: 240px;
+  max-width: 340px;
+  animation: toastIn 0.25s ease;
+  border-left: 4px solid var(--border);
+}
+@keyframes toastIn { from { transform: translateX(20px); opacity: 0; } to { transform: none; opacity: 1; } }
+.toast.success { border-left-color: var(--success); }
+.toast.error   { border-left-color: var(--danger); }
+.toast.info    { border-left-color: var(--orange); }
+.toast-icon { font-size: 1rem; }
+.toast-msg { color: var(--fg-mid); flex: 1; min-width: 0; }
+
+/* ─── CONFIRM DIALOG ─── */
+.confirm-box {
+  background: var(--surface);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(4,12,28,0.4);
+  width: 100%;
+  max-width: 380px;
+  padding: 28px 24px 22px;
+  text-align: center;
+  animation: slideUp 0.18s ease;
+}
+.confirm-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.confirm-title { font-size: 1rem; font-weight: 700; color: var(--fg); margin-bottom: 8px; }
+.confirm-msg { font-size: 0.875rem; color: var(--fg-mid); margin-bottom: 20px; line-height: 1.6; }
+.confirm-actions { display: flex; gap: 10px; justify-content: center; }
+
+/* ─── LOGIN CARD ─── */
+.login-card {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--sh-md);
+  width: 100%;
+  max-width: 380px;
+  overflow: hidden;
+}
+.login-header {
+  background: var(--navy);
+  padding: 28px 28px 24px;
+  text-align: center;
+}
+.login-icon { font-size: 2.4rem; margin-bottom: 10px; }
+.login-title { font-size: 1.2rem; font-weight: 700; color: #fff; }
+.login-sub { font-size: 0.82rem; color: rgba(200,222,250,0.6); margin-top: 4px; }
+.login-body { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+.login-error {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar {
+  height: 4px;
+  background: var(--border-l);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--orange);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* ─── COLOR PREVIEW ─── */
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.color-swatch {
+  width: 36px; height: 36px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+/* ─── MOBILE SIDEBAR ─── */
+@media (max-width: 720px) {
+  .sidebar {
+    position: fixed;
+    left: -240px;
+    top: 0;
+    height: 100%;
+    z-index: 800;
+    transition: left 0.25s ease;
+  }
+  .sidebar.open { left: 0; }
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(4,12,28,0.5);
+    z-index: 790;
+  }
+  .mobile-overlay.show { display: block; }
+  .topbar { padding: 0 16px; }
+  .content-area { padding: 16px; }
+}
+</style>
+
+<div id="toast-container"></div>
+<div id="confirm-backdrop" class="modal-backdrop" style="display:none">
+  <div class="confirm-box">
+    <div class="confirm-icon" id="confirm-icon">⚠️</div>
+    <div class="confirm-title" id="confirm-title">Підтвердіть дію</div>
+    <div class="confirm-msg" id="confirm-msg">Ви впевнені?</div>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary" id="confirm-no">Скасувати</button>
+      <button class="btn btn-danger" id="confirm-yes">Видалити</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── LOGIN ─── -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-icon">⚓</div>
+      <div class="login-title">Адмін Панель</div>
+      <div class="login-sub">Звягель Туристичний</div>
+    </div>
+    <form class="login-body" id="login-form" novalidate>
+      <div id="login-error" class="login-error" style="display:none"></div>
+      <div class="field">
+        <label for="email-in">Email</label>
+        <input type="email" id="email-in" placeholder="admin@zvyahel.ua" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="pass-in">Пароль</label>
+        <input type="password" id="pass-in" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+        Увійти →
+      </button>
+      <p style="font-size:0.78rem;color:var(--fg-soft);text-align:center;line-height:1.5">
+        Після налаштування Firebase замініть конфіг у <code style="background:var(--border-l);padding:1px 4px;border-radius:3px">FIREBASE_CONFIG</code>
+      </p>
+    </form>
+  </div>
+</div>
+
+<!-- ─── ADMIN APP ─── -->
+<div id="app" style="display:none">
+  <div class="mobile-overlay" id="mob-overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-name">⚓ Звягель <span>Адмін</span></div>
+      <div class="sidebar-logo-sub">Панель керування</div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-tab="dashboard">
+        <span class="nav-icon">📊</span> Дашборд
+      </button>
+      <button class="nav-item" data-tab="cards">
+        <span class="nav-icon">🗺️</span> Картки
+      </button>
+      <button class="nav-item" data-tab="texts">
+        <span class="nav-icon">📝</span> Тексти
+      </button>
+      <button class="nav-item" data-tab="media">
+        <span class="nav-icon">🖼️</span> Медіа
+      </button>
+      <div class="nav-sep"></div>
+      <a href="index.html" target="_blank" class="nav-item" style="text-decoration:none">
+        <span class="nav-icon">🌐</span> Переглянути сайт
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar" id="user-avatar">А</div>
+        <div class="user-email" id="user-email">admin</div>
+        <button class="btn-logout" id="logout-btn">Вийти</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="btn btn-secondary btn-sm" id="mob-menu" style="display:none">☰</button>
+      <div class="topbar-title" id="topbar-title">Дашборд</div>
+      <div class="topbar-actions">
+        <span id="firebase-status" style="font-size:0.78rem;padding:3px 10px;border-radius:20px;background:var(--warning-bg);color:var(--warning);font-weight:600">⚙ Демо-режим</span>
+      </div>
+    </div>
+
+    <div class="content-area">
+
+      <!-- DASHBOARD -->
+      <div class="tab-panel active" id="tab-dashboard">
+        <div class="stats-strip">
+          <div class="stat-card">
+            <div class="stat-val orange" id="st-cards">6</div>
+            <div class="stat-label">Картки атракцій</div>
+            <div class="stat-delta up">активних</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="st-views">—</div>
+            <div class="stat-label">Переглядів сайту</div>
+            <div class="stat-delta neutral">потребує Firebase</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="st-media">4</div>
+            <div class="stat-label">Медіафайлів</div>
+            <div class="stat-delta up">завантажено</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="st-texts">7</div>
+            <div class="stat-label">Текстових блоків</div>
+            <div class="stat-delta up">налаштовано</div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-bottom:20px">
+          <div class="panel-header">
+            <span class="panel-title">⚡ Швидкі дії</span>
+          </div>
+          <div class="panel-body" style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="switchTab('cards');openCardModal()">➕ Нова картка</button>
+            <button class="btn btn-navy" onclick="switchTab('texts')">✏️ Редагувати тексти</button>
+            <button class="btn btn-secondary" onclick="switchTab('media')">🖼️ Завантажити фото</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">🔧 Підключення Firebase</span></div>
+          <div class="panel-body">
+            <p style="font-size:0.875rem;color:var(--fg-mid);margin-bottom:16px;line-height:1.7">
+              Зараз панель працює в демо-режимі. Щоб зберігати зміни в базі даних, налаштуйте Firebase:
+            </p>
+            <ol style="font-size:0.875rem;color:var(--fg-mid);line-height:2;padding-left:20px">
+              <li>Перейдіть на <strong style="color:var(--fg)">console.firebase.google.com</strong> і створіть проект</li>
+              <li>Увімкніть <strong style="color:var(--fg)">Authentication → Email/Password</strong></li>
+              <li>Створіть <strong style="color:var(--fg)">Firestore Database</strong></li>
+              <li>Скопіюйте конфіг SDK і вставте в змінну <code style="background:var(--border-l);padding:1px 5px;border-radius:3px">FIREBASE_CONFIG</code> у коді</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="tab-panel" id="tab-cards">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">🗺️ Картки атракцій</span>
+            <button class="btn btn-primary btn-sm" onclick="openCardModal()">➕ Додати картку</button>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:50px"></th>
+                  <th>Назва</th>
+                  <th>Категорія</th>
+                  <th>Рейтинг</th>
+                  <th>Відстань</th>
+                  <th style="width:100px">Дії</th>
+                </tr>
+              </thead>
+              <tbody id="cards-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTS -->
+      <div class="tab-panel" id="tab-texts">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">📝 Тексти сайту</span>
+            <button class="btn btn-primary btn-sm" onclick="saveTexts()">💾 Зберегти зміни</button>
+          </div>
+          <div class="panel-body">
+            <p style="font-size:0.82rem;color:var(--fg-soft);margin-bottom:20px">Зміни зберігаються локально. Підключіть Firebase для публікації на сайт.</p>
+            <div class="texts-grid" id="texts-form"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEDIA -->
+      <div class="tab-panel" id="tab-media">
+        <div class="panel" style="margin-bottom:20px">
+          <div class="panel-header"><span class="panel-title">⬆️ Завантажити файл</span></div>
+          <div class="panel-body">
+            <label class="upload-zone" id="upload-zone">
+              <input type="file" id="file-input" accept="image/*" multiple>
+              <div class="upload-icon">🖼️</div>
+              <div class="upload-label">Перетягніть зображення сюди</div>
+              <div class="upload-hint">або клікніть для вибору • PNG, JPG, WebP до 5 МБ</div>
+            </label>
+            <div class="progress-bar" id="upload-progress-bar" style="display:none;margin-top:14px">
+              <div class="progress-fill" id="upload-progress" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">🖼️ Бібліотека медіа</span></div>
+          <div class="panel-body">
+            <div class="media-grid" id="media-grid"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- content-area -->
+  </div><!-- main -->
+</div><!-- app -->
+
+<!-- CARD MODAL -->
+<div class="modal-backdrop" id="card-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="card-modal-title">➕ Нова картка</span>
+      <button class="modal-close" onclick="closeCardModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="card-form" novalidate>
+        <div class="form-grid">
+          <div class="field form-full">
+            <label for="cf-name">Назва *</label>
+            <input id="cf-name" type="text" placeholder="Назва атракції" required>
+          </div>
+          <div class="field">
+            <label for="cf-cat">Категорія</label>
+            <select id="cf-cat">
+              <option value="Архітектура">🏛 Архітектура</option>
+              <option value="Природа">🌿 Природа</option>
+              <option value="Культура">🎭 Культура</option>
+              <option value="Відпочинок">⛱ Відпочинок</option>
+              <option value="Археологія">⚱ Археологія</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cf-emoji">Іконка (emoji)</label>
+            <input id="cf-emoji" type="text" placeholder="🏰" maxlength="4">
+          </div>
+          <div class="field form-full">
+            <label for="cf-desc">Опис</label>
+            <textarea id="cf-desc" placeholder="Короткий опис місця..."></textarea>
+          </div>
+          <div class="field">
+            <label>Рейтинг</label>
+            <div class="star-row" id="star-row">
+              <button type="button" class="star-btn on" data-v="1">★</button>
+              <button type="button" class="star-btn on" data-v="2">★</button>
+              <button type="button" class="star-btn on" data-v="3">★</button>
+              <button type="button" class="star-btn on" data-v="4">★</button>
+              <button type="button" class="star-btn" data-v="5">★</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cf-dist">Відстань від центру</label>
+            <input id="cf-dist" type="text" placeholder="1.5 км">
+          </div>
+          <div class="field">
+            <label for="cf-color">Колір фону картки</label>
+            <div class="color-row">
+              <input type="color" id="cf-color" value="#0A2240" style="width:42px;height:36px;padding:2px;cursor:pointer;border:1px solid var(--border);border-radius:6px;background:none">
+              <input type="text" id="cf-color-hex" value="#0A2240" placeholder="#0A2240" style="flex:1">
+            </div>
+          </div>
+          <div class="field">
+            <label for="cf-color2">Колір фону (2й)</label>
+            <div class="color-row">
+              <input type="color" id="cf-color2" value="#163559" style="width:42px;height:36px;padding:2px;cursor:pointer;border:1px solid var(--border);border-radius:6px;background:none">
+              <input type="text" id="cf-color2-hex" value="#163559" placeholder="#163559" style="flex:1">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeCardModal()">Скасувати</button>
+      <button class="btn btn-primary" onclick="saveCard()">💾 Зберегти</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── FIREBASE CONFIG (замініть на ваш) ───
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
+  authDomain: "zviahel-tourist.firebaseapp.com",
+  projectId: "zviahel-tourist",
+  storageBucket: "zviahel-tourist.firebasestorage.app",
+  messagingSenderId: "914549612868",
+  appId: "1:914549612868:web:3abce6606a89167134b711",
+  measurementId: "G-DV5YF43W24"
+};
+const FIREBASE_READY = FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY";
+
+// ─── STATE ───
+let cards = JSON.parse(localStorage.getItem('adm_cards') || 'null') || [
+  { id: 1, name: "Звягельське городище", cat: "Археологія", emoji: "🏰", desc: "Давнє слов'янське городище X–XI ст.", rating: 5, dist: "Центр", color: "#0A2240", color2: "#163559" },
+  { id: 2, name: "Собор Різдва Христового", cat: "Архітектура", emoji: "⛪", desc: "Пам'ятка архітектури XIX ст.", rating: 4, dist: "0.8 км", color: "#1A4A7A", color2: "#0A2240" },
+  { id: 3, name: "Річка Случ", cat: "Природа", emoji: "🌊", desc: "Мальовнича річка для відпочинку", rating: 5, dist: "1.2 км", color: "#0F3A6A", color2: "#1A5A9A" },
+  { id: 4, name: "Краєзнавчий музей", cat: "Культура", emoji: "🎭", desc: "Колекція з 50 000 експонатів", rating: 4, dist: "1.5 км", color: "#163559", color2: "#0A2240" },
+  { id: 5, name: "Центральний парк", cat: "Відпочинок", emoji: "🌳", desc: "20 га зеленої зони в центрі міста", rating: 4, dist: "0.5 км", color: "#0A3A1A", color2: "#0A2A0A" },
+  { id: 6, name: "Музей Лесі Українки", cat: "Культура", emoji: "🏛️", desc: "Дім, де народилася поетеса", rating: 5, dist: "2.1 км", color: "#2A1A4A", color2: "#1A0A3A" },
+];
+
+let texts = JSON.parse(localStorage.getItem('adm_texts') || 'null') || {
+  hero_title: "Відкрийте стародавній Звягель",
+  hero_subtitle: "Місто з тисячолітньою історією на берегах Случі",
+  about_text_1: "Звягель — одне з найдавніших міст Волині. Пережило монгольську навалу, польсько-литовське панування та козацькі повстання.",
+  about_text_2: "Тут народилася Леся Українка — символ незламного духу, чиє ім'я відоме далеко за межами України.",
+  contact_phone: "+380 41 234 56 78",
+  contact_email: "tourism@zvyahel.gov.ua",
+  contact_address: "вул. Шевченка, 1, Звягель",
+};
+
+let media = JSON.parse(localStorage.getItem('adm_media') || 'null') || [
+  { id: 1, name: "hero-castle.jpg", emoji: "🏰", size: "1.2 МБ" },
+  { id: 2, name: "river-sluch.jpg", emoji: "🌊", size: "980 КБ" },
+  { id: 3, name: "leya-museum.jpg", emoji: "🏛️", size: "850 КБ" },
+  { id: 4, name: "central-park.jpg", emoji: "🌳", size: "1.1 МБ" },
+];
+
+let editCardId = null;
+let starRating = 4;
+let currentUser = null;
+
+// ─── TOAST ───
+function toast(msg, type = 'info', icon = '✓') {
+  const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+  const c = document.createElement('div');
+  c.className = `toast ${type}`;
+  c.innerHTML = `<span class="toast-icon">${icons[type] || icon}</span><span class="toast-msg">${msg}</span>`;
+  document.getElementById('toast-container').appendChild(c);
+  setTimeout(() => c.remove(), 3600);
+}
+
+// ─── CONFIRM ───
+function confirm(title, msg, onYes) {
+  const bd = document.getElementById('confirm-backdrop');
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent = msg;
+  bd.style.display = 'flex';
+  const yes = document.getElementById('confirm-yes');
+  const no = document.getElementById('confirm-no');
+  const close = () => { bd.style.display = 'none'; };
+  yes.onclick = () => { close(); onYes(); };
+  no.onclick = close;
+}
+
+// ─── AUTH (demo) ───
+document.getElementById('login-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const email = document.getElementById('email-in').value.trim();
+  const pass = document.getElementById('pass-in').value;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+
+  if (!email || !pass) {
+    errEl.textContent = 'Введіть email і пароль.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  if (FIREBASE_READY) {
+    toast('Firebase підключено! Перевіряю...', 'info');
+  }
+
+  // Demo login (без Firebase)
+  if (pass.length < 4) {
+    errEl.textContent = 'Пароль надто короткий (мін. 4 символи).';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  currentUser = email;
+  document.getElementById('user-email').textContent = email;
+  document.getElementById('user-avatar').textContent = email[0].toUpperCase();
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  initApp();
+});
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+  confirm('Вийти?', 'Ви впевнені, що хочете вийти з панелі?', () => {
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pass-in').value = '';
+    toast('Ви вийшли з системи', 'info');
+  });
+});
+
+// ─── TABS ───
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelector(`[data-tab="${name}"]`)?.classList.add('active');
+  const titles = { dashboard: 'Дашборд', cards: 'Картки атракцій', texts: 'Тексти сайту', media: 'Медіафайли' };
+  document.getElementById('topbar-title').textContent = titles[name] || name;
+}
+document.querySelectorAll('[data-tab]').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+// ─── MOBILE ───
+const mobBtn = document.getElementById('mob-menu');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('mob-overlay');
+if (window.innerWidth <= 720) mobBtn.style.display = 'inline-flex';
+window.addEventListener('resize', () => {
+  mobBtn.style.display = window.innerWidth <= 720 ? 'inline-flex' : 'none';
+});
+mobBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+});
+
+// ─── CARDS TABLE ───
+const catBadge = { Архітектура: 'badge-arch', Природа: 'badge-nat', Культура: 'badge-cult', Відпочинок: 'badge-rest', Археологія: 'badge-arch' };
+function starsHtml(n) {
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+function renderCards() {
+  const tb = document.getElementById('cards-tbody');
+  tb.innerHTML = '';
+  cards.forEach(card => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="cell-emoji" style="background:linear-gradient(135deg,${card.color},${card.color2});border-radius:6px;text-align:center;padding:8px;width:50px">${card.emoji || '📍'}</td>
+      <td><strong>${card.name}</strong></td>
+      <td><span class="badge ${catBadge[card.cat] || 'badge-arch'}">${card.cat}</span></td>
+      <td style="color:var(--orange);font-size:0.82rem;letter-spacing:-1px">${starsHtml(card.rating)}</td>
+      <td style="color:var(--fg-soft);font-size:0.85rem">📍 ${card.dist}</td>
+      <td>
+        <div class="tbl-actions">
+          <button class="btn-icon primary" title="Редагувати" onclick="editCard(${card.id})">✏️</button>
+          <button class="btn-icon danger" title="Видалити" onclick="deleteCard(${card.id})">🗑️</button>
+        </div>
+      </td>
+    `;
+    tb.appendChild(tr);
+  });
+  document.getElementById('st-cards').textContent = cards.length;
+  saveState();
+}
+
+// ─── CARD MODAL ───
+function openCardModal(id = null) {
+  editCardId = id;
+  const modal = document.getElementById('card-modal');
+  const form = document.getElementById('card-form');
+  document.getElementById('card-modal-title').textContent = id ? '✏️ Редагувати картку' : '➕ Нова картка';
+
+  if (id) {
+    const c = cards.find(x => x.id === id);
+    document.getElementById('cf-name').value = c.name;
+    document.getElementById('cf-cat').value = c.cat;
+    document.getElementById('cf-emoji').value = c.emoji || '';
+    document.getElementById('cf-desc').value = c.desc || '';
+    document.getElementById('cf-dist').value = c.dist || '';
+    document.getElementById('cf-color').value = c.color;
+    document.getElementById('cf-color-hex').value = c.color;
+    document.getElementById('cf-color2').value = c.color2;
+    document.getElementById('cf-color2-hex').value = c.color2;
+    starRating = c.rating;
+  } else {
+    form.reset();
+    document.getElementById('cf-color').value = '#0A2240';
+    document.getElementById('cf-color-hex').value = '#0A2240';
+    document.getElementById('cf-color2').value = '#163559';
+    document.getElementById('cf-color2-hex').value = '#163559';
+    starRating = 4;
+  }
+  renderStars();
+  modal.style.display = 'flex';
+}
+function closeCardModal() { document.getElementById('card-modal').style.display = 'none'; }
+
+function saveCard() {
+  const name = document.getElementById('cf-name').value.trim();
+  if (!name) { toast('Введіть назву картки', 'error'); return; }
+  const data = {
+    name,
+    cat:    document.getElementById('cf-cat').value,
+    emoji:  document.getElementById('cf-emoji').value || '📍',
+    desc:   document.getElementById('cf-desc').value.trim(),
+    dist:   document.getElementById('cf-dist').value.trim() || '—',
+    rating: starRating,
+    color:  document.getElementById('cf-color').value,
+    color2: document.getElementById('cf-color2').value,
+  };
+  if (editCardId) {
+    const i = cards.findIndex(x => x.id === editCardId);
+    cards[i] = { ...cards[i], ...data };
+    toast(`"${name}" оновлено`, 'success');
+  } else {
+    data.id = Date.now();
+    cards.push(data);
+    toast(`"${name}" додано`, 'success');
+  }
+  renderCards();
+  closeCardModal();
+}
+
+function editCard(id) { openCardModal(id); }
+
+function deleteCard(id) {
+  const card = cards.find(x => x.id === id);
+  confirm('Видалити картку?', `"${card.name}" буде видалено назавжди.`, () => {
+    cards = cards.filter(x => x.id !== id);
+    renderCards();
+    toast('Картку видалено', 'success');
+  });
+}
+
+// ─── STARS ───
+function renderStars() {
+  document.querySelectorAll('#star-row .star-btn').forEach(btn => {
+    btn.classList.toggle('on', parseInt(btn.dataset.v) <= starRating);
+  });
+}
+document.getElementById('star-row').addEventListener('click', e => {
+  const btn = e.target.closest('.star-btn');
+  if (!btn) return;
+  starRating = parseInt(btn.dataset.v);
+  renderStars();
+});
+
+// ─── COLOR SYNC ───
+['cf-color', 'cf-color2'].forEach(id => {
+  const picker = document.getElementById(id);
+  const hex = document.getElementById(id + '-hex');
+  picker.addEventListener('input', () => { hex.value = picker.value; });
+  hex.addEventListener('input', () => {
+    if (/^#[0-9A-Fa-f]{6}$/.test(hex.value)) picker.value = hex.value;
+  });
+});
+
+// ─── TEXTS ───
+const textDefs = [
+  { key: 'hero_title',    label: 'Заголовок hero',         type: 'input' },
+  { key: 'hero_subtitle', label: 'Підзаголовок hero',      type: 'input' },
+  { key: 'about_text_1',  label: 'Про місто — абзац 1',    type: 'textarea' },
+  { key: 'about_text_2',  label: 'Про місто — абзац 2',    type: 'textarea' },
+  { key: 'contact_phone', label: 'Телефон контактів',      type: 'input' },
+  { key: 'contact_email', label: 'Email контактів',        type: 'input' },
+  { key: 'contact_address',label: 'Адреса',                type: 'input' },
+];
+function renderTexts() {
+  const f = document.getElementById('texts-form');
+  f.innerHTML = '';
+  textDefs.forEach(def => {
+    const div = document.createElement('div');
+    div.className = 'field' + (def.type === 'textarea' ? ' form-full' : '');
+    const el = def.type === 'textarea'
+      ? `<textarea id="tf-${def.key}" rows="3">${texts[def.key] || ''}</textarea>`
+      : `<input type="text" id="tf-${def.key}" value="${(texts[def.key] || '').replace(/"/g,'&quot;')}">`;
+    div.innerHTML = `<label for="tf-${def.key}">${def.label}</label>${el}`;
+    f.appendChild(div);
+  });
+}
+function saveTexts() {
+  textDefs.forEach(def => {
+    const el = document.getElementById('tf-' + def.key);
+    if (el) texts[def.key] = el.value.trim();
+  });
+  saveState();
+  toast('Тексти збережено локально', 'success');
+}
+
+// ─── MEDIA ───
+function renderMedia() {
+  const grid = document.getElementById('media-grid');
+  grid.innerHTML = '';
+  media.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'media-item';
+    div.innerHTML = `
+      <div class="media-thumb">${item.emoji || '🖼️'}</div>
+      <div class="media-info">
+        <span class="media-name" title="${item.name}">${item.name}</span>
+        <button class="btn-icon danger btn-sm" title="Видалити" onclick="deleteMedia(${item.id})">✕</button>
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+  document.getElementById('st-media').textContent = media.length;
+}
+function deleteMedia(id) {
+  const m = media.find(x => x.id === id);
+  confirm('Видалити файл?', `"${m.name}" буде видалено з бібліотеки.`, () => {
+    media = media.filter(x => x.id !== id);
+    renderMedia();
+    toast('Файл видалено', 'success');
+  });
+}
+
+// ─── UPLOAD (demo) ───
+const fileInput = document.getElementById('file-input');
+const uploadZone = document.getElementById('upload-zone');
+
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag');
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+function handleFiles(files) {
+  const bar = document.getElementById('upload-progress-bar');
+  const fill = document.getElementById('upload-progress');
+  bar.style.display = 'block';
+  let done = 0;
+  Array.from(files).forEach((file, i) => {
+    setTimeout(() => {
+      const emoji = file.type.includes('image') ? '🖼️' : '📄';
+      const size = file.size > 1024*1024 ? (file.size/1024/1024).toFixed(1) + ' МБ' : Math.round(file.size/1024) + ' КБ';
+      media.push({ id: Date.now() + i, name: file.name, emoji, size });
+      done++;
+      fill.style.width = (done / files.length * 100) + '%';
+      if (done === files.length) {
+        setTimeout(() => { bar.style.display = 'none'; fill.style.width = '0%'; }, 700);
+        renderMedia();
+        toast(`${done} файл(ів) завантажено (демо-режим)`, 'success');
+        saveState();
+      }
+    }, 400 + i * 200);
+  });
+}
+
+// ─── PERSIST ───
+function saveState() {
+  try {
+    localStorage.setItem('adm_cards', JSON.stringify(cards));
+    localStorage.setItem('adm_texts', JSON.stringify(texts));
+    localStorage.setItem('adm_media', JSON.stringify(media));
+  } catch(e) {}
+}
+
+// ─── INIT ───
+function initApp() {
+  renderCards();
+  renderTexts();
+  renderMedia();
+  document.getElementById('st-texts').textContent = textDefs.length;
+  if (FIREBASE_READY) {
+    document.getElementById('firebase-status').textContent = '🔥 Firebase';
+    document.getElementById('firebase-status').style.background = 'var(--success-bg)';
+    document.getElementById('firebase-status').style.color = 'var(--success)';
+  }
+  toast('Ласкаво просимо до адмін панелі!', 'success');
+}
+</script>
+
+</body></html>
