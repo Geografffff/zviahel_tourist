@@ -1,0 +1,667 @@
+
+/* ==================================================
+   ЗВЯГЕЛЬ ТУРИСТИЧНИЙ — ЄДИНА ДИЗАЙН-СИСТЕМА
+   index.html, catalog.html, article.html
+   ================================================== */
+
+:root {
+  --navy: #10213b;
+  --navy2: #193657;
+  --orange: #f58220;
+  --bg: #f4f6fa;
+  --line: #dce3ec;
+  --text: #18263a;
+  --muted: #687487;
+  --white: #ffffff;
+  --radius: 18px;
+  --shadow: 0 8px 28px rgba(16, 33, 59, .08);
+  --shadow-hover: 0 16px 38px rgba(16, 33, 59, .15);
+  --transition: 220ms ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+body {
+  color: var(--text);
+  background: var(--white);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  transition:
+    color var(--transition),
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.container {
+  width: min(1180px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+/* ЗАГОЛОВКИ */
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--navy);
+  font-weight: 800;
+  letter-spacing: -.025em;
+}
+
+h1 {
+  line-height: 1.08;
+  font-size: clamp(34px, 5vw, 58px);
+}
+
+h2 {
+  line-height: 1.18;
+  font-size: clamp(27px, 3vw, 39px);
+}
+
+h3 {
+  line-height: 1.3;
+}
+
+.eyebrow {
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.intro {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+/* ЄДИНІ КНОПКИ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 43px;
+  padding: 11px 17px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: var(--orange);
+  color: var(--white);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.35;
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(245, 130, 32, .16);
+}
+
+.btn:hover {
+  color: var(--white);
+  background: #e97010;
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(245, 130, 32, .25);
+}
+
+.btn.secondary,
+.btn-outline {
+  color: var(--navy);
+  background: #eef3f9;
+  border-color: #dce5f0;
+  box-shadow: none;
+}
+
+.btn.secondary:hover,
+.btn-outline:hover {
+  color: var(--navy);
+  background: #e1eaf5;
+  border-color: #c8d7e9;
+}
+
+.actions .btn {
+  min-height: 38px;
+  padding: 9px 12px;
+  font-size: 12.5px;
+}
+
+/* ШАПКА */
+
+header {
+  border-bottom: 3px solid var(--orange);
+  box-shadow: 0 7px 25px rgba(5, 17, 36, .15);
+}
+
+header .brand {
+  font-weight: 850;
+  letter-spacing: -.02em;
+}
+
+.brand-mark,
+.brand-icon {
+  box-shadow: 0 5px 16px rgba(245, 130, 32, .2);
+}
+
+.nav-link {
+  border-radius: 10px;
+}
+
+.nav-link:hover {
+  color: #ffb56e;
+}
+
+/* ГОЛОВНИЙ ЕКРАН */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+
+body:has(#tours-list) .hero {
+  padding-block: clamp(62px, 8vw, 100px);
+}
+
+body:has(#tours-list) .hero h1 {
+  max-width: 850px;
+}
+
+body:has(#tours-list) .hero p {
+  max-width: 700px;
+  line-height: 1.75;
+}
+
+body:has(#tours-list) .hero .btn {
+  margin: 8px 8px 0 0;
+}
+
+/* СЕКЦІЇ ГОЛОВНОЇ */
+
+.page-section {
+  padding-block: clamp(42px, 6vw, 72px);
+}
+
+.page-section.alt {
+  background: var(--bg);
+}
+
+.page-section h2 {
+  margin-bottom: 14px;
+}
+
+.page-section .intro {
+  margin-bottom: 24px;
+}
+
+/* КАРТКИ — УНІФІКОВАНИЙ СТИЛЬ */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #c7d4e4;
+  box-shadow: var(--shadow-hover);
+}
+
+.card > img,
+.card > .placeholder,
+.card > .image-gallery,
+.card > .image-gallery > img {
+  width: 100%;
+  height: 220px;
+}
+
+.card > img,
+.card > .image-gallery > img {
+  display: block;
+  object-fit: cover;
+}
+
+.card > .image-gallery {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #e8edf4;
+}
+
+.image-gallery > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 350ms ease;
+}
+
+.card:hover .image-gallery > img {
+  transform: scale(1.035);
+}
+
+.card > .placeholder {
+  display: grid;
+  place-items: center;
+  color: var(--orange);
+  background:
+    radial-gradient(circle at 80% 20%, #345476 0, transparent 40%),
+    linear-gradient(135deg, var(--navy), var(--navy2));
+  font-size: 46px;
+}
+
+.gallery-arrow {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #ffffff55;
+  border-radius: 50%;
+  background: rgba(16, 33, 59, .82);
+  color: white;
+  box-shadow: 0 3px 12px #0002;
+}
+
+.gallery-arrow:hover {
+  background: var(--orange);
+}
+
+.gallery-count {
+  padding: 4px 10px;
+  border-radius: 30px;
+  background: rgba(16, 33, 59, .85);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 21px;
+}
+
+.card h3,
+.card h2 {
+  margin: 0 0 12px;
+  color: var(--navy);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.32;
+  letter-spacing: -.02em;
+  overflow-wrap: anywhere;
+}
+
+.card p {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 15px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid #e4eaf2;
+  border-radius: 30px;
+  background: #f4f7fb;
+  color: #42536b;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 5px;
+}
+
+.section-bottom {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.section-bottom .btn {
+  min-width: 180px;
+}
+
+.empty {
+  color: var(--muted);
+}
+
+/* ПРО МІСТО ТА ІНФОРМАЦІЙНІ БЛОКИ */
+
+.split {
+  gap: 30px;
+}
+
+.info-panel {
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.long-text {
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.map-frame {
+  box-shadow: var(--shadow);
+}
+
+/* ПОВНОЕКРАННИЙ КАТАЛОГ */
+
+body:has(#catalog-list) header {
+  padding-block: 17px;
+}
+
+body:has(#catalog-list) .hero {
+  padding-block: 44px;
+  background:
+    radial-gradient(circle at 90% 10%, #e3eaf5 0, transparent 35%),
+    var(--bg);
+}
+
+body:has(#catalog-list) main {
+  padding-block: 35px 70px;
+}
+
+.toolbar {
+  align-items: center;
+  gap: 12px;
+}
+
+.toolbar input,
+input[type="search"] {
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid #d5deea;
+  border-radius: 12px;
+  outline: none;
+  background: white;
+  color: var(--text);
+  box-shadow: 0 3px 12px #10213b06;
+}
+
+.toolbar input:focus,
+input[type="search"]:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 4px rgba(245, 130, 32, .12);
+}
+
+#result-count {
+  margin-block: 14px 20px;
+  font-size: 14px;
+}
+
+/* СТОРІНКА ОКРЕМОЇ ЕКСКУРСІЇ */
+
+.header-inner {
+  gap: 18px;
+}
+
+.header-link {
+  border-radius: 11px;
+  transition: background var(--transition);
+}
+
+.header-link:hover {
+  background: #ffffff17;
+}
+
+body:has(#main-content) .hero {
+  background:
+    radial-gradient(circle at 80% 15%, #29496c 0, transparent 36%),
+    linear-gradient(135deg, var(--navy), #0a172a);
+}
+
+body:has(#main-content) .hero-photo {
+  border: 1px solid #ffffff20;
+  border-radius: 22px;
+  box-shadow: 0 20px 50px #0003;
+}
+
+body:has(#main-content) .fact {
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition);
+}
+
+body:has(#main-content) .fact:hover {
+  transform: translateY(-3px);
+}
+
+body:has(#main-content) .sidebar-card {
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+body:has(#main-content) .route-number {
+  box-shadow: 0 4px 12px rgba(245, 130, 32, .22);
+}
+
+body:has(#main-content) .gallery-item {
+  border-radius: 15px;
+}
+
+body:has(#main-content) .contacts {
+  background:
+    radial-gradient(circle at 95% 10%, #29496c 0, transparent 35%),
+    linear-gradient(135deg, var(--navy), #0a172a);
+}
+
+body:has(#main-content) .contact-card {
+  border-radius: 17px;
+}
+
+/* КОНТАКТИ ТА ПІДВАЛ */
+
+.contact {
+  background:
+    radial-gradient(circle at 95% 10%, #29496c 0, transparent 35%),
+    linear-gradient(135deg, var(--navy), #0a172a);
+}
+
+.contact-item,
+.contact-card {
+  border-radius: 13px;
+}
+
+.footer,
+footer {
+  background: #091326;
+}
+
+/* ДОСТУПНІСТЬ */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+/* ПЛАНШЕТИ */
+
+@media (max-width: 950px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .card > img,
+  .card > .placeholder,
+  .card > .image-gallery,
+  .card > .image-gallery > img {
+    height: 205px;
+  }
+}
+
+/* ТЕЛЕФОНИ */
+
+@media (max-width: 600px) {
+  .container {
+    width: calc(100% - 28px);
+  }
+
+  .page-section {
+    padding-block: 38px;
+  }
+
+  body:has(#tours-list) .hero {
+    padding-block: 52px;
+  }
+
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    margin-top: 22px;
+  }
+
+  .card {
+    border-radius: 16px;
+  }
+
+  .card > img,
+  .card > .placeholder,
+  .card > .image-gallery,
+  .card > .image-gallery > img {
+    height: 220px;
+  }
+
+  .card-body {
+    padding: 18px;
+  }
+
+  .card h3,
+  .card h2 {
+    font-size: 20px;
+  }
+
+  .card p {
+    font-size: 14px;
+  }
+
+  .actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .section-bottom .btn {
+    width: 100%;
+  }
+
+  body:has(#catalog-list) .hero {
+    padding-block: 32px;
+  }
+
+  body:has(#catalog-list) main {
+    padding-block: 24px 45px;
+  }
+
+  .toolbar {
+    align-items: stretch;
+  }
+
+  .toolbar input,
+  .toolbar .btn {
+    width: 100%;
+    max-width: none;
+  }
+
+  body:has(#main-content) .hero-photo {
+    border-radius: 16px;
+  }
+
+  body:has(#main-content) .facts {
+    gap: 10px;
+  }
+
+  body:has(#main-content) .fact {
+    padding: 14px;
+  }
+
+  .contact,
+  body:has(#main-content) .contacts {
+    padding-block: 40px;
+  }
+}
+
+/* ЗМЕНШЕННЯ АНІМАЦІЙ ЗА НАЛАШТУВАННЯМИ КОРИСТУВАЧА */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
