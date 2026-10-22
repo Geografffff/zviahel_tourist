@@ -50,7 +50,7 @@ img { max-width: 100%; }
   margin: 0 auto;
 }
 
-section[id], div[id="tourist-map"] {
+section[id], #tourist-map {
   scroll-margin-top: 95px;
 }
 
@@ -126,7 +126,7 @@ section[id], div[id="tourist-map"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: 9px;
   color: #edf2f8;
   text-decoration: none;
@@ -142,7 +142,7 @@ section[id], div[id="tourist-map"] {
   background: rgba(255,255,255,.09);
 }
 
-/* Dropdown menu */
+/* DROPDOWN */
 
 .travel-menu {
   position: relative;
@@ -164,7 +164,6 @@ section[id], div[id="tourist-map"] {
   font-weight: 800;
   white-space: nowrap;
   cursor: pointer;
-  transition: background .2s, border-color .2s;
 }
 
 .travel-menu-button:hover,
@@ -187,7 +186,7 @@ section[id], div[id="tourist-map"] {
   position: absolute;
   top: calc(100% + 13px);
   right: 0;
-  width: 260px;
+  width: 270px;
   padding: 9px;
   border: 1px solid var(--line);
   border-radius: 15px;
@@ -195,6 +194,7 @@ section[id], div[id="tourist-map"] {
   box-shadow: 0 18px 45px rgba(6,19,38,.2);
   visibility: hidden;
   opacity: 0;
+  pointer-events: none;
   transform: translateY(-7px);
   transition: opacity .18s, transform .18s, visibility .18s;
 }
@@ -202,6 +202,7 @@ section[id], div[id="tourist-map"] {
 .travel-dropdown.open {
   visibility: visible;
   opacity: 1;
+  pointer-events: auto;
   transform: translateY(0);
 }
 
@@ -620,7 +621,7 @@ h2 {
   background: #fff;
 }
 
-/* ================= ABOUT / ROUTES ================= */
+/* ================= ABOUT / MAP ================= */
 
 .split {
   display: grid;
@@ -635,6 +636,7 @@ h2 {
   border-radius: var(--radius);
   background: #fff;
   box-shadow: var(--shadow);
+  min-width: 0;
 }
 
 .info-panel h3 {
@@ -663,6 +665,52 @@ h2 {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
+
+/* ================= TOURIST MAP ================= */
+
+.tourist-map {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow);
+  scroll-margin-top: 95px;
+}
+
+.tourist-map-title {
+  margin: 0 0 12px;
+  color: var(--navy);
+  font-size: 25px;
+  line-height: 1.3;
+  font-weight: 900;
+}
+
+.tourist-map-description {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.tourist-map-frame {
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: #e8edf4;
+  box-shadow: var(--shadow);
+}
+
+.tourist-map-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.tourist-map-actions { margin: 15px 0 0; }
 
 /* ================= CONTACTS ================= */
 
@@ -823,6 +871,8 @@ a:focus-visible, button:focus-visible {
     align-items: stretch;
     flex-direction: column;
     gap: 12px;
+    max-height: calc(100dvh - 70px);
+    overflow-y: auto;
     padding: 17px 20px 20px;
     background: var(--navy);
     border-bottom: 2px solid var(--orange);
@@ -916,6 +966,10 @@ a:focus-visible, button:focus-visible {
 
   .contact-list { grid-template-columns: 1fr; }
   .map-frame { height: 290px; }
+  .tourist-map { padding: 15px; }
+  .tourist-map-title { font-size: 22px; }
+  .tourist-map-frame { height: 380px; border-radius: 13px; }
+  .tourist-map-actions .btn { width: 100%; }
 
   .info-panel, .contact-card { padding: 19px; }
   .footer-row { align-items: flex-start; flex-direction: column; }
@@ -952,7 +1006,6 @@ a:focus-visible, button:focus-visible {
 
     <div class="header-right" id="headerRight">
 
-      <!-- ОСНОВНА НАВІГАЦІЯ: ПОТРІБНА ПОСЛІДОВНІСТЬ -->
       <nav class="main-nav" aria-label="Головна навігація">
         <a class="nav-link" href="#home">Головна</a>
         <a class="nav-link" href="#about">Про місто</a>
@@ -962,7 +1015,6 @@ a:focus-visible, button:focus-visible {
         <a class="nav-link" href="#contacts">Контакти</a>
       </nav>
 
-      <!-- ДОДАТКОВІ РОЗДІЛИ -->
       <div class="travel-menu">
         <button
           type="button"
@@ -1137,7 +1189,7 @@ a:focus-visible, button:focus-visible {
     </div>
   </section>
 
-  <!-- ЯК ДІСТАТИСЯ -->
+  <!-- ЯК ДІСТАТИСЯ ТА ТУРИСТИЧНА КАРТА -->
   <section class="page-section alt" id="getting-here">
     <div class="container">
       <div class="eyebrow">Почніть свою подорож</div>
@@ -1172,26 +1224,34 @@ a:focus-visible, button:focus-visible {
           </p>
         </div>
 
-        <!-- ТУРИСТИЧНА КАРТА: ПОСИЛАННЯ НА НЕЇ Є В ОКРЕМОМУ МЕНЮ -->
-        <div id="tourist-map">
+        <!-- ТВОЯ ІНТЕРАКТИВНА GOOGLE MY MAPS -->
+        <div id="tourist-map" class="tourist-map">
           <div class="eyebrow">Досліджуй місто</div>
-          <h3 style="margin:0 0 14px;color:var(--navy)">Туристична карта Звягеля</h3>
+          <h3 class="tourist-map-title">Туристична карта Звягеля</h3>
 
-          <iframe
-            class="map-frame"
-            title="Туристична карта Звягеля"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://maps.google.com/maps?q=Zviahel%2C%20Ukraine&amp;z=13&amp;output=embed"
-          ></iframe>
+          <p class="tourist-map-description">
+            Переглядайте туристичні локації, пам’ятки та цікаві місця Звягеля
+            на інтерактивній карті.
+          </p>
 
-          <p style="margin:12px 0 0">
+          <div class="tourist-map-frame">
+            <iframe
+              src="https://www.google.com/maps/d/u/0/embed?mid=1C2_6c6jSEhzn06ix_72mnmgIPqxzd1k&amp;ehbc=2E312F"
+              title="Інтерактивна туристична карта Звягеля"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+
+          <p class="tourist-map-actions">
             <a
               class="btn secondary"
-              href="https://www.google.com/maps/search/?api=1&amp;query=Zviahel%2C%20Ukraine"
+              href="https://www.google.com/maps/d/u/0/viewer?mid=1C2_6c6jSEhzn06ix_72mnmgIPqxzd1k"
               target="_blank"
-              rel="noopener noreferrer"
-            >Відкрити карту на весь екран ↗</a>
+              rel="noopener noreferrer">
+              Відкрити карту на весь екран ↗
+            </a>
           </p>
         </div>
       </div>
@@ -1275,7 +1335,7 @@ a:focus-visible, button:focus-visible {
 </footer>
 
 <button id="backTop" class="back-top" type="button" aria-label="Повернутися вгору">↑</button>
-<div class="container"><p id="load-status" role="status"></p></div>
+<div class="container"><p id="load-status" role="status" aria-live="polite"></p></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -1304,7 +1364,7 @@ const $ = id => document.getElementById(id);
 
 $("year").textContent = new Date().getFullYear();
 
-/* ================= MOBILE MENU ================= */
+/* ================= MOBILE AND DROPDOWN MENUS ================= */
 
 const menuToggle = $("menuToggle");
 const headerRight = $("headerRight");
@@ -1351,8 +1411,11 @@ document.addEventListener("click", event => {
 
 headerRight.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", () => {
-    if (window.innerWidth <= 990) closeHeaderMenu();
-    else closeTravelDropdown();
+    if (window.innerWidth <= 990) {
+      closeHeaderMenu();
+    } else {
+      closeTravelDropdown();
+    }
   });
 });
 
@@ -1409,11 +1472,7 @@ function safeHttps(value) {
 function setText(id, value) {
   const element = $(id);
 
-  if (
-    element &&
-    typeof value === "string" &&
-    value.trim()
-  ) {
+  if (element && typeof value === "string" && value.trim()) {
     element.textContent = value;
   }
 }
@@ -1693,7 +1752,6 @@ function renderCards(rootId, sourceDocs, type, limit) {
     heading.textContent = data.title || "Без назви";
     body.appendChild(heading);
 
-    /* Метадані екскурсій */
     if (type === "tour") {
       const highlights = document.createElement("div");
       highlights.className = "tour-highlight";
@@ -1709,7 +1767,6 @@ function renderCards(rootId, sourceDocs, type, limit) {
       }
     }
 
-    /* Метадані закладів */
     if (type === "food" || type === "stay") {
       const meta = document.createElement("div");
       meta.className = "meta";
@@ -1753,7 +1810,6 @@ function renderCards(rootId, sourceDocs, type, limit) {
     const actions = document.createElement("div");
     actions.className = "actions";
 
-    /* Детальна сторінка для екскурсій, цікавинок і новин */
     if (["news", "place", "tour"].includes(type)) {
       const section = type === "place" ? "places" :
                       type === "tour" ? "tours" : "news";
@@ -1769,7 +1825,6 @@ function renderCards(rootId, sourceDocs, type, limit) {
       ));
     }
 
-    /* Запис на екскурсію */
     if (type === "tour") {
       const phone = makePhone(data.phone || data.booking);
 
@@ -1780,7 +1835,6 @@ function renderCards(rootId, sourceDocs, type, limit) {
       ));
     }
 
-    /* Заклади харчування та проживання */
     if (type === "food" || type === "stay") {
       const externalLink = safeHttps(data.link);
       const phone = makePhone(data.phone);
@@ -1867,7 +1921,8 @@ db.collection("siteContent").doc("gettingHere").onSnapshot(
   reportError
 );
 
-/* Завантаження опублікованих записів */
+/* ================= PUBLIC CONTENT ================= */
+
 [
   ["places", "places-list", "place", 3],
   ["tours", "tours-list", "tour", 3],
