@@ -25,7 +25,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 120px;
+  scroll-padding-top: 145px;
 }
 
 body {
@@ -50,7 +50,7 @@ input {
 }
 
 /* =========================
-   СУЧАСНА ШАПКА САЙТУ
+   ШАПКА САЙТУ
 ========================= */
 
 header {
@@ -58,8 +58,8 @@ header {
   top: 0;
   z-index: 30;
   color: white;
-  background: rgba(16, 33, 59, 0.97);
-  border-bottom: 2px solid var(--orange);
+  background: rgba(16, 33, 59, 0.98);
+  border-bottom: 3px solid var(--orange);
   box-shadow: 0 8px 28px rgba(5, 17, 36, 0.2);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -67,75 +67,83 @@ header {
 
 .nav {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 18px;
-  padding: 14px 0;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 15px;
+  padding: 13px 0 12px;
 }
 
 .brand {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  color: #fff;
+  align-self: flex-start;
+  gap: 12px;
+  color: white;
   text-decoration: none;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: 0.4px;
-  line-height: 1.3;
 }
 
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 43px;
-  height: 43px;
+  width: 49px;
+  height: 49px;
   flex-shrink: 0;
-  border-radius: 14px;
+  border-radius: 15px;
   background: linear-gradient(135deg, #ff9b42, var(--orange));
-  color: white;
   font-size: 27px;
-  box-shadow: 0 5px 14px #f5822040;
+  box-shadow: 0 5px 16px #f5822040;
   transition: transform 0.25s ease;
 }
 
 .brand:hover .brand-mark {
-  transform: rotate(-10deg) scale(1.06);
+  transform: rotate(-8deg);
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1.25;
 }
 
 .brand-name {
-  display: block;
-  color: #fff;
+  color: white;
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
 }
 
 .brand-name b {
   color: var(--orange);
-  font-weight: 900;
+}
+
+.brand-tagline {
+  color: #cbd5e1;
+  font-size: 12px;
+  letter-spacing: 0.5px;
 }
 
 nav {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 5px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-nav a {
+.nav-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  white-space: nowrap;
+  padding: 9px 12px;
+  border: 1px solid #ffffff20;
+  border-radius: 11px;
+  background: #ffffff08;
   color: #edf3fb;
   text-decoration: none;
   font-size: 12.5px;
   font-weight: 700;
-  padding: 9px 10px;
-  border: 1px solid transparent;
-  border-radius: 10px;
+  white-space: nowrap;
   transition:
     background 0.2s ease,
     color 0.2s ease,
@@ -143,20 +151,23 @@ nav a {
     transform 0.2s ease;
 }
 
-nav a:hover {
-  background: #ffffff12;
-  border-color: #ffffff20;
+.nav-link:hover {
+  background: #ffffff17;
+  border-color: #ffffff45;
   color: #ffb56e;
   transform: translateY(-1px);
 }
 
-nav a:focus-visible,
-.brand:focus-visible {
-  outline: 2px solid var(--orange);
-  outline-offset: 3px;
+.nav-link.nav-primary {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: white;
 }
 
-/* Знаки питання біля інформаційних розділів */
+.nav-link.nav-primary:hover {
+  background: #ff963b;
+  color: white;
+}
 
 .nav-help {
   display: inline-grid;
@@ -166,11 +177,16 @@ nav a:focus-visible,
   flex-shrink: 0;
   border-radius: 50%;
   background: var(--orange);
-  color: #fff;
+  color: white;
   font-size: 12px;
   font-weight: 900;
   line-height: 1;
-  box-shadow: 0 2px 7px #f5822035;
+}
+
+.nav-link:focus-visible,
+.brand:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
 }
 
 /* =========================
@@ -288,7 +304,7 @@ h3 {
   display: grid;
   grid-template-columns: repeat(
     auto-fit,
-    minmax(min(100%, 260px), 1fr)
+    minmax(min(100%, 240px), 1fr)
   );
   gap: 20px;
   margin-top: 25px;
@@ -303,9 +319,7 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 16px;
   box-shadow: 0 7px 24px #10213b0b;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
@@ -592,33 +606,25 @@ h3 {
 }
 
 /* =========================
-   ПЛАНШЕТИ
+   АДАПТИВНІСТЬ
 ========================= */
 
-@media(max-width: 1000px) {
+@media (max-width: 1000px) {
   .nav {
-    justify-content: center;
-  }
-
-  .brand {
-    margin-right: auto;
+    gap: 12px;
   }
 
   nav {
     justify-content: flex-start;
   }
 
-  nav a {
+  .nav-link {
     font-size: 12px;
-    padding: 8px 9px;
+    padding: 8px 10px;
   }
 }
 
-/* =========================
-   МОБІЛЬНІ ПРИСТРОЇ
-========================= */
-
-@media(max-width: 850px) {
+@media (max-width: 850px) {
   .split,
   .contact-layout {
     grid-template-columns: 1fr;
@@ -631,60 +637,59 @@ h3 {
   .page-section {
     padding: 42px 0;
   }
-
-  .nav {
-    gap: 12px;
-  }
-
-  nav {
-    justify-content: flex-start;
-  }
 }
 
-@media(max-width: 560px) {
+@media (max-width: 560px) {
   .container {
     width: calc(100% - 26px);
   }
 
   .nav {
-    align-items: center;
-    gap: 12px;
+    gap: 11px;
     padding: 11px 0;
   }
 
-  .brand {
-    font-size: 14px;
+  .brand-mark {
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    font-size: 24px;
   }
 
-  .brand-mark {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
+  .brand-name {
+    font-size: 18px;
+  }
+
+  .brand-tagline {
+    font-size: 11px;
   }
 
   nav {
     width: 100%;
     flex-wrap: nowrap;
+    overflow-x: auto;
     justify-content: flex-start;
     gap: 7px;
-    overflow-x: auto;
-    padding: 2px 1px 8px;
+    padding: 2px 1px 9px;
     scrollbar-width: thin;
     scrollbar-color: var(--orange) transparent;
   }
 
-  nav a {
+  .nav-link {
     flex-shrink: 0;
     padding: 9px 11px;
     font-size: 12px;
-    background: #ffffff09;
-    border-color: #ffffff12;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .card img,
   .placeholder,
   .image-gallery > img {
-    height: 175px;
+    height: 200px;
   }
 
   .hero p {
@@ -705,9 +710,7 @@ h3 {
   }
 }
 
-/* Зменшення анімацій за налаштуваннями пристрою */
-
-@media(prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
@@ -724,47 +727,50 @@ h3 {
 
 <body>
 
-<!-- =========================
-     ШАПКА САЙТУ
-========================= -->
+<!-- ШАПКА -->
 
 <header>
   <div class="container nav">
 
-    <a class="brand" href="#home"
-       aria-label="Звягель Туристичний — на головну">
+    <a class="brand" href="#home" aria-label="Звягель Туристичний — головна">
+      <span class="brand-mark" aria-hidden="true">🧭</span>
 
-      <span class="brand-mark" aria-hidden="true">✦</span>
-
-      <span class="brand-name">
-        ЗВЯГЕЛЬ <b>ТУРИСТИЧНИЙ</b>
+      <span class="brand-copy">
+        <span class="brand-name">Звягель <b>Туристичний</b></span>
+        <span class="brand-tagline">Відкривай. Досліджуй. Повертайся.</span>
       </span>
-
     </a>
 
     <nav aria-label="Головна навігація">
-      <a href="#home">Головна</a>
-      <a href="#places">Цікавинки</a>
-      <a href="#about">Про місто</a>
-      <a href="#tours">Екскурсії</a>
-      <a href="#news">Новини</a>
+      <a class="nav-link nav-primary" href="#places">
+        <span aria-hidden="true">🏰</span> Цікавинки
+      </a>
 
-      <a href="#food">
-        Де поїсти
+      <a class="nav-link" href="#tours">
+        <span aria-hidden="true">🧭</span> Екскурсії
+      </a>
+
+      <a class="nav-link" href="#food">
+        <span aria-hidden="true">🍽️</span> Де поїсти
         <span class="nav-help" aria-hidden="true">?</span>
       </a>
 
-      <a href="#stay">
-        Де переночувати
+      <a class="nav-link" href="#stay">
+        <span aria-hidden="true">🛏️</span> Де переночувати
         <span class="nav-help" aria-hidden="true">?</span>
       </a>
 
-      <a href="#getting-here">
-        Як дістатися
+      <a class="nav-link" href="#getting-here">
+        <span aria-hidden="true">📍</span> Як дістатися
         <span class="nav-help" aria-hidden="true">?</span>
       </a>
 
-      <a href="#contacts">Контакти</a>
+      <a class="nav-link" href="#news">
+        <span aria-hidden="true">📰</span> Новини
+      </a>
+
+      <a class="nav-link" href="#about">Про місто</a>
+      <a class="nav-link" href="#contacts">Контакти</a>
     </nav>
 
   </div>
@@ -772,13 +778,10 @@ h3 {
 
 <main>
 
-<!-- =========================
-     ГОЛОВНА
-========================= -->
+<!-- ГОЛОВНА -->
 
 <section class="hero" id="home">
   <div class="container">
-
     <div class="eyebrow">Відкрий своє місто</div>
 
     <h1 id="hero-title">
@@ -790,26 +793,16 @@ h3 {
       спадщину Лесі Українки та досліджуйте місто над Случчю.
     </p>
 
-    <a class="btn" href="#tours">
-      Обрати екскурсію ↗
-    </a>
-
-    <a class="btn secondary" href="#getting-here">
-      Спланувати візит
-    </a>
-
+    <a class="btn" href="#tours">Обрати екскурсію ↗</a>
+    <a class="btn secondary" href="#getting-here">Спланувати візит</a>
   </div>
 </section>
 
-<!-- =========================
-     ЦІКАВИНКИ
-========================= -->
+<!-- ЦІКАВИНКИ -->
 
 <section class="page-section" id="places">
   <div class="container">
-
     <div class="eyebrow">Маршрути та відкриття</div>
-
     <h2 id="places-title">Цікавинки Звягеля</h2>
 
     <p class="intro" id="places-intro">
@@ -825,17 +818,13 @@ h3 {
         Усі цікавинки →
       </a>
     </div>
-
   </div>
 </section>
 
-<!-- =========================
-     ПРО МІСТО
-========================= -->
+<!-- ПРО МІСТО -->
 
 <section class="page-section alt" id="about">
   <div class="container split">
-
     <div>
       <div class="eyebrow">Місто з історією</div>
 
@@ -858,19 +847,14 @@ h3 {
         Досліджуй минуле й відкривай нові маршрути.
       </p>
     </div>
-
   </div>
 </section>
 
-<!-- =========================
-     ЕКСКУРСІЇ
-========================= -->
+<!-- ЕКСКУРСІЇ -->
 
 <section class="page-section" id="tours">
   <div class="container">
-
     <div class="eyebrow">Відкривай разом з нами</div>
-
     <h2 id="tours-title">Екскурсії Звягелем</h2>
 
     <p class="intro" id="tours-intro">
@@ -887,19 +871,14 @@ h3 {
         Усі екскурсії →
       </a>
     </div>
-
   </div>
 </section>
 
-<!-- =========================
-     НОВИНИ
-========================= -->
+<!-- НОВИНИ -->
 
 <section class="page-section alt" id="news">
   <div class="container">
-
     <div class="eyebrow">Будьте в курсі</div>
-
     <h2 id="news-title">Новини та оголошення</h2>
 
     <p class="intro" id="news-intro">
@@ -915,19 +894,14 @@ h3 {
         Усі новини →
       </a>
     </div>
-
   </div>
 </section>
 
-<!-- =========================
-     ДЕ ПОЇСТИ
-========================= -->
+<!-- ДЕ ПОЇСТИ -->
 
 <section class="page-section" id="food">
   <div class="container">
-
     <div class="eyebrow">Смак міста</div>
-
     <h2>Де поїсти у Звягелі</h2>
 
     <p class="intro">
@@ -944,19 +918,14 @@ h3 {
         Усі заклади харчування →
       </a>
     </div>
-
   </div>
 </section>
 
-<!-- =========================
-     ДЕ ПЕРЕНОЧУВАТИ
-========================= -->
+<!-- ДЕ ПЕРЕНОЧУВАТИ -->
 
 <section class="page-section alt" id="stay">
   <div class="container">
-
     <div class="eyebrow">Плануйте зупинку</div>
-
     <h2>Де переночувати у Звягелі</h2>
 
     <p class="intro">
@@ -972,25 +941,18 @@ h3 {
         Усі місця проживання →
       </a>
     </div>
-
   </div>
 </section>
 
-<!-- =========================
-     ЯК ДІСТАТИСЯ
-========================= -->
+<!-- ЯК ДІСТАТИСЯ -->
 
 <section class="page-section" id="getting-here">
   <div class="container">
-
     <div class="eyebrow">Почніть свою подорож</div>
-
     <h2>Як дістатися до Звягеля</h2>
 
     <div class="split">
-
       <div class="info-panel">
-
         <h3>Сплануйте маршрут</h3>
 
         <div id="getting-here-text" class="long-text">
@@ -1020,7 +982,6 @@ h3 {
             Побудувати маршрут до Звягеля
           </a>
         </p>
-
       </div>
 
       <iframe
@@ -1029,25 +990,18 @@ h3 {
         loading="lazy"
         src="https://maps.google.com/maps?q=Zviahel%2C%20Ukraine&amp;z=12&amp;output=embed">
       </iframe>
-
     </div>
   </div>
 </section>
 
-<!-- =========================
-     КОНТАКТИ
-========================= -->
+<!-- КОНТАКТИ -->
 
 <section class="contact" id="contacts">
   <div class="container contact-layout">
-
     <div>
-
       <div class="eyebrow">Завітайте до нас</div>
 
-      <h2 id="contacts-title">
-        Контакти туристичного центру
-      </h2>
+      <h2 id="contacts-title">Контакти туристичного центру</h2>
 
       <p id="contact-extra">
         Допоможемо відкрити Звягель, обрати екскурсію
@@ -1055,7 +1009,6 @@ h3 {
       </p>
 
       <div class="contact-list">
-
         <div class="contact-item">
           <strong>Телефон</strong>
           <a id="contact-phone" href="tel:+380673004470">
@@ -1065,9 +1018,7 @@ h3 {
 
         <div class="contact-item">
           <strong>Адреса</strong>
-          <span id="contact-address">
-            вул. Героїв Майдану, 13, Звягель
-          </span>
+          <span id="contact-address">вул. Героїв Майдану, 13, Звягель</span>
         </div>
 
         <div class="contact-item">
@@ -1079,41 +1030,29 @@ h3 {
 
         <div class="contact-item">
           <strong>Графік роботи</strong>
-          <span id="contact-hours">
-            Пн–Пт, 09:00–18:00
-          </span>
+          <span id="contact-hours">Пн–Пт, 09:00–18:00</span>
         </div>
-
       </div>
 
       <div class="social-links">
-
         <a
           class="social-link"
           id="contact-facebook"
           href="https://www.facebook.com/zviaheltouristcentre/"
           target="_blank"
-          rel="noopener">
-          Facebook
-        </a>
+          rel="noopener">Facebook</a>
 
         <a
           class="social-link"
           id="contact-instagram"
           href="https://www.instagram.com/zviahel_tourist_centr/"
           target="_blank"
-          rel="noopener">
-          Instagram
-        </a>
-
+          rel="noopener">Instagram</a>
       </div>
-
     </div>
 
     <div class="contact-card">
-
       <div class="eyebrow">Твоя наступна подорож</div>
-
       <h3>Звягель чекає на тебе!</h3>
 
       <p>
@@ -1122,45 +1061,31 @@ h3 {
         та досліджуй замок.
       </p>
 
-      <a class="btn" href="#tours">
-        Обрати екскурсію →
-      </a>
-
+      <a class="btn" href="#tours">Обрати екскурсію →</a>
     </div>
-
   </div>
 </section>
 
 </main>
 
-<!-- =========================
-     ПІДВАЛ
-========================= -->
+<!-- ПІДВАЛ -->
 
 <footer class="footer">
   <div class="container footer-row">
-
     <div>
       <div class="footer-brand">
         © <span id="year">2026</span> Звягель Туристичний
       </div>
-
       <div class="footer-tagline">
         Відкривай. Досліджуй. Повертайся.
       </div>
     </div>
 
-    <div>
-      Розробка сайту — <strong>Юрій Ігнатов</strong>
-    </div>
-
+    <div>Розробка сайту — <strong>Юрій Ігнатов</strong></div>
   </div>
 </footer>
 
-<button
-  id="backTop"
-  class="back-top"
-  aria-label="Повернутися вгору">
+<button id="backTop" class="back-top" aria-label="Повернутися вгору">
   ↑
 </button>
 
@@ -1168,19 +1093,13 @@ h3 {
   <p id="load-status" role="status"></p>
 </div>
 
-<!-- =========================
-     FIREBASE SDK
-========================= -->
+<!-- FIREBASE SDK -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
 "use strict";
-
-/* =========================
-   НАЛАШТУВАННЯ FIREBASE
-========================= */
 
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
@@ -1197,14 +1116,11 @@ if (!firebase.apps.length) {
 }
 
 const db = firebase.firestore();
-
 const $ = id => document.getElementById(id);
 
 $("year").textContent = new Date().getFullYear();
 
-/* =========================
-   ДОПОМІЖНІ ФУНКЦІЇ
-========================= */
+/* ДОПОМІЖНІ ФУНКЦІЇ */
 
 function safeHttps(value) {
   try {
@@ -1236,9 +1152,7 @@ function setExternalLink(id, value) {
   }
 }
 
-/* =========================
-   ГОЛОВНА СТОРІНКА
-========================= */
+/* ГОЛОВНА СТОРІНКА */
 
 function applyHomepage(data) {
   const t = data.texts || data;
@@ -1265,9 +1179,7 @@ function applyHomepage(data) {
   }
 }
 
-/* =========================
-   ПРО МІСТО
-========================= */
+/* ПРО МІСТО */
 
 function applyAbout(data) {
   setText("about-title", data.title);
@@ -1278,20 +1190,11 @@ function applyAbout(data) {
     [data.text1, data.text2].filter(Boolean).join("\n\n")
   );
 
-  setText(
-    "about-box-title",
-    data.box_title || data.boxTitle
-  );
-
-  setText(
-    "about-box-text",
-    data.box_text || data.boxText
-  );
+  setText("about-box-title", data.box_title || data.boxTitle);
+  setText("about-box-text", data.box_text || data.boxText);
 }
 
-/* =========================
-   КОНТАКТИ
-========================= */
+/* КОНТАКТИ */
 
 function applyContacts(data) {
   setText("contacts-title", data.title);
@@ -1322,9 +1225,7 @@ function applyContacts(data) {
   }
 }
 
-/* =========================
-   ЗАПОВНЮВАЧІ ЗОБРАЖЕНЬ
-========================= */
+/* ЗАПОВНЮВАЧІ ЗОБРАЖЕНЬ */
 
 function placeholder(type) {
   const element = document.createElement("div");
@@ -1342,9 +1243,7 @@ function placeholder(type) {
   return element;
 }
 
-/* =========================
-   СТВОРЕННЯ ПОСИЛАНЬ
-========================= */
+/* СТВОРЕННЯ ПОСИЛАНЬ */
 
 function makeLink(text, href, className) {
   const link = document.createElement("a");
@@ -1361,9 +1260,7 @@ function makeLink(text, href, className) {
   return link;
 }
 
-/* =========================
-   КАРУСЕЛЬ ФОТО
-========================= */
+/* КАРУСЕЛЬ ФОТО */
 
 function createGallery(data, type) {
   const urls = [
@@ -1371,9 +1268,7 @@ function createGallery(data, type) {
       [
         data.image,
         ...(Array.isArray(data.images) ? data.images : [])
-      ]
-        .map(safeHttps)
-        .filter(Boolean)
+      ].map(safeHttps).filter(Boolean)
     )
   ];
 
@@ -1385,7 +1280,6 @@ function createGallery(data, type) {
   gallery.className = "image-gallery";
 
   const image = document.createElement("img");
-
   image.src = urls[0];
   image.alt = (data.title || "Фото") + " — фото 1";
   image.loading = "lazy";
@@ -1408,12 +1302,9 @@ function createGallery(data, type) {
   function update() {
     image.src = urls[active];
     image.alt =
-      (data.title || "Фото") +
-      " — фото " +
-      (active + 1);
+      (data.title || "Фото") + " — фото " + (active + 1);
 
-    count.textContent =
-      (active + 1) + " / " + urls.length;
+    count.textContent = (active + 1) + " / " + urls.length;
   }
 
   function arrow(label, className, step) {
@@ -1447,9 +1338,7 @@ function createGallery(data, type) {
   return gallery;
 }
 
-/* =========================
-   ВІДОБРАЖЕННЯ КАРТОК
-========================= */
+/* ВІДОБРАЖЕННЯ КАРТОК */
 
 function renderCards(rootId, docs, type, limit) {
   const root = $(rootId);
@@ -1468,7 +1357,6 @@ function renderCards(rootId, docs, type, limit) {
 
   if (!docs.length) {
     const paragraph = document.createElement("p");
-
     paragraph.className = "empty";
 
     paragraph.textContent =
@@ -1479,95 +1367,77 @@ function renderCards(rootId, docs, type, limit) {
         : "Інформація незабаром з’явиться. Слідкуйте за оновленнями.";
 
     root.appendChild(paragraph);
-
     return;
   }
 
   docs.forEach(data => {
     const card = document.createElement("article");
-
     card.className = "card";
+
     card.appendChild(createGallery(data, type));
 
     const body = document.createElement("div");
-
     body.className = "card-body";
 
     const heading = document.createElement("h3");
-
     heading.textContent = data.title || "Без назви";
 
     body.appendChild(heading);
 
     if (type === "tour" && data.subtitle) {
       const subtitle = document.createElement("p");
-
       subtitle.textContent = data.subtitle;
-
       body.appendChild(subtitle);
     }
 
     if (["tour", "food", "stay"].includes(type)) {
       const meta = document.createElement("div");
-
       meta.className = "meta";
 
-      const values =
-        type === "tour"
-          ? [
-              ["◷ ", data.duration],
-              ["₴ ", data.price]
-            ]
-          : [
-              ["📍 ", data.address],
-              ["₴ ", data.price],
-              ["◷ ", data.hours]
-            ];
+      const values = type === "tour"
+        ? [["◷ ", data.duration], ["₴ ", data.price]]
+        : [
+            ["📍 ", data.address],
+            ["₴ ", data.price],
+            ["◷ ", data.hours]
+          ];
 
-      values
-        .filter(item => item[1])
-        .forEach(([prefix, value]) => {
-          const chip = document.createElement("span");
-
-          chip.className = "chip";
-          chip.textContent = prefix + value;
-
-          meta.appendChild(chip);
-        });
+      values.filter(item => item[1]).forEach(([prefix, value]) => {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = prefix + value;
+        meta.appendChild(chip);
+      });
 
       if (meta.childNodes.length) {
         body.appendChild(meta);
       }
     }
 
-    const description =
-      type === "news"
-        ? (data.summary || data.body)
-        : data.description;
+    const description = type === "news"
+      ? (data.summary || data.body)
+      : data.description;
 
     if (description) {
       const paragraph = document.createElement("p");
       const string = String(description);
 
-      paragraph.textContent =
-        string.length > 180
-          ? string.slice(0, 177).trimEnd() + "…"
-          : string;
+      paragraph.textContent = string.length > 180
+        ? string.slice(0, 177).trimEnd() + "…"
+        : string;
 
       body.appendChild(paragraph);
     }
 
     const actions = document.createElement("div");
-
     actions.className = "actions";
 
     if (["news", "place", "tour"].includes(type)) {
-      const section =
-        type === "place"
-          ? "places"
-          : type === "tour"
-          ? "tours"
-          : "news";
+      const section = type === "place"
+        ? "places"
+        : type === "tour"
+        ? "tours"
+        : "news";
 
       actions.appendChild(
         makeLink(
@@ -1579,14 +1449,9 @@ function renderCards(rootId, docs, type, limit) {
           "btn secondary"
         )
       );
-
     } else if (safeHttps(data.link)) {
       actions.appendChild(
-        makeLink(
-          "Детальніше ↗",
-          safeHttps(data.link),
-          "btn secondary"
-        )
+        makeLink("Детальніше ↗", safeHttps(data.link), "btn secondary")
       );
     }
 
@@ -1626,27 +1491,17 @@ function renderCards(rootId, docs, type, limit) {
   });
 }
 
-/* =========================
-   КНОПКА ПОВЕРНЕННЯ ВГОРУ
-========================= */
+/* КНОПКА ПОВЕРНЕННЯ ВГОРУ */
 
 $("backTop").onclick = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 window.addEventListener("scroll", () => {
-  $("backTop").classList.toggle(
-    "visible",
-    window.scrollY > 450
-  );
+  $("backTop").classList.toggle("visible", window.scrollY > 450);
 });
 
-/* =========================
-   ПОВІДОМЛЕННЯ ПРО ПОМИЛКИ
-========================= */
+/* ПОВІДОМЛЕННЯ ПРО ПОМИЛКИ */
 
 function reportError(error) {
   console.error("Firebase:", error);
@@ -1656,77 +1511,68 @@ function reportError(error) {
     "Перевірте інтернет і правила Firebase.";
 }
 
-/* =========================
-   ЗАВАНТАЖЕННЯ ТЕКСТІВ FIRESTORE
-========================= */
+/* ЗАВАНТАЖЕННЯ ТЕКСТІВ FIRESTORE */
 
-db.collection("siteContent")
-  .doc("homepage")
-  .onSnapshot(
-    snapshot => {
-      if (snapshot.exists) {
-        applyHomepage(snapshot.data());
-      }
-    },
-    reportError
-  );
+db.collection("siteContent").doc("homepage").onSnapshot(
+  snapshot => {
+    if (snapshot.exists) {
+      applyHomepage(snapshot.data());
+    }
+  },
+  reportError
+);
 
-db.collection("siteContent")
-  .doc("about")
-  .onSnapshot(
-    snapshot => {
-      if (snapshot.exists) {
-        applyAbout(snapshot.data());
-      }
-    },
-    reportError
-  );
+db.collection("siteContent").doc("about").onSnapshot(
+  snapshot => {
+    if (snapshot.exists) {
+      applyAbout(snapshot.data());
+    }
+  },
+  reportError
+);
 
-db.collection("siteContent")
-  .doc("contacts")
-  .onSnapshot(
-    snapshot => {
-      if (snapshot.exists) {
-        applyContacts(snapshot.data());
-      }
-    },
-    reportError
-  );
+db.collection("siteContent").doc("contacts").onSnapshot(
+  snapshot => {
+    if (snapshot.exists) {
+      applyContacts(snapshot.data());
+    }
+  },
+  reportError
+);
 
-db.collection("siteContent")
-  .doc("gettingHere")
-  .onSnapshot(
-    snapshot => {
-      if (!snapshot.exists) return;
+db.collection("siteContent").doc("gettingHere").onSnapshot(
+  snapshot => {
+    if (!snapshot.exists) return;
 
-      const data = snapshot.data();
+    const data = snapshot.data();
 
-      setText("getting-here-text", data.body);
+    setText("getting-here-text", data.body);
 
-      const map = safeHttps(data.mapLink);
-      const directions = safeHttps(data.directionsLink);
+    const map = safeHttps(data.mapLink);
+    const directions = safeHttps(data.directionsLink);
 
-      if (map) {
-        $("google-map-link").href = map;
-      }
+    if (map) {
+      $("google-map-link").href = map;
+    }
 
-      if (directions) {
-        $("directions-link").href = directions;
-      }
-    },
-    reportError
-  );
+    if (directions) {
+      $("directions-link").href = directions;
+    }
+  },
+  reportError
+);
 
-/* =========================
-   ЗАВАНТАЖЕННЯ КОЛЕКЦІЙ
-========================= */
+/* ЗАВАНТАЖЕННЯ КОЛЕКЦІЙ
+   Головна показує лише обмежену кількість записів.
+   Решта залишається доступною в каталогах.
+*/
 
 [
-  ["places", "places-list", "place", 6],
-  ["tours", "tours-list", "tour", 6],
+  ["places", "places-list", "place", 4],
+  ["tours", "tours-list", "tour", 4],
   ["news", "news-list", "news", 3],
-  ["food", "food-list", "food", 6],
-  ["stay", "stay-list", "stay", 3]
+  ["food", "food-list", "food", 4],
+  ["stay", "stay-list", "stay", 4]
 ].forEach(([collection, root, type, limit]) => {
   db.collection(collection)
     .where("published", "==", true)
