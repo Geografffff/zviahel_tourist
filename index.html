@@ -27,7 +27,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 105px;
+  scroll-padding-top: 125px;
 }
 
 body {
@@ -41,13 +41,13 @@ a { color: inherit; }
 button, input { font: inherit; }
 .container { width: min(1160px, 92%); margin: auto; }
 
-/* ШАПКА ТА МЕНЮ */
+/* ШАПКА */
 
 header {
   position: sticky;
   top: 0;
   z-index: 50;
-  color: var(--white);
+  color: white;
   background: var(--navy);
   box-shadow: 0 4px 22px #07132625;
 }
@@ -73,11 +73,13 @@ header {
 
 .brand span { color: var(--orange); }
 
+/* СУЧАСНІ КНОПКИ МЕНЮ */
+
 nav {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 5px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
@@ -85,33 +87,49 @@ nav a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 9px 11px;
+  min-height: 39px;
+  padding: 9px 12px;
   color: #f1f4f9;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
   font-size: 13px;
   font-weight: 650;
   text-decoration: none;
-  border: 1px solid transparent;
-  border-radius: 9px;
-  transition: background .2s, color .2s, border-color .2s;
+  white-space: nowrap;
+  transition: background .2s, color .2s, border-color .2s, transform .2s;
 }
 
-nav a:hover,
+nav a:hover {
+  color: white;
+  background: #ffffff12;
+  border-color: #ffffff25;
+  transform: translateY(-1px);
+}
+
 nav a.active {
   color: var(--orange-light);
-  background: #ffffff10;
-  border-color: #ffffff18;
+  background: #ffffff0d;
+  border-color: #ffffff20;
 }
 
+/* Карта не підсвічується постійно помаранчевим */
 nav a.nav-map {
   color: white;
+  background: #1c385d;
+  border-color: #49617f;
+}
+
+nav a.nav-map:hover {
+  color: var(--navy);
   background: var(--orange);
   border-color: var(--orange);
 }
 
-nav a.nav-map:hover {
-  color: white;
-  background: #dc6b0e;
-  border-color: #dc6b0e;
+nav a:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
 }
 
 /* КНОПКИ */
@@ -145,7 +163,7 @@ nav a.nav-map:hover {
 
 .btn.secondary {
   color: var(--navy);
-  background: #fff;
+  background: white;
   border-color: var(--line);
 }
 
@@ -161,9 +179,7 @@ nav a.nav-map:hover {
   border-color: #ffffff80;
 }
 
-.btn.outline:hover {
-  background: #ffffff12;
-}
+.btn.outline:hover { background: #ffffff12; }
 
 /* ГОЛОВНИЙ ЕКРАН */
 
@@ -287,8 +303,6 @@ h2 {
   line-height: 1.3;
 }
 
-/* ОДНАКОВА ВИСОТА ОПИСІВ */
-
 .card-body > p {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -368,7 +382,6 @@ h2 {
 }
 
 .contact-section .eyebrow { color: var(--orange-light); }
-
 .contact-section h2 { color: white; }
 
 .contact-intro {
@@ -448,7 +461,7 @@ h2 {
 
 .contact-card .btn { margin-top: 12px; }
 
-/* КАРТА БІЛЬШЕ НЕ ВБУДОВАНА В ГОЛОВНУ */
+/* ОКРЕМА СТОРІНКА КАРТИ */
 
 .map-promo {
   padding: 30px;
@@ -464,7 +477,7 @@ h2 {
 /* ПІДВАЛ */
 
 .footer {
-  padding: 24px 0;
+  padding: 30px 0 24px;
   color: #d6dce5;
   background: #091326;
   font-size: 14px;
@@ -473,9 +486,21 @@ h2 {
 .footer-row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 12px;
 }
+
+.footer-developer {
+  margin: 18px 0 0;
+  padding-top: 17px;
+  border-top: 1px solid #ffffff20;
+  color: #b9c4d4;
+  text-align: center;
+  font-size: 13px;
+}
+
+.footer-developer strong { color: var(--orange-light); }
 
 .empty {
   padding: 18px 0;
@@ -519,14 +544,16 @@ h2 {
 
 /* АДАПТИВНІСТЬ */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .nav {
     align-items: flex-start;
     flex-direction: column;
   }
 
   nav { justify-content: flex-start; }
+}
 
+@media (max-width: 900px) {
   .split,
   .contact-grid {
     grid-template-columns: 1fr;
@@ -534,6 +561,8 @@ h2 {
 }
 
 @media (max-width: 560px) {
+  html { scroll-padding-top: 170px; }
+
   .hero {
     min-height: 360px;
     padding: 58px 0;
@@ -549,7 +578,6 @@ h2 {
   .hero-actions .btn { width: 100%; }
 
   .page-section { padding: 45px 0; }
-
   .cards { grid-template-columns: 1fr; }
 
   .card img,
@@ -559,23 +587,29 @@ h2 {
   }
 
   .contact-section { padding: 48px 0; }
-
   .contact-card { padding: 19px; }
 
-  nav { gap: 4px; }
+  nav { gap: 5px; }
 
   nav a {
+    min-height: 35px;
     padding: 7px 9px;
     font-size: 12px;
   }
 
   .tour-actions { flex-direction: column; }
-
   .tour-actions .btn { width: 100%; }
 
   .back-top {
     right: 14px;
     bottom: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
   }
 }
 </style>
@@ -595,6 +629,7 @@ h2 {
       <a href="#news">Новини</a>
       <a href="#food">Де поїсти</a>
       <a href="#stay">Де переночувати</a>
+      <a href="#getting-here">Як дістатися?</a>
       <a href="map.html" class="nav-map">Карта міста ↗</a>
       <a href="#contacts">Контакти</a>
     </nav>
@@ -606,18 +641,16 @@ h2 {
 <section class="hero" id="home">
   <div class="container">
     <div class="eyebrow">Відкрий своє місто</div>
-
     <h1 id="hero-title">Звягель — місто історії, легенд і відкриттів</h1>
-
     <p id="hero-subtitle">
       Відчуйте атмосферу стародавнього Возвягля, відкрийте спадщину
       Лесі Українки та вирушайте досліджувати місто над Случчю.
     </p>
-
     <div class="hero-actions">
       <a class="btn" href="#tours">Обрати екскурсію ↗</a>
       <a class="btn outline" href="#contacts">Спланувати візит</a>
       <a class="btn outline" href="map.html">Туристична карта ↗</a>
+      <a class="btn outline" href="#getting-here">Як дістатися? ↗</a>
     </div>
   </div>
 </section>
@@ -633,7 +666,6 @@ h2 {
         </p>
       </div>
     </div>
-
     <div id="places-list" class="cards">
       <p class="empty">Завантаження…</p>
     </div>
@@ -645,14 +677,12 @@ h2 {
     <div>
       <div class="eyebrow">Місто з історією</div>
       <h2 id="about-title">Звягель — більше, ніж точка на карті</h2>
-
       <div id="about-text" class="long-text">
         Звягель має багату історію, археологічну спадщину та особливу
         атмосферу на берегах річки Случ. Місто тісно пов’язане з іменем
         Лесі Українки та родиною Косачів.
       </div>
     </div>
-
     <div class="info-panel">
       <h3 id="about-box-title">Відчуй код Звягеля</h3>
       <p id="about-box-text">
@@ -670,7 +700,6 @@ h2 {
     <p class="intro" id="tours-intro">
       Обирайте маршрут, дізнавайтеся подробиці та записуйтеся до туристичного центру.
     </p>
-
     <div id="tours-list" class="cards">
       <p class="empty">Завантаження…</p>
     </div>
@@ -684,7 +713,6 @@ h2 {
     <p class="intro" id="news-intro">
       Новини туристичного центру та події міста.
     </p>
-
     <div id="news-list" class="cards">
       <p class="empty">Завантаження…</p>
     </div>
@@ -699,7 +727,6 @@ h2 {
       Добірка закладів харчування для туристів. Перед візитом уточнюйте
       графік роботи та наявність місць.
     </p>
-
     <div id="food-list" class="cards">
       <p class="empty">Інформація завантажується…</p>
     </div>
@@ -713,7 +740,6 @@ h2 {
     <p class="intro">
       Готелі, садиби та інші варіанти розміщення для короткої або тривалішої подорожі.
     </p>
-
     <div id="stay-list" class="cards">
       <p class="empty">Інформація завантажується…</p>
     </div>
@@ -728,7 +754,6 @@ h2 {
     <div class="split">
       <div class="info-panel">
         <h3>Сплануйте маршрут</h3>
-
         <div id="getting-here-text" class="long-text">
           Звягель розташований у Житомирській області на важливому
           транспортному напрямку Київ—Чоп. Ви можете спланувати поїздку
@@ -772,7 +797,6 @@ h2 {
   <div class="container">
     <div class="eyebrow">Ми допоможемо спланувати візит</div>
     <h2 id="contacts-title">Контакти туристичного центру</h2>
-
     <p class="contact-intro">
       Потрібна екскурсія, рекомендація маршруту або туристична інформація?
       Звертайтеся до Звягельського туристичного центру.
@@ -852,16 +876,21 @@ h2 {
 </main>
 
 <footer class="footer">
-  <div class="container footer-row">
-    <span>© <span id="year"></span> Звягель Туристичний</span>
-    <span>Відкривай. Досліджуй. Повертайся.</span>
+  <div class="container">
+    <div class="footer-row">
+      <span>© <span id="year"></span> Звягель Туристичний</span>
+      <span>Відкривай. Досліджуй. Повертайся.</span>
+    </div>
+    <p class="footer-developer">
+      Розробник — <strong>Ігнатов Юрій</strong>
+    </p>
   </div>
 </footer>
 
 <button id="backTop" class="back-top"
         aria-label="Повернутися вгору" title="Повернутися вгору">↑</button>
 
-<div class="container"><p id="load-status"></p></div>
+<div class="container"><p id="load-status" role="status"></p></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -960,7 +989,7 @@ function applyContacts(d) {
 
   for (const key of ["facebook", "instagram"]) {
     const url = safeHttps(d[key]);
-    let el = $("contact-" + key);
+    const el = $("contact-" + key);
 
     if (url && el) {
       el.href = url;
@@ -1094,6 +1123,7 @@ function renderCards(id, docs, type) {
   });
 }
 
+/* Кнопка повернення вгору */
 $("backTop").addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
@@ -1102,6 +1132,7 @@ window.addEventListener("scroll", () => {
   $("backTop").classList.toggle("visible", window.scrollY > 450);
 });
 
+/* Активний пункт меню для переходів усередині сторінки */
 document.querySelectorAll('nav a[href^="#"]').forEach(a => {
   a.addEventListener("click", () => {
     document.querySelectorAll("nav a").forEach(n => n.classList.remove("active"));
@@ -1109,27 +1140,32 @@ document.querySelectorAll('nav a[href^="#"]').forEach(a => {
   });
 });
 
+/* Показ помилок Firebase */
 function showError(err) {
   console.error(err);
   $("load-status").textContent =
     "Не вдалося завантажити частину інформації. Перевірте інтернет або правила Firebase.";
 }
 
+/* Контент головної */
 db.collection("siteContent").doc("homepage").onSnapshot(
   s => { if (s.exists) applyHomepage(s.data()); },
   showError
 );
 
+/* Про місто */
 db.collection("siteContent").doc("about").onSnapshot(
   s => { if (s.exists) applyAbout(s.data()); },
   showError
 );
 
+/* Контакти */
 db.collection("siteContent").doc("contacts").onSnapshot(
   s => { if (s.exists) applyContacts(s.data()); },
   showError
 );
 
+/* Опубліковані картки */
 for (const [collection, id, type] of [
   ["places", "places-list", "place"],
   ["tours", "tours-list", "tour"],
@@ -1145,6 +1181,7 @@ for (const [collection, id, type] of [
     );
 }
 
+/* Як дістатися */
 db.collection("siteContent").doc("gettingHere").onSnapshot(
   s => {
     if (!s.exists) return;
@@ -1161,5 +1198,6 @@ db.collection("siteContent").doc("gettingHere").onSnapshot(
   showError
 );
 </script>
+
 </body>
 </html>
