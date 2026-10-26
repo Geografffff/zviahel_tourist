@@ -501,7 +501,7 @@ h2 {
   border-color: #c8d4e4;
 }
 
-.card-media {
+.card- {
   position: relative;
   height: 225px;
   flex: 0 0 225px;
@@ -509,7 +509,7 @@ h2 {
   background: #e8edf4;
 }
 
-.card-media > img {
+.card- > img {
   display: block;
   width: 100%;
   height: 100%;
@@ -517,7 +517,7 @@ h2 {
   transition: transform .45s;
 }
 
-.card:hover .card-media > img { transform: scale(1.045); }
+.card:hover .card- > img { transform: scale(1.045); }
 
 .placeholder {
   display: grid;
@@ -1045,8 +1045,10 @@ a:focus-visible, button:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-   { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition: none !important;
+  }
 }
 </style>
 </head>
