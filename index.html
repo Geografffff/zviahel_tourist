@@ -3,472 +3,497 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
+  <meta name="google-site-verification" content="rZidPNN04t6GRkpQRoJasrBDBTz6qnTvP15AY2LW8cY">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#10213b">
+  <meta name="description" content="Звягель Туристичний — екскурсії, історія міста, спадщина Лесі Українки, туристична карта та маршрути.">
 
-  <title>Звягель Туристичний — відкрий місто для себе</title>
-  <meta
-    name="description"
-    content="Відкрийте Звягель: історичні пам'ятки, екскурсії, місця Лесі Українки, туристична карта, заклади харчування та проживання."
-  >
-
-  <meta name="google-site-verification" content="">
+  <title>Звягель Туристичний — відкрий місто</title>
 
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <!-- ================= HEADER ================= -->
-  <header class="site-header">
-    <div class="header-inner">
+<header class="site-header">
+  <div class="container header-inner">
 
-      <a class="brand" href="#home" aria-label="Звягель Туристичний — головна">
-        <span class="brand-mark">З</span>
-        <span class="brand-text">
-          <strong>ЗВЯГЕЛЬ</strong>
-          <small>ТУРИСТИЧНИЙ</small>
-        </span>
-      </a>
+    <a class="brand" href="#home" aria-label="Звягель Туристичний — головна">
+      <span class="brand-mark">🧭</span>
+      <span class="brand-name">
+        ЗВЯГЕЛЬ
+        <span>ТУРИСТИЧНИЙ</span>
+      </span>
+    </a>
 
-      <button
-        class="menu-toggle"
-        id="menuToggle"
-        type="button"
-        aria-label="Відкрити меню"
-        aria-controls="headerRight"
-        aria-expanded="false"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+      aria-label="Відкрити меню"
+      aria-expanded="false"
+      aria-controls="headerRight"
+    >☰</button>
 
-      <nav class="header-right" id="headerRight" aria-label="Головна навігація">
+    <div class="header-right" id="headerRight">
 
+      <nav class="main-nav" aria-label="Головна навігація">
         <a class="nav-link" href="#home">Головна</a>
         <a class="nav-link" href="#about">Про місто</a>
         <a class="nav-link" href="#tours">Екскурсії</a>
         <a class="nav-link" href="#places">Цікавинки</a>
         <a class="nav-link" href="#news">Новини</a>
-
-        <div class="travel-menu">
-          <button
-            id="travelMenuButton"
-            class="travel-menu-button"
-            type="button"
-            aria-expanded="false"
-            aria-controls="travelDropdown"
-          >
-            Мандрівникам
-            <span aria-hidden="true">⌄</span>
-          </button>
-
-          <div class="travel-dropdown" id="travelDropdown">
-            <a href="#food">Де поїсти?</a>
-            <a href="#stay">Де переночувати?</a>
-            <a href="#getting-here">Як дістатися?</a>
-            <a href="#tourist-map">Туристична карта</a>
-          </div>
-        </div>
-
         <a class="nav-link" href="#contacts">Контакти</a>
       </nav>
 
+      <div class="travel-menu">
+        <button
+          type="button"
+          class="travel-menu-button"
+          id="travelMenuButton"
+          aria-expanded="false"
+          aria-controls="travelDropdown"
+        >
+          ☰ Для мандрівника <span class="chevron">⌄</span>
+        </button>
+
+        <div class="travel-dropdown" id="travelDropdown">
+          <a href="#food">
+            <span class="dropdown-icon">🍽️</span>
+            <span>Де поїсти?</span>
+          </a>
+          <a href="#stay">
+            <span class="dropdown-icon">🛏️</span>
+            <span>Де переночувати?</span>
+          </a>
+          <a href="#getting-here">
+            <span class="dropdown-icon">🚌</span>
+            <span>Як дістатися?</span>
+          </a>
+          <a href="#tourist-map">
+            <span class="dropdown-icon">🗺️</span>
+            <span>Туристична карта</span>
+          </a>
+        </div>
+      </div>
+
     </div>
-  </header>
+  </div>
+</header>
 
-  <main>
+<main>
 
-    <!-- ================= HERO ================= -->
-    <section class="hero" id="home">
-      <div class="hero-overlay"></div>
+  <!-- ГОЛОВНА -->
+  <section class="hero" id="home">
+    <div class="container hero-content">
 
-      <div class="hero-content">
-        <span class="hero-eyebrow">Мандруй. Відкривай. Відчувай.</span>
+      <div class="eyebrow">Твоя наступна подорож починається тут</div>
 
-        <h1 id="hero-title">
-          Звягель — місто історії, легенд і відкриттів
-        </h1>
+      <h1 id="hero-title">
+        Звягель — місто історії, легенд і відкриттів
+      </h1>
 
-        <p id="hero-subtitle">
-          Відкрий місто Лесі Українки, стародавніх мурів і дзвонів.
-          Знайди власний маршрут та історію, яку захочеться розповісти.
+      <p id="hero-subtitle">
+        Відчуйте атмосферу літописного Возвягля, відкрийте спадщину
+        Лесі Українки та досліджуйте місто над Случчю.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn" href="#tours">Обрати екскурсію ↗</a>
+        <a class="btn secondary" href="#places">Відкрити місто</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ПРО МІСТО -->
+  <section class="page-section alt" id="about">
+    <div class="container split">
+
+      <div>
+        <div class="eyebrow">Місто з історією</div>
+
+        <h2 id="about-title">
+          Звягель — місто з глибоким корінням
+        </h2>
+
+        <div id="about-text" class="long-text">
+          Звягель має багату історію, археологічну спадщину та особливу
+          атмосферу на берегах річки Случ. Місто пов’язане з іменем
+          Лесі Українки та родиною Косачів.
+        </div>
+      </div>
+
+      <div class="info-panel">
+        <h3 id="about-box-title">Відчуй код Звягеля</h3>
+
+        <p id="about-box-text">
+          Археологія, слово, сила та пам’ять. Досліджуй минуле
+          й відкривай нові маршрути.
         </p>
 
-        <div class="hero-buttons">
-          <a class="btn btn-primary" href="#tours">
-            Обрати екскурсію
-          </a>
-
-          <a class="btn btn-outline" href="#places">
-            Відкрити місто
-          </a>
-        </div>
+        <a class="btn secondary" href="#places">
+          Досліджувати місто →
+        </a>
       </div>
 
-      <a class="hero-scroll" href="#about" aria-label="Прокрутити до розділу Про місто">
-        <span aria-hidden="true">↓</span>
-      </a>
-    </section>
+    </div>
+  </section>
 
-    <!-- ================= ABOUT ================= -->
-    <section class="section about-section" id="about">
-      <div class="container">
+  <!-- ЕКСКУРСІЇ -->
+  <section class="page-section" id="tours">
+    <div class="container">
 
-        <div class="section-heading">
-          <span class="section-kicker">Знайомство з містом</span>
-          <h2 id="about-title">Звягель — місто з характером</h2>
-        </div>
+      <div class="section-heading">
+        <div class="heading-copy">
+          <div class="eyebrow">Відкривай разом з нами</div>
 
-        <div class="about-grid">
-          <div class="about-main">
-            <p id="about-text">
-              Звягель — місто з глибокою історією, мальовничими краєвидами
-              річки Случ і нерозривним зв'язком з іменем Лесі Українки.
-              Тут минуле зустрічається із сучасністю, а кожна вулиця
-              приховує власну історію.
-            </p>
-          </div>
-
-          <div class="about-box">
-            <h3 id="about-box-title">Відчуй справжній Звягель</h3>
-            <p id="about-box-text">
-              Відкривай стародавній Возвягль, знайомся з культурною
-              спадщиною та вирушай у подорож містом, яке має що розповісти.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ================= TOURS ================= -->
-    <section class="section section-alt" id="tours">
-      <div class="container">
-
-        <div class="section-heading">
-          <span class="section-kicker">Подорожуй з нами</span>
           <h2 id="tours-title">Екскурсії Звягелем</h2>
-          <p id="tours-intro">
-            Обирай маршрут, знайомся з історією міста та відкривай
-            його маловідомі сторінки разом із місцевими гідами.
+
+          <p class="intro" id="tours-intro">
+            Обирайте маршрут, дізнавайтеся подробиці та записуйтеся
+            до туристичного центру.
           </p>
         </div>
 
-        <div class="cards-grid" id="tours-list">
-          <p class="loading-message">Завантажуємо екскурсії...</p>
-        </div>
-
-        <div class="section-action">
-          <a class="btn btn-primary" href="catalog.html?section=tours">
-            Усі екскурсії
-          </a>
-        </div>
-
+        <a class="section-top-link" href="catalog.html?section=tours">
+          Усі екскурсії <span aria-hidden="true">→</span>
+        </a>
       </div>
-    </section>
 
-    <!-- ================= PLACES ================= -->
-    <section class="section" id="places">
-      <div class="container">
+      <div id="tours-list" class="cards">
+        <p class="empty">Завантаження екскурсій…</p>
+      </div>
 
-        <div class="section-heading">
-          <span class="section-kicker">Місця, які варто побачити</span>
+    </div>
+  </section>
+
+  <!-- ЦІКАВИНКИ -->
+  <section class="page-section alt" id="places">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="heading-copy">
+          <div class="eyebrow">Маршрути та відкриття</div>
+
           <h2 id="places-title">Цікавинки Звягеля</h2>
-          <p id="places-intro">
-            Історичні пам'ятки, культурні локації та місця,
-            які допоможуть відкрити місто з нового боку.
+
+          <p class="intro" id="places-intro">
+            Історичні пам’ятки, культурні місця та особливі куточки міста.
           </p>
         </div>
 
-        <div class="cards-grid" id="places-list">
-          <p class="loading-message">Завантажуємо туристичні місця...</p>
-        </div>
-
-        <div class="section-action">
-          <a class="btn btn-primary" href="catalog.html?section=places">
-            Усі туристичні місця
-          </a>
-        </div>
-
+        <a class="section-top-link" href="catalog.html?section=places">
+          Усі цікавинки <span aria-hidden="true">→</span>
+        </a>
       </div>
-    </section>
 
-    <!-- ================= NEWS ================= -->
-    <section class="section section-alt" id="news">
-      <div class="container">
-
-        <div class="section-heading">
-          <span class="section-kicker">Будь у курсі</span>
-          <h2 id="news-title">Новини та події</h2>
-          <p id="news-intro">
-            Туристичні новини, культурні заходи та події,
-            заради яких варто завітати до Звягеля.
-          </p>
-        </div>
-
-        <div class="cards-grid" id="news-list">
-          <p class="loading-message">Завантажуємо новини...</p>
-        </div>
-
-        <div class="section-action">
-          <a class="btn btn-primary" href="catalog.html?section=news">
-            Усі новини
-          </a>
-        </div>
-
+      <div id="places-list" class="cards">
+        <p class="empty">Завантаження цікавинок…</p>
       </div>
-    </section>
 
-    <!-- ================= FOOD ================= -->
-    <section class="section" id="food">
-      <div class="container">
+    </div>
+  </section>
 
-        <div class="section-heading">
-          <span class="section-kicker">Смаки міста</span>
-          <h2>Де поїсти?</h2>
-          <p>
-            Кафе, ресторани та інші заклади, де можна перепочити
-            й познайомитися зі смаками Звягеля.
+  <!-- НОВИНИ -->
+  <section class="page-section" id="news">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="heading-copy">
+          <div class="eyebrow">Будьте в курсі</div>
+
+          <h2 id="news-title">Новини та оголошення</h2>
+
+          <p class="intro" id="news-intro">
+            Новини туристичного центру та події міста.
           </p>
         </div>
 
-        <div class="cards-grid" id="food-list">
-          <p class="loading-message">Завантажуємо заклади харчування...</p>
-        </div>
-
-        <div class="section-action">
-          <a class="btn btn-primary" href="catalog.html?section=food">
-            Усі заклади харчування
-          </a>
-        </div>
-
+        <a class="section-top-link" href="catalog.html?section=news">
+          Усі новини <span aria-hidden="true">→</span>
+        </a>
       </div>
-    </section>
 
-    <!-- ================= STAY ================= -->
-    <section class="section section-alt" id="stay">
-      <div class="container">
-
-        <div class="section-heading">
-          <span class="section-kicker">Залишайся довше</span>
-          <h2>Де переночувати?</h2>
-          <p>
-            Варіанти проживання для мандрівників, які хочуть
-            побачити більше й провести у Звягелі більше часу.
-          </p>
-        </div>
-
-        <div class="cards-grid" id="stay-list">
-          <p class="loading-message">Завантажуємо місця проживання...</p>
-        </div>
-
-        <div class="section-action">
-          <a class="btn btn-primary" href="catalog.html?section=stay">
-            Усі варіанти проживання
-          </a>
-        </div>
-
+      <div id="news-list" class="cards">
+        <p class="empty">Завантаження новин…</p>
       </div>
-    </section>
 
-    <!-- ================= GETTING HERE ================= -->
-    <section class="section" id="getting-here">
-      <div class="container">
+    </div>
+  </section>
 
-        <div class="section-heading">
-          <span class="section-kicker">Плануй подорож</span>
-          <h2>Як дістатися?</h2>
+  <!-- ДЕ ПОЇСТИ -->
+  <section class="page-section alt" id="food">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="heading-copy">
+          <div class="eyebrow">Смак міста</div>
+
+          <h2>Де поїсти у Звягелі</h2>
+
+          <p class="intro">
+            Заклади харчування для туристів. Перед візитом уточнюйте графік роботи.
+          </p>
         </div>
 
-        <div class="getting-here-content">
-          <p id="getting-here-text">
-            Звягель розташований у Житомирській області, неподалік
-            міжнародної автодороги Київ — Чоп. Дістатися міста можна
-            автомобілем або автобусом. Перед поїздкою перевіряйте
-            актуальний розклад транспорту.
-          </p>
+        <a class="section-top-link" href="catalog.html?section=food">
+          Усі заклади <span aria-hidden="true">→</span>
+        </a>
+      </div>
 
-          <div class="getting-here-actions">
+      <div id="food-list" class="cards">
+        <p class="empty">Завантаження закладів…</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ДЕ ПЕРЕНОЧУВАТИ -->
+  <section class="page-section" id="stay">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="heading-copy">
+          <div class="eyebrow">Плануйте зупинку</div>
+
+          <h2>Де переночувати у Звягелі</h2>
+
+          <p class="intro">
+            Готелі та інші варіанти розміщення для вашої подорожі.
+          </p>
+        </div>
+
+        <a class="section-top-link" href="catalog.html?section=stay">
+          Усі місця проживання <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div id="stay-list" class="cards">
+        <p class="empty">Завантаження місць проживання…</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ЯК ДІСТАТИСЯ -->
+  <section class="page-section alt" id="getting-here">
+    <div class="container">
+
+      <div class="eyebrow">Почніть свою подорож</div>
+      <h2>Як дістатися до Звягеля</h2>
+
+      <div class="split">
+
+        <div class="info-panel">
+          <h3>Сплануйте маршрут</h3>
+
+          <div id="getting-here-text" class="long-text">
+            Звягель розташований у Житомирській області на важливому
+            транспортному напрямку Київ—Чоп. Перед виїздом перевірте
+            актуальний розклад транспорту та дорожню ситуацію.
+          </div>
+
+          <p style="margin-top:20px">
             <a
-              class="btn btn-primary"
-              id="getting-here-map-link"
-              href="https://www.google.com/maps/search/?api=1&query=Звягель"
+              class="btn"
+              id="google-map-link"
+              href="https://www.google.com/maps/search/?api=1&amp;query=Zviahel%2C%20Ukraine"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Знайти Звягель на карті
+              Відкрити Google Maps ↗
             </a>
+          </p>
 
+          <p>
             <a
-              class="btn btn-outline-dark"
-              id="getting-here-directions-link"
-              href="https://www.google.com/maps/dir/?api=1&destination=Звягель"
+              id="directions-link"
+              href="https://www.google.com/maps/dir/?api=1&amp;destination=Zviahel%2C%20Ukraine"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Побудувати маршрут
+              Побудувати маршрут до Звягеля
             </a>
-          </div>
+          </p>
         </div>
 
-      </div>
-    </section>
+        <!-- ТУРИСТИЧНА КАРТА -->
+        <div id="tourist-map" class="tourist-map">
 
-    <!-- ================= TOURIST MAP ================= -->
-    <section class="section section-alt" id="tourist-map">
-      <div class="container">
+          <div class="eyebrow">Досліджуй місто</div>
 
-        <div class="section-heading">
-          <span class="section-kicker">Звягель у твоїй кишені</span>
-          <h2>Туристична карта міста</h2>
+          <h3 class="tourist-map-title">
+            Туристична карта Звягеля
+          </h3>
+
+          <p class="tourist-map-description">
+            Переглядайте туристичні локації, пам’ятки та цікаві місця
+            Звягеля на інтерактивній карті.
+          </p>
+
+          <div class="tourist-map-frame">
+            <iframe
+              src="https://www.google.com/maps/d/u/0/embed?mid=1C2_6c6jSEhzn06ix_72mnmgIPqxzd1k&amp;ehbc=2E312F"
+              title="Інтерактивна туристична карта Звягеля"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+
+          <p class="tourist-map-actions">
+            <a
+              class="btn secondary"
+              href="https://www.google.com/maps/d/u/0/viewer?mid=1C2_6c6jSEhzn06ix_72mnmgIPqxzd1k"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Відкрити карту на весь екран ↗
+            </a>
+          </p>
+
           <p>
-            Знаходь туристичні локації та плануй власний маршрут
-            за допомогою інтерактивної карти.
+            <a href="design-map.html">
+              Окрема сторінка туристичної карти
+            </a>
           </p>
-        </div>
 
-        <div class="map-container">
-          <iframe
-            src="https://www.google.com/maps/d/embed?mid=1C2_6c6jSEhzn06ix_72mnmgIPqxzd1k"
-            title="Інтерактивна туристична карта Звягеля"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            allowfullscreen
-          ></iframe>
         </div>
-
-        <div class="section-action">
-          <a
-            class="btn btn-primary"
-            href="design-map.html"
-          >
-            Відкрити туристичну карту
-          </a>
-        </div>
-
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ================= CONTACTS ================= -->
-    <section class="section contacts-section" id="contacts">
-      <div class="container">
+  <!-- КОНТАКТИ -->
+  <section class="contact" id="contacts">
+    <div class="container contact-layout">
 
-        <div class="section-heading">
-          <span class="section-kicker">Ми допоможемо спланувати подорож</span>
-          <h2 id="contacts-title">Контакти туристичного центру</h2>
-          <p id="contact-extra">
-            Звертайся до нас за інформацією про екскурсії,
-            туристичні локації та відпочинок у Звягелі.
-          </p>
-        </div>
+      <div>
+        <div class="eyebrow">Завітайте до нас</div>
 
-        <div class="contacts-grid">
+        <h2 id="contacts-title">
+          Контакти туристичного центру
+        </h2>
 
-          <div class="contact-card">
-            <span class="contact-icon" aria-hidden="true">⌖</span>
-            <h3>Адреса</h3>
-            <p id="contact-address">
-              вул. Героїв Майдану, 13, м. Звягель
-            </p>
-          </div>
+        <p id="contact-extra">
+          Допоможемо відкрити Звягель, обрати екскурсію та спланувати подорож.
+        </p>
 
-          <div class="contact-card">
-            <span class="contact-icon" aria-hidden="true">☎</span>
-            <h3>Телефон</h3>
-            <a id="contact-phone-link" href="tel:+380673004470">
-              <span id="contact-phone">+38 067 300 4470</span>
+        <div class="contact-list">
+
+          <div class="contact-item">
+            <strong>Телефон</strong>
+            <a id="contact-phone" href="tel:+380673004470">
+              +38 067 300 4470
             </a>
           </div>
 
-          <div class="contact-card">
-            <span class="contact-icon" aria-hidden="true">✉</span>
-            <h3>Електронна пошта</h3>
-            <a id="contact-email-link" href="mailto:tic.zvyagel@gmail.com">
-              <span id="contact-email">tic.zvyagel@gmail.com</span>
+          <div class="contact-item">
+            <strong>Адреса</strong>
+            <span id="contact-address">
+              вул. Героїв Майдану, 13, Звягель
+            </span>
+          </div>
+
+          <div class="contact-item">
+            <strong>Електронна пошта</strong>
+            <a id="contact-email" href="mailto:tic.zvyagel@gmail.com">
+              tic.zvyagel@gmail.com
             </a>
           </div>
 
-          <div class="contact-card">
-            <span class="contact-icon" aria-hidden="true">◷</span>
-            <h3>Графік роботи</h3>
-            <p id="contact-hours">
-              Уточнюйте актуальний графік телефоном.
-            </p>
+          <div class="contact-item">
+            <strong>Графік роботи</strong>
+            <span id="contact-hours">
+              Пн–Пт, 09:00–18:00
+            </span>
           </div>
 
         </div>
 
         <div class="social-links">
           <a
+            class="social-link"
             id="contact-facebook"
-            href="https://www.facebook.com/"
+            href="https://www.facebook.com/zviaheltouristcentre/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Facebook
+            Facebook ↗
           </a>
 
           <a
+            class="social-link"
             id="contact-instagram"
-            href="https://www.instagram.com/"
+            href="https://www.instagram.com/zviahel_tourist_centr/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Instagram
+            Instagram ↗
           </a>
         </div>
-
       </div>
-    </section>
 
-  </main>
+      <div class="contact-card">
+        <div class="eyebrow">Твоя наступна подорож</div>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
+        <h3>Звягель чекає на тебе!</h3>
 
-      <a class="footer-brand" href="#home">
-        Звягель Туристичний
-      </a>
+        <p>
+          Відкривай стародавні таємниці міста, знайомся зі спадщиною
+          Лесі Українки та досліджуй історію замку.
+        </p>
 
-      <p>
-        Відкривай місто. Відчувай історію. Створюй спогади.
-      </p>
-
-      <p class="copyright">
-        © <span id="year"></span> Звягель Туристичний.
-        Усі права захищено.
-      </p>
+        <a class="btn" href="#tours">
+          Обрати екскурсію →
+        </a>
+      </div>
 
     </div>
-  </footer>
+  </section>
 
-  <!-- Кнопка повернення вгору -->
-  <button
-    id="backTop"
-    class="back-top"
-    type="button"
-    aria-label="Повернутися нагору"
-    title="Нагору"
-  >
-    ↑
-  </button>
+</main>
 
-  <!-- Статус завантаження -->
-  <p id="load-status" class="load-status" role="status" hidden></p>
+<!-- ПІДВАЛ -->
+<footer class="footer">
+  <div class="container footer-row">
+    <div>
+      <div class="footer-brand">
+        © <span id="year"></span> Звягель Туристичний
+      </div>
+      <div class="footer-tagline">
+        Відкривай. Досліджуй. Повертайся.
+      </div>
+    </div>
 
-  <!-- ================= FIREBASE SDK ================= -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <div>
+      Розробка сайту — <strong>Юрій Ігнатов</strong>
+    </div>
+  </div>
+</footer>
 
-  <!-- ================= SITE SCRIPTS ================= -->
-  <script src="js/firebase.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/navigation.js"></script>
-  <script src="js/news.js"></script>
-  <script src="js/projects.js"></script>
+<button
+  id="backTop"
+  class="back-top"
+  type="button"
+  aria-label="Повернутися вгору"
+  title="Повернутися вгору"
+>↑</button>
+
+<div class="container">
+  <p id="load-status" role="status" aria-live="polite"></p>
+</div>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<!-- СКРИПТИ САЙТУ -->
+<script src="js/firebase.js"></script>
+<script src="js/main.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/news.js"></script>
+<script src="js/projects.js"></script>
 
 </body>
 </html>
