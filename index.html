@@ -501,15 +501,16 @@ h2 {
   border-color: #c8d4e4;
 }
 
-.card- {
+.card-media {
   position: relative;
   height: 225px;
   flex: 0 0 225px;
+  min-width: 0;
   overflow: hidden;
   background: #e8edf4;
 }
 
-.card- > img {
+.card-media > img {
   display: block;
   width: 100%;
   height: 100%;
@@ -517,8 +518,24 @@ h2 {
   transition: transform .45s;
 }
 
-.card:hover .card- > img { transform: scale(1.045); }
+.card:hover .card-media > img {
+  transform: scale(1.045);
+}
 
+.card-media .placeholder {
+  position: absolute;
+  inset: 0;
+}
+
+.card-media .gallery-arrow {
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.card-media .card-label {
+  pointer-events: none;
+}
 .placeholder {
   display: grid;
   place-items: center;
@@ -1022,10 +1039,11 @@ a:focus-visible, button:focus-visible {
     margin-top: 22px;
   }
 
-  .card-media {
-    height: 230px;
-    flex-basis: 230px;
-  }
+.card-media {
+  height: 230px;
+  flex: 0 0 230px;
+  width: 100%;
+}
 
   .card-body { padding: 18px; }
   .card h3 { font-size: 20px; }
@@ -1829,10 +1847,15 @@ window.addEventListener("scroll", () => {
 
 /* ================= FIRESTORE ================= */
 
-function reportError(error) {
-  console.error("Firebase:", error);
-  $("load-status").textContent =
-    "Не вдалося завантажити частину інформації. Перевірте інтернет і правила доступу Firebase.";
+function reportError(error, context = "сайту") {
+  console.error("Firebase — " + context + ":", error);
+
+  const status = $("load-status");
+  if (!status) return;
+
+  status.textContent =
+    "Не вдалося завантажити дані (" + context +
+    "). Перевірте підключення та правила доступу Firebase.";
 }
 
 db.collection("siteContent").doc("homepage").onSnapshot(
