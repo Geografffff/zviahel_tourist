@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10213b">
+<meta name="description" content="Детальна інформація про туристичні та культурні проєкти Звягеля.">
+<title>Проєкт — Звягель Туристичний</title>
+<style>
+:root{--navy:#10213b;--orange:#f58220;--bg:#f4f6fa;--text:#19283c;--muted:#69778b;--line:#e0e6ef}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);line-height:1.7;background:#fff}
+a{color:inherit}
+.container{width:min(1080px,calc(100% - 32px));margin:auto}
+header{position:sticky;top:0;z-index:10;background:var(--navy);color:#fff;border-bottom:3px solid var(--orange)}
+.header-inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-weight:900;text-decoration:none;letter-spacing:.4px}
+.brand span{display:block;color:#ffb36d;font-size:10px;letter-spacing:2px}
+.back-link{color:#fff;text-decoration:none;font-size:14px;font-weight:750}
+.back-link:hover{color:#ffb36d}
+main{min-height:65vh}
+.hero{padding:36px 0 0;background:var(--bg)}
+.breadcrumbs{padding:0 0 18px;color:var(--muted);font-size:13px}
+.breadcrumbs a{color:var(--navy);font-weight:700}
+.hero-image{width:100%;max-height:540px;aspect-ratio:16/8;object-fit:cover;display:block;border-radius:18px;background:#e4eaf2}
+.content{padding:32px 0 64px}
+h1{margin:0 0 14px;color:var(--navy);font-size:clamp(30px,5vw,48px);line-height:1.15;letter-spacing:-1px}
+.subtitle{font-size:clamp(17px,2.5vw,21px);color:#43546b;margin:0 0 20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 28px}
+.chip{padding:7px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);font-size:13px;color:#43546b}
+.description{font-size:16px;white-space:pre-line;overflow-wrap:anywhere}
+.description h2{margin-top:28px;color:var(--navy)}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:28px 0}
+.gallery button{display:block;overflow:hidden;padding:0;border:1px solid var(--line);border-radius:12px;background:#edf1f6;cursor:pointer}
+.gallery img{display:block;width:100%;height:210px;object-fit:cover;transition:transform .2s}
+.gallery button:hover img{transform:scale(1.035)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;justify-content:center;align-items:center;min-height:45px;padding:11px 17px;border-radius:10px;background:var(--orange);color:#fff;text-decoration:none;font-weight:800;font-size:14px}
+.btn:hover{background:#e97010}
+.btn.secondary{background:#edf2f8;color:var(--navy)}
+.status{padding:35px 0;color:var(--muted)}
+footer{padding:24px 0;background:#091326;color:#dce6f2;font-size:13px}
+footer strong{color:#ffb36d}
+.lightbox{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:#061020ed}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:85vh;object-fit:contain}
+.lightbox button{position:absolute;top:15px;right:18px;border:0;background:transparent;color:#fff;font-size:34px;cursor:pointer}
+@media(max-width:650px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.gallery img{height:150px}.hero-image{aspect-ratio:4/3}.content{padding-top:24px}.header-inner{min-height:62px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container header-inner">
+    <a class="brand" href="./index.html#home">🧭 ЗВЯГЕЛЬ<span>ТУРИСТИЧНИЙ</span></a>
+    <a class="back-link" href="./catalog.html?section=projects">← Усі проєкти</a>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="container">
+      <div class="breadcrumbs"><a href="./index.html">Головна</a> / <a href="./catalog.html?section=projects">Наші проєкти</a> / <span id="crumb-title">Проєкт</span></div>
+      <img id="main-image" class="hero-image" alt="" hidden>
+    </div>
+  </div>
+  <article class="container content">
+    <p id="status" class="status" role="status">Завантажуємо інформацію про проєкт…</p>
+    <div id="project-content" hidden>
+      <div id="category" class="eyebrow"></div>
+      <h1 id="title"></h1>
+      <p id="subtitle" class="subtitle"></p>
+      <div id="meta" class="chips"></div>
+      <div id="short-description" class="description"></div>
+      <div id="gallery" class="gallery"></div>
+      <div id="details" class="description"></div>
+      <div id="actions" class="actions"></div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container">© <span id="year"></span> Звягель Туристичний · <strong>Відкривай. Досліджуй. Повертайся.</strong></div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Перегляд фото">
+  <button type="button" id="close-lightbox" aria-label="Закрити">×</button>
+  <img id="lightbox-image" alt="">
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+"use strict";
+
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
+  authDomain: "zviahel-tourist.firebaseapp.com",
+  projectId: "zviahel-tourist",
+  storageBucket: "zviahel-tourist.firebasestorage.app",
+  messagingSenderId: "914549612868",
+  appId: "1:914549612868:web:3abce6606a89167134b711",
+  measurementId: "G-DV5YF43W24"
+};
+
+const $ = id => document.getElementById(id);
+$("year").textContent = new Date().getFullYear();
+
+function safeHttps(value) {
+  try {
+    const url = new URL(String(value || "").trim());
+    return url.protocol === "https:" ? url.href : "";
+  } catch { return ""; }
+}
+
+function firstValue(data, keys) {
+  for (const key of keys) {
+    const value = data[key];
+    if (typeof value === "string" && value.trim()) return value.trim();
+  }
+  return "";
+}
+
+function addText(parent, text) {
+  if (!text) return;
+  const p = document.createElement("p");
+  p.textContent = text;
+  parent.appendChild(p);
+}
+
+function addChip(text) {
+  if (!text) return;
+  const span = document.createElement("span");
+  span.className = "chip";
+  span.textContent = text;
+  $("meta").appendChild(span);
+}
+
+function addAction(label, url) {
+  const safe = safeHttps(url);
+  if (!safe) return;
+  const a = document.createElement("a");
+  a.className = "btn";
+  a.href = safe;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  a.textContent = label;
+  $("actions").appendChild(a);
+}
+
+function showLightbox(url, alt) {
+  $("lightbox-image").src = url;
+  $("lightbox-image").alt = alt;
+  $("lightbox").classList.add("open");
+}
+
+$("close-lightbox").addEventListener("click", () => {
+  $("lightbox").classList.remove("open");
+  $("lightbox-image").removeAttribute("src");
+});
+$("lightbox").addEventListener("click", event => {
+  if (event.target === $("lightbox")) $("close-lightbox").click();
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") $("close-lightbox").click();
+});
+
+async function loadProject() {
+  const id = new URLSearchParams(location.search).get("id");
+  if (!id || id.length > 200) {
+    $("status").textContent = "Не вказано проєкт. Поверніться до каталогу та оберіть потрібний запис.";
+    return;
+  }
+
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+    const db = firebase.firestore();
+    const snapshot = await db.collection("projects").doc(id).get();
+
+    if (!snapshot.exists) {
+      $("status").textContent = "Цей проєкт не знайдено. Можливо, його ще не опубліковано.";
+      return;
+    }
+
+    const data = snapshot.data();
+
+    if (data.published !== true) {
+      $("status").textContent = "Цей проєкт наразі не опублікований.";
+      return;
+    }
+
+    const title = firstValue(data, ["title", "name"]) || "Проєкт Звягеля";
+    const subtitle = firstValue(data, ["subtitle", "shortSubtitle"]);
+    const category = firstValue(data, ["category", "type", "projectType"]);
+    const summary = firstValue(data, ["summary", "shortDescription", "description", "body"]);
+    const details = firstValue(data, ["details", "fullDescription", "longDescription", "content"]);
+    const date = firstValue(data, ["date", "period", "implementationPeriod", "year"]);
+    const image = safeHttps(firstValue(data, ["image", "mainImage", "photo"]));
+    const rawImages = Array.isArray(data.images) ? data.images : [];
+    const galleryUrls = [...new Set(rawImages.map(safeHttps).filter(Boolean))];
+    const allImages = [...new Set([image, ...galleryUrls].filter(Boolean))];
+
+    document.title = title + " — Звягель Туристичний";
+    $("crumb-title").textContent = title;
+    $("title").textContent = title;
+    $("subtitle").textContent = subtitle;
+    $("subtitle").hidden = !subtitle;
+    $("category").textContent = category;
+    $("category").hidden = !category;
+
+    if (image) {
+      $("main-image").src = image;
+      $("main-image").alt = title;
+      $("main-image").hidden = false;
+      $("main-image").addEventListener("click", () => showLightbox(image, title));
+      $("main-image").style.cursor = "zoom-in";
+    } else {
+      $("main-image").hidden = true;
+    }
+
+    addChip(category);
+    if (date) addChip("📅 " + date);
+
+    if (summary) addText($("short-description"), summary);
+    if (details && details !== summary) addText($("details"), details);
+
+    const gallery = $("gallery");
+    allImages.forEach((url, index) => {
+      if (url === image) return;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("aria-label", "Переглянути фото " + (index + 1));
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = title + " — фото " + (index + 1);
+      img.loading = "lazy";
+      img.onerror = () => button.remove();
+      button.appendChild(img);
+      button.addEventListener("click", () => showLightbox(url, img.alt));
+      gallery.appendChild(button);
+    });
+
+    const projectUrl = firstValue(data, ["url", "projectUrl", "website", "link"]);
+    if (projectUrl) addAction("Відкрити проєкт ↗", projectUrl);
+
+    const audioUrl = firstValue(data, ["audioGuideUrl", "audioUrl"]);
+    if (audioUrl && audioUrl !== projectUrl) addAction("Слухати аудіогід ↗", audioUrl);
+
+    $("status").hidden = true;
+    $("project-content").hidden = false;
+  } catch (error) {
+    console.error("Помилка завантаження проєкту:", error);
+    $("status").textContent = "Не вдалося завантажити проєкт. Перевірте інтернет і правила доступу Firebase.";
+  }
+}
+
+loadProject();
+</script>
+</body>
+</html>
