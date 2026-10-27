@@ -1,8 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="google-site-verification" content="rZidPNN04t6GRkpQRoJasrBDBTz6qnTvP15AY2LW8cY" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10213b">
 <meta name="description" content="Звягель Туристичний — екскурсії, історія міста, спадщина Лесі Українки, туристична карта та маршрути.">
@@ -119,18 +119,19 @@ section[id], #tourist-map {
 .main-nav {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 5px;
 }
 
 .nav-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  border-radius: 9px;
+  min-height: 44px;
+  padding: 11px 12px;
+  border-radius: 10px;
   color: #edf2f8;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 750;
   white-space: nowrap;
   transition: background .2s, color .2s;
@@ -152,13 +153,13 @@ section[id], #tourist-map {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 42px;
-  padding: 10px 13px;
+  min-height: 46px;
+  padding: 12px 15px;
   border: 1px solid rgba(255,255,255,.2);
   border-radius: 10px;
   background: rgba(255,255,255,.06);
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   white-space: nowrap;
   cursor: pointer;
@@ -479,24 +480,6 @@ h2 {
   margin-top: 29px;
   align-items: stretch;
 }
-
-.travel-shortcuts {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 28px;
-}
-.travel-shortcut {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 9px;
-  min-width: 0; padding: 22px; border: 1px solid var(--line);
-  border-radius: var(--radius); background: #fff; box-shadow: var(--shadow);
-  text-decoration: none; transition: transform .2s, box-shadow .2s, border-color .2s;
-}
-.travel-shortcut:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--orange); }
-.travel-shortcut > span { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 13px; background: #fff1e5; font-size: 23px; }
-.travel-shortcut strong { color: var(--navy); font-size: 17px; line-height: 1.3; }
-.travel-shortcut small { color: var(--muted); font-size: 13px; line-height: 1.55; }
-.travel-shortcut b { margin-top: auto; padding-top: 7px; color: #b95a0a; font-size: 12px; }
 
 .card {
   display: flex;
@@ -978,7 +961,6 @@ a:focus-visible, button:focus-visible {
   .travel-dropdown.open { display: block; }
 
   .cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .travel-shortcuts { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .split, .contact-layout { grid-template-columns: 1fr; }
   .hero { min-height: 470px; padding: 70px 0 80px; }
 
@@ -1039,9 +1021,6 @@ a:focus-visible, button:focus-visible {
     margin-top: 22px;
   }
 
-  .travel-shortcuts { grid-template-columns: 1fr; gap: 12px; }
-  .travel-shortcut { padding: 18px; }
-
   .card-media {
     height: 230px;
     flex-basis: 230px;
@@ -1100,7 +1079,6 @@ a:focus-visible, button:focus-visible {
         <a class="nav-link" href="#tours">Екскурсії</a>
         <a class="nav-link" href="#places">Цікавинки</a>
         <a class="nav-link" href="#news">Новини</a>
-        <a class="nav-link" href="#projects">Проєкти</a>
         <a class="nav-link" href="#contacts">Контакти</a>
       </nav>
 
@@ -1116,10 +1094,10 @@ a:focus-visible, button:focus-visible {
         </button>
 
         <div class="travel-dropdown" id="travelDropdown">
-          <a href="catalog.html?section=food"><span class="dropdown-icon">🍽️</span><span>Де поїсти?</span></a>
-          <a href="catalog.html?section=stay"><span class="dropdown-icon">🛏️</span><span>Де переночувати?</span></a>
-          <a href="catalog.html?section=gettingHere"><span class="dropdown-icon">🚌</span><span>Як дістатися?</span></a>
-          <a href="design-map.html"><span class="dropdown-icon">🗺️</span><span>Туристична карта</span></a>
+          <a href="#food"><span class="dropdown-icon">🍽️</span><span>Де поїсти?</span></a>
+          <a href="#stay"><span class="dropdown-icon">🛏️</span><span>Де переночувати?</span></a>
+          <a href="#getting-here"><span class="dropdown-icon">🚌</span><span>Як дістатися?</span></a>
+          <a href="#tourist-map"><span class="dropdown-icon">🗺️</span><span>Туристична карта</span></a>
         </div>
       </div>
     </div>
@@ -1216,36 +1194,87 @@ a:focus-visible, button:focus-visible {
     </div>
   </section>
 
-  <section class="page-section alt" id="projects">
+  <section class="page-section alt" id="food">
     <div class="container">
       <div class="section-heading">
         <div class="heading-copy">
-          <div class="eyebrow">Ідеї, що оживляють місто</div>
-          <h2>Наші проєкти</h2>
-          <p class="intro">Туристичні ініціативи, культурні події та нові способи відкривати Звягель.</p>
+          <div class="eyebrow">Смак міста</div>
+          <h2>Де поїсти у Звягелі</h2>
+          <p class="intro">Заклади харчування для туристів. Перед візитом уточнюйте графік роботи.</p>
         </div>
-        <a class="section-top-link" href="catalog.html?section=projects">Усі проєкти <span aria-hidden="true">→</span></a>
+        <a class="section-top-link" href="catalog.html?section=food">Усі заклади <span aria-hidden="true">→</span></a>
       </div>
-      <div id="projects-list" class="cards">
-        <p class="empty">Завантаження проєктів…</p>
+      <div id="food-list" class="cards">
+        <p class="empty">Завантаження закладів…</p>
       </div>
     </div>
   </section>
 
-  <section class="page-section" id="travel-info">
+  <section class="page-section" id="stay">
     <div class="container">
       <div class="section-heading">
         <div class="heading-copy">
-          <div class="eyebrow">Усе необхідне для подорожі</div>
-          <h2>Плануйте візит до Звягеля</h2>
-          <p class="intro">Знайдіть заклад харчування, місце для ночівлі, маршрут до міста або туристичну карту.</p>
+          <div class="eyebrow">Плануйте зупинку</div>
+          <h2>Де переночувати у Звягелі</h2>
+          <p class="intro">Готелі та інші варіанти розміщення для вашої подорожі.</p>
         </div>
+        <a class="section-top-link" href="catalog.html?section=stay">Усі місця проживання <span aria-hidden="true">→</span></a>
       </div>
-      <div class="travel-shortcuts">
-        <a class="travel-shortcut" href="catalog.html?section=food"><span>🍽️</span><strong>Де поїсти?</strong><small>Кафе, ресторани та заклади харчування</small><b>Переглянути →</b></a>
-        <a class="travel-shortcut" href="catalog.html?section=stay"><span>🛏️</span><strong>Де переночувати?</strong><small>Готелі та інші варіанти проживання</small><b>Переглянути →</b></a>
-        <a class="travel-shortcut" href="catalog.html?section=gettingHere"><span>🚌</span><strong>Як дістатися?</strong><small>Корисна інформація для планування дороги</small><b>Дізнатися більше →</b></a>
-        <a class="travel-shortcut" href="design-map.html"><span>🗺️</span><strong>Туристична карта</strong><small>Локації та цікаві місця міста</small><b>Відкрити карту →</b></a>
+      <div id="stay-list" class="cards">
+        <p class="empty">Завантаження місць проживання…</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section alt" id="getting-here">
+    <div class="container">
+      <div class="eyebrow">Почніть свою подорож</div>
+      <h2>Як дістатися до Звягеля</h2>
+
+      <div class="split">
+        <div class="info-panel">
+          <h3>Сплануйте маршрут</h3>
+          <div id="getting-here-text" class="long-text">
+            Звягель розташований у Житомирській області на важливому транспортному напрямку Київ—Чоп.
+            Перед виїздом перевірте актуальний розклад транспорту та дорожню ситуацію.
+          </div>
+
+          <p style="margin-top:20px">
+            <a class="btn" id="google-map-link"
+               href="https://www.google.com/maps/search/?api=1&amp;query=Zviahel%2C%20Ukraine"
+               target="_blank" rel="noopener noreferrer">Відкрити Google Maps ↗</a>
+          </p>
+
+          <p>
+            <a id="directions-link"
+               href="https://www.google.com/maps/dir/?api=1&amp;destination=Zviahel%2C%20Ukraine"
+               target="_blank" rel="noopener noreferrer">Побудувати маршрут до Звягеля</a>
+          </p>
+        </div>
+
+        <div id="tourist-map" class="tourist-map">
+          <div class="eyebrow">Досліджуй місто</div>
+          <h3 class="tourist-map-title">Туристична карта Звягеля</h3>
+          <p class="tourist-map-description">
+            Переглядайте туристичні локації, пам’ятки та цікаві місця Звягеля
+            на інтерактивній карті.
+          </p>
+
+          <div class="tourist-map-frame">
+            <iframe
+              src="https://www.google.com/maps/d/u/0/embed?mid=1tm36aV9_BaX4Fe9F_MRW6j3yrCtq-_I&amp;ehbc=2E312F"
+              title="Інтерактивна туристична карта Звягеля"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <p class="tourist-map-actions">
+            <a class="btn secondary"
+               href="https://www.google.com/maps/d/u/0/viewer?mid=1tm36aV9_BaX4Fe9F_MRW6j3yrCtq-_I"
+               target="_blank" rel="noopener noreferrer">Відкрити карту на весь екран ↗</a>
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -1501,10 +1530,10 @@ function applyContacts(data) {
 }
 
 function applyGettingHere(data) {
-  setText("getting-here-text", data.body || data.text || data.description);
+  setText("getting-here-text", data.body || data.text || data.description || data.content || "");
 
-  const mapLink = safeHttps(data.mapLink);
-  const directionsLink = safeHttps(data.directionsLink);
+  const mapLink = safeHttps(data.mapLink || data.mapUrl);
+  const directionsLink = safeHttps(data.directionsLink || data.directionsUrl);
   if (mapLink) $("google-map-link").href = mapLink;
   if (directionsLink) $("directions-link").href = directionsLink;
 }
@@ -1520,8 +1549,7 @@ function placeholder(type) {
     news: "📰",
     food: "🍽️",
     stay: "🛏️",
-    place: "🏰",
-    project: "✨"
+    place: "🏰"
   };
 
   element.textContent = icons[type] || "📍";
@@ -1560,8 +1588,7 @@ function createGallery(data, type) {
     place: "ЦІКАВИНКА",
     news: "НОВИНИ",
     food: "ДЕ ПОЇСТИ",
-    stay: "ПРОЖИВАННЯ",
-    project: "ПРОЄКТ"
+    stay: "ПРОЖИВАННЯ"
   };
 
   const label = document.createElement("span");
@@ -1617,9 +1644,6 @@ function getDescription(data, type) {
   if (type === "news") {
     return data.summary || data.shortDescription || data.description || data.body || "";
   }
-  if (type === "project") {
-    return data.summary || data.shortDescription || data.description || data.body || data.subtitle || "";
-  }
   return data.subtitle || data.shortDescription || data.description || data.summary || "";
 }
 
@@ -1666,8 +1690,7 @@ function renderCards(rootId, sourceDocs, type, limit) {
       place: "Інформація про цікаві місця незабаром з’явиться.",
       news: "Нових публікацій поки немає. Слідкуйте за оновленнями.",
       food: "Інформація про заклади харчування незабаром з’явиться.",
-      stay: "Інформація про місця проживання незабаром з’явиться.",
-      project: "Інформація про проєкти незабаром з’явиться."
+      stay: "Інформація про місця проживання незабаром з’явиться."
     };
 
     empty.textContent = messages[type] || "Інформація незабаром з’явиться.";
@@ -1741,11 +1764,6 @@ function renderCards(rootId, sourceDocs, type, limit) {
 
     const actions = document.createElement("div");
     actions.className = "actions";
-
-    if (type === "project") {
-      const detailLink = "./project.html?id=" + encodeURIComponent(data.id || "");
-      actions.appendChild(makeLink("Детальніше →", detailLink, "btn primary-detail"));
-    }
 
     if (["news", "place", "tour"].includes(type)) {
       const section = type === "place" ? "places" :
@@ -1846,7 +1864,8 @@ db.collection("siteContent").doc("gettingHere").onSnapshot(
   ["places", "places-list", "place", 3],
   ["tours", "tours-list", "tour", 3],
   ["news", "news-list", "news", 3],
-  ["projects", "projects-list", "project", 3]
+  ["food", "food-list", "food", 3],
+  ["stay", "stay-list", "stay", 3]
 ].forEach(([collection, root, type, limit]) => {
   db.collection(collection)
     .where("published", "==", true)
