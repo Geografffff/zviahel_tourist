@@ -36,8 +36,8 @@ header{
 .header-row{display:flex;align-items:center;justify-content:space-between;gap:15px}
 .brand{display:flex;align-items:center;gap:11px;color:#fff;text-decoration:none;font-size:19px;font-weight:850}
 .brand-icon{display:grid;place-items:center;width:43px;height:43px;border-radius:13px;background:var(--orange);font-size:24px;flex-shrink:0}
-.brand b{color:var(--orange)}
 
+.brand b{color:var(--orange)}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
   min-height:43px;padding:10px 16px;border:1px solid transparent;border-radius:11px;
@@ -110,7 +110,9 @@ h2{margin:0 0 11px;color:var(--navy);font-size:21px;line-height:1.32;letter-spac
 .back-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
 
-@media(max-width:950px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}}
+@media(max-width:950px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+}
 @media(max-width:600px){
   .container{width:calc(100% - 28px)}
   header{padding:9px 0}
@@ -440,26 +442,50 @@ function renderCard(data) {
   const actions = document.createElement("div");
   actions.className = "actions";
 
-  if (["place", "tour", "news"].includes(config.type)) {
-    actions.appendChild(
-      makeLink(
-        config.type === "news" ? "Читати новину →" : "Детальніше →",
-        "article.html?type=" + encodeURIComponent(section) +
-          "&id=" + encodeURIComponent(data.id),
-        true
-      )
-    );
+  /*
+   * Внутрішні сторінки:
+   * усі проєкти, екскурсії, цікавинки та новини
+   * відкриваються через article.html з ID документа Firebase.
+   */
+  if (["place", "tour", "news", "project"].includes(config.type)) {
+    const detailType = {
+      place: "places",
+      tour: "tours",
+      news: "news",
+      project: "projects"
+    }[config.type];
+
+    if (data.id) {
+      actions.appendChild(
+        makeLink(
+          config.type === "news" ? "Читати новину →" : "Детальніше →",
+          "article.html?type=" +
+            encodeURIComponent(detailType) +
+            "&id=" +
+            encodeURIComponent(data.id),
+          true
+        )
+      );
+    }
   }
 
+  /*
+   * Зовнішнє посилання для проєктів.
+   * Воно додається окремо від кнопки внутрішньої сторінки.
+   */
   if (["food", "stay", "project"].includes(config.type)) {
     const externalUrl = safeHttps(data.link || data.url);
 
     if (externalUrl) {
-      actions.appendChild(makeLink(
-        config.type === "project" ? "Дізнатися більше ↗" : "Детальніше ↗",
-        externalUrl,
-        true
-      ));
+      actions.appendChild(
+        makeLink(
+          config.type === "project"
+            ? "Відкрити проєкт ↗"
+            : "Детальніше ↗",
+          externalUrl,
+          true
+        )
+      );
     }
   }
 
@@ -480,6 +506,7 @@ function renderCard(data) {
     }
 
     const mapUrl = safeHttps(data.mapLink || data.map);
+
     if (mapUrl) {
       actions.appendChild(makeLink("На карті ↗", mapUrl, true));
     }
