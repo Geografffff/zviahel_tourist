@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10213b">
+  <title>Як дістатися до Звягеля? | Звягель Туристичний</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #10213b;
+      background: #f5f7fa;
+    }
+
+    header {
+      background: #10213b;
+      color: white;
+      padding: 22px 16px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    .map {
+      overflow: hidden;
+      border-radius: 16px;
+      margin: 22px 0;
+      background: #e9edf2;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 430px;
+      border: 0;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 20px;
+      border-radius: 9px;
+      background: #f58220;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .btn.secondary {
+      background: #10213b;
+    }
+
+    .back {
+      color: #10213b;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      iframe { height: 330px; }
+      .buttons { flex-direction: column; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Як дістатися до Звягеля?</h1>
+    <p>Плануйте свою подорож до нашого міста</p>
+  </header>
+
+  <main>
+    <h2>Знайдіть Звягель на карті</h2>
+    <p>
+      Звягель — місто Житомирської області, розташоване
+      на березі річки Случ. Перегляньте розташування міста
+      на карті та прокладіть зручний маршрут.
+    </p>
+
+    <div class="buttons">
+      <a class="btn" target="_blank" rel="noopener"
+         href="https://www.google.com/maps/search/?api=1&query=Звягель%2C+Житомирська+область">
+        Відкрити Google Maps
+      </a>
+
+      <a class="btn secondary" target="_blank" rel="noopener"
+         href="https://www.google.com/maps/dir/?api=1&destination=Звягель%2C+Житомирська+область">
+        Побудувати маршрут
+      </a>
+    </div>
+
+    <div class="map">
+      <iframe
+        title="Звягель на Google Maps"
+        src="https://maps.google.com/maps?q=Звягель%2C%20Житомирська%20область&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <a class="back" href="./index.html">← Повернутися на головну</a>
+  </main>
+</body>
+</html>
