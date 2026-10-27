@@ -14,1167 +14,221 @@
 
 <style>
 :root {
-  --navy: #10213b;
-  --navy-light: #193657;
-  --orange: #f58220;
-  --orange-light: #ffb36d;
-  --bg: #f4f6fa;
-  --white: #fff;
-  --text: #19283c;
-  --muted: #69778b;
-  --line: #e0e6ef;
-  --radius: 18px;
-  --shadow: 0 8px 28px rgba(16,33,59,.07);
-  --shadow-hover: 0 18px 42px rgba(16,33,59,.14);
-  --header-height: 72px;
-}
-
-* { box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-height) + 16px);
-}
-
-body {
-  margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  color: var(--text);
-  background: #fff;
-  line-height: 1.65;
-}
-
-body.menu-open { overflow: hidden; }
-
-a { color: inherit; }
-button, input { font: inherit; }
-img { max-width: 100%; }
-
-button:focus-visible,
-a:focus-visible {
-  outline: 3px solid var(--orange);
-  outline-offset: 3px;
-}
-
-.container {
-  width: min(1200px, calc(100% - 40px));
-  margin-inline: auto;
-}
-
-section[id] {
-  scroll-margin-top: calc(var(--header-height) + 18px);
-}
-
-/* ================= ШАПКА ================= */
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  color: #fff;
-  background: rgba(16,33,59,.97);
-  border-bottom: 2px solid var(--orange);
-  box-shadow: 0 5px 24px rgba(5,16,32,.14);
-  backdrop-filter: blur(14px);
-}
-
-.header-inner {
-  min-height: var(--header-height);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  color: #fff;
-  text-decoration: none;
-}
-
-.brand-mark {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  border-radius: 12px;
-  background: var(--orange);
-  font-size: 22px;
-}
-
-.brand-name {
-  font-size: 14px;
-  font-weight: 900;
-  line-height: 1.2;
-  letter-spacing: .3px;
-}
-
-.brand-name span {
-  display: block;
-  margin-top: 4px;
-  color: var(--orange-light);
-  font-size: 9px;
-  letter-spacing: 1.5px;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  min-width: 0;
-}
-
-.main-nav {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.nav-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 8px;
-  border-radius: 8px;
-  color: #edf2f8;
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 750;
-  white-space: nowrap;
-  transition: background .2s, color .2s;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: var(--orange-light);
-  background: rgba(255,255,255,.09);
-}
-
-.travel-menu {
-  position: relative;
-  flex-shrink: 0;
-}
-
-.travel-menu-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  min-height: 40px;
-  padding: 9px 11px;
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 9px;
-  background: rgba(255,255,255,.06);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 800;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.travel-menu-button:hover,
-.travel-menu-button[aria-expanded="true"] {
-  background: rgba(255,255,255,.13);
-  border-color: var(--orange);
-}
-
-.chevron {
-  display: inline-block;
-  color: var(--orange-light);
-  transition: transform .2s;
-}
-
-.travel-menu-button[aria-expanded="true"] .chevron {
-  transform: rotate(180deg);
-}
-
-.travel-dropdown {
-  position: absolute;
-  top: calc(100% + 12px);
-  right: 0;
-  width: 275px;
-  padding: 9px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 18px 45px rgba(6,19,38,.2);
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-6px);
-  transition: opacity .18s, transform .18s, visibility .18s;
-}
-
-.travel-dropdown.open {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.travel-dropdown a {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 11px;
-  border-radius: 9px;
-  color: var(--navy);
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 750;
-}
-
-.travel-dropdown a:hover {
-  background: #fff3e8;
-  color: #a64c06;
-}
-
-.dropdown-icon {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: #f1f4f9;
-  font-size: 17px;
-}
-
-.travel-dropdown a:hover .dropdown-icon {
-  background: #ffe1c7;
-}
-
-.menu-toggle {
-  display: none;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  flex-shrink: 0;
-  border: 1px solid #ffffff30;
-  border-radius: 10px;
-  background: #ffffff0b;
-  color: #fff;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-/* ================= КНОПКИ ================= */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 11px 16px;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  background: var(--orange);
-  color: #fff;
-  text-decoration: none;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.4;
-  cursor: pointer;
-  transition: transform .2s, background .2s, box-shadow .2s;
-}
-
-.btn:hover {
-  background: #e97010;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(245,130,32,.2);
-}
-
-.btn.secondary {
-  background: #edf2f8;
-  border-color: #dce5f0;
-  color: var(--navy);
-  box-shadow: none;
-}
-
-.btn.secondary:hover {
-  background: #e1eaf5;
-}
-
-.btn.dark {
-  background: var(--navy);
-  color: #fff;
-}
-
-.btn.dark:hover {
-  background: var(--navy-light);
-}
-
-/* ================= ГОЛОВНИЙ БАНЕР ================= */
-
-.hero {
-  position: relative;
-  isolation: isolate;
-  min-height: 520px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  padding: 72px 0 82px;
-  color: #fff;
-  background-color: var(--navy);
-  background-image:
-    linear-gradient(90deg,rgba(8,20,38,.94),rgba(16,33,59,.75) 52%,rgba(16,33,59,.3)),
-    linear-gradient(135deg,#426b91,#10213b);
-  background-size: cover;
-  background-position: center;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: radial-gradient(ellipse at 80% 30%,rgba(245,130,32,.14),transparent 38%);
-  pointer-events: none;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 35%;
-  height: 5px;
-  background: var(--orange);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-}
-
-.eyebrow {
-  margin: 0 0 12px;
-  color: var(--orange);
-  font-size: 12px;
-  font-weight: 850;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  line-height: 1.5;
-}
-
-.hero .eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  color: var(--orange-light);
-}
-
-.hero .eyebrow::before {
-  content: "";
-  width: 28px;
-  height: 2px;
-  flex-shrink: 0;
-  background: var(--orange);
-}
-
-h1, h2, h3 { letter-spacing: -.035em; }
-
-.hero h1 {
-  max-width: 820px;
-  margin: 0 0 22px;
-  color: #fff;
-  font-size: clamp(38px,5.5vw,70px);
-  line-height: 1.07;
-  font-weight: 900;
-}
-
-.hero p {
-  max-width: 670px;
-  margin: 0 0 27px;
-  color: #e4ebf5;
-  font-size: clamp(16px,1.8vw,19px);
-  line-height: 1.8;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 11px;
-}
-
-.hero .btn.secondary {
-  background: rgba(255,255,255,.1);
-  border-color: rgba(255,255,255,.35);
-  color: #fff;
-}
-
-.hero .btn.secondary:hover {
-  background: rgba(255,255,255,.2);
-}
-
-/* ================= СЕКЦІЇ ================= */
-
-.page-section {
-  padding: clamp(48px,6vw,76px) 0;
-}
-
-.page-section.alt {
-  background: var(--bg);
-}
-
-.section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 10px;
-}
-
-.heading-copy {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-h2 {
-  margin: 0 0 13px;
-  color: var(--navy);
-  font-size: clamp(28px,3.4vw,42px);
-  line-height: 1.17;
-  font-weight: 900;
-}
-
-.intro {
-  max-width: 790px;
-  margin: 0;
-  color: var(--muted);
-  font-size: 15px;
-}
-
-.section-top-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex: 0 0 205px;
-  width: 205px;
-  min-height: 50px;
-  padding: 12px 15px;
-  border: 2px solid var(--orange);
-  border-radius: 11px;
-  background: var(--orange);
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 850;
-  line-height: 1.35;
-  transition: background .2s, transform .2s, box-shadow .2s;
-}
-
-.section-top-link:hover {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(16,33,59,.16);
-}
-
-/* ================= КАРТКИ ================= */
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3,minmax(0,1fr));
-  align-items: stretch;
-  gap: 22px;
-  margin-top: 28px;
-}
-
-.travel-shortcuts {
-  display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 16px;
-  margin-top: 28px;
-}
-
-.travel-shortcut {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 9px;
-  min-width: 0;
-  padding: 21px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: #fff;
-  box-shadow: var(--shadow);
-  text-decoration: none;
-  transition: transform .2s, box-shadow .2s, border-color .2s;
-}
-
-.travel-shortcut:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-  border-color: var(--orange);
-}
-
-.travel-shortcut > span {
-  display: grid;
-  place-items: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 12px;
-  background: #fff1e5;
-  font-size: 23px;
-}
-
-.travel-shortcut strong {
-  color: var(--navy);
-  font-size: 17px;
-  line-height: 1.35;
-}
-
-.travel-shortcut small {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.travel-shortcut b {
-  margin-top: auto;
-  padding-top: 7px;
-  color: #b95a0a;
-  font-size: 12px;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-width: 0;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: #fff;
-  box-shadow: var(--shadow);
-  transition: transform .24s, box-shadow .24s, border-color .24s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-  border-color: #c8d4e4;
-}
-
-.card-media {
-  position: relative;
-  height: 225px;
-  flex: 0 0 225px;
-  overflow: hidden;
-  background: #e8edf4;
-}
-
-.card-media > img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .45s;
-}
-
-.card:hover .card-media > img {
-  transform: scale(1.04);
-}
-
-.placeholder {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg,var(--navy),#284a70);
-  color: var(--orange);
-  font-size: 49px;
-}
-
-.gallery-arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 3;
-  transform: translateY(-50%);
-  width: 37px;
-  height: 37px;
-  border: 1px solid #ffffff55;
-  border-radius: 50%;
-  background: rgba(16,33,59,.85);
-  color: #fff;
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.gallery-arrow:hover {
-  background: var(--orange);
-}
-
-.gallery-prev { left: 10px; }
-.gallery-next { right: 10px; }
-
-.gallery-count {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  z-index: 3;
-  padding: 4px 10px;
-  border-radius: 30px;
-  background: rgba(16,33,59,.85);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 750;
-}
-
-.card-label {
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 2;
-  max-width: calc(100% - 26px);
-  padding: 6px 10px;
-  border: 1px solid rgba(255,255,255,.3);
-  border-radius: 8px;
-  background: rgba(16,33,59,.88);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.card-body {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  min-width: 0;
-  padding: 20px;
-}
-
-.card h3 {
-  margin: 0 0 12px;
-  color: var(--navy);
-  font-size: 21px;
-  line-height: 1.32;
-  font-weight: 850;
-  overflow-wrap: anywhere;
-}
-
-.card-description {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  margin: 0 0 16px;
-  color: var(--muted);
-  font-size: 13.5px;
-  line-height: 1.75;
-  white-space: pre-line;
-  overflow-wrap: anywhere;
-}
-
-.meta,
-.tour-highlight {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin: 0 0 15px;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 9px;
-  border: 1px solid #e4eaf2;
-  border-radius: 8px;
-  background: #f5f7fb;
-  color: #40516a;
-  font-size: 11px;
-  font-weight: 750;
-  overflow-wrap: anywhere;
-}
-
-.tour-highlight .chip {
-  background: #fff7f0;
-  border-color: #f7dfca;
-  color: #8a4a16;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 12px;
-}
-
-.actions .btn {
-  min-height: 39px;
-  padding: 9px 12px;
-  font-size: 12px;
-}
-
-.empty {
-  grid-column: 1 / -1;
-  margin: 0;
-  padding: 24px;
-  border: 1px dashed #cdd7e5;
-  border-radius: 15px;
-  color: var(--muted);
-  background: #fff;
-}
-
-/* ================= ПРО МІСТО ================= */
-
-.split {
-  display: grid;
-  grid-template-columns: 1.15fr .85fr;
-  align-items: start;
-  gap: 28px;
-}
-
-.info-panel {
-  min-width: 0;
-  padding: clamp(22px,3vw,31px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: #fff;
-  box-shadow: var(--shadow);
-}
-
-.info-panel h3 {
-  margin: 0 0 12px;
-  color: var(--navy);
-  font-size: 21px;
-}
-
-.info-panel p {
-  margin: 0 0 14px;
-  color: var(--muted);
-}
-
-.long-text {
-  white-space: pre-line;
-  overflow-wrap: anywhere;
-  color: var(--muted);
-}
-
-/* ================= КОНТАКТИ ================= */
-
-.contact {
-  padding: clamp(45px,6vw,75px) 0;
-  background:
-    radial-gradient(circle at 90% 5%,rgba(54,89,130,.65),transparent 34%),
-    linear-gradient(135deg,#10213b,#0a172a);
-  color: #fff;
-  border-top: 5px solid var(--orange);
-}
-
-.contact h2,
-.contact h3 {
-  color: #fff;
-}
-
-.contact p {
-  color: #dce6f2;
-}
-
-.contact-layout {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 35px;
-}
-
-.contact-list {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.contact-item {
-  min-width: 0;
-  padding: 14px;
-  border: 1px solid #ffffff20;
-  border-radius: 13px;
-  background: #ffffff09;
-}
-
-.contact-item strong {
-  display: block;
-  margin-bottom: 4px;
-  color: #fff;
-  font-size: 12px;
-}
-
-.contact-item a,
-.contact-item span {
-  color: #dce6f2;
-  font-size: 13px;
-  overflow-wrap: anywhere;
-  text-decoration: none;
-}
-
-.contact-item a:hover {
-  color: var(--orange-light);
-}
-
-.social-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.social-link {
-  padding: 9px 13px;
-  border: 1px solid #ffffff30;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 13px;
-  text-decoration: none;
-}
-
-.social-link:hover {
-  background: #ffffff15;
-}
-
-.contact-card {
-  align-self: start;
-  padding: 27px;
-  border: 1px solid #ffffff20;
-  border-radius: 18px;
-  background: #ffffff0c;
-}
-
-.contact-card h3 {
-  margin: 0 0 12px;
-  font-size: 25px;
-}
-
-/* ================= ПІДВАЛ ================= */
-
-.footer {
-  padding: 24px 0;
-  background: #091326;
-  color: #cbd5e1;
-  font-size: 13px;
-}
-
-.footer-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.footer-brand {
-  color: #fff;
-  font-weight: 850;
-}
-
-.footer-tagline {
-  color: var(--orange-light);
-}
-
-#load-status {
-  margin: 0;
-  padding: 7px 0;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.back-top {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 50;
-  width: 45px;
-  height: 45px;
-  display: none;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  background: var(--orange);
-  color: #fff;
-  font-size: 23px;
-  cursor: pointer;
-  box-shadow: 0 5px 15px #10213b30;
-}
-
-.back-top.visible {
-  display: grid;
-}
-
-/* ================= АДАПТИВНІСТЬ ================= */
-
-@media (max-width: 1180px) {
-  .header-inner { gap: 10px; }
-  .brand-name { font-size: 12px; }
-  .header-right { gap: 5px; }
-  .nav-link { padding: 8px 6px; font-size: 11px; }
-  .travel-menu-button { padding: 9px; font-size: 11px; }
-  .cards { gap: 17px; }
-}
-
-@media (max-width: 990px) {
-  :root { --header-height: 66px; }
-
-  .menu-toggle {
-    display: grid;
-  }
-
-  .header-inner {
-    min-height: var(--header-height);
-  }
-
-  .header-right {
-    position: fixed;
-    top: var(--header-height);
-    left: 0;
-    right: 0;
-    display: none;
-    align-items: stretch;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 12px;
-    max-height: calc(100dvh - var(--header-height));
-    overflow-y: auto;
-    padding: 16px 20px 22px;
-    background: var(--navy);
-    border-bottom: 2px solid var(--orange);
-    box-shadow: 0 14px 25px #06132630;
-  }
-
-  .header-right.open {
-    display: flex;
-  }
-
-  .main-nav {
-    display: grid;
-    grid-template-columns: repeat(3,minmax(0,1fr));
-    gap: 6px;
-  }
-
-  .nav-link {
-    min-height: 42px;
-    justify-content: center;
-    padding: 9px 8px;
-    border: 1px solid #ffffff18;
-    font-size: 12px;
-    text-align: center;
-    white-space: normal;
-  }
-
-  .travel-menu {
-    width: 100%;
-  }
-
-  .travel-menu-button {
-    width: 100%;
-    min-height: 45px;
-    justify-content: center;
-    font-size: 13px;
-  }
-
-  .travel-dropdown {
-    position: static;
-    display: none;
-    width: 100%;
-    margin-top: 8px;
-    box-shadow: none;
-    transform: none;
-  }
-
-  .travel-dropdown.open {
-    display: block;
-  }
-
-  .cards {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-
-  .travel-shortcuts {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-
-  .split,
-  .contact-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    min-height: 470px;
-    padding: 65px 0 75px;
-  }
-
-  .section-top-link {
-    flex-basis: 190px;
-    width: 190px;
-  }
-}
-
-@media (max-width: 600px) {
-  .container {
-    width: calc(100% - 28px);
-  }
-
-  .brand-mark {
-    width: 38px;
-    height: 38px;
-    font-size: 20px;
-  }
-
-  .brand-name { font-size: 12px; }
-  .brand-name span { font-size: 9px; }
-
-  .header-right {
-    padding: 14px;
-  }
-
-  .main-nav {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-
-  .nav-link {
-    min-height: 42px;
-    font-size: 12px;
-  }
-
-  .hero {
-    min-height: 450px;
-    padding: 54px 0 62px;
-  }
-
-  .hero h1 {
-    font-size: clamp(36px,10vw,49px);
-    letter-spacing: -1.1px;
-  }
-
-  .hero p {
-    font-size: 15px;
-    line-height: 1.75;
-  }
-
-  .hero-actions {
-    gap: 9px;
-  }
-
-  .hero-actions .btn {
-    flex: 1 1 100%;
-    max-width: 340px;
-  }
-
-  .page-section {
-    padding: 43px 0;
-  }
-
-  .section-heading {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px;
-  }
-
-  .section-top-link {
-    flex: 0 0 auto;
-    width: 100%;
-    min-height: 48px;
-    padding: 12px 15px;
-    font-size: 14px;
-  }
-
-  .cards {
-    grid-template-columns: 1fr;
-    gap: 17px;
-    margin-top: 22px;
-  }
-
-  .travel-shortcuts {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .travel-shortcut {
-    padding: 18px;
-  }
-
-  .card-media {
-    height: 225px;
-    flex-basis: 225px;
-  }
-
-  .card-body {
-    padding: 18px;
-  }
-
-  .card h3 {
-    font-size: 20px;
-  }
-
-  .card-description {
-    -webkit-line-clamp: 5;
-  }
-
-  .actions .btn {
-    flex: 1 1 auto;
-  }
-
-  .contact-list {
-    grid-template-columns: 1fr;
-  }
-
-  .info-panel,
-  .contact-card {
-    padding: 19px;
-  }
-
-  .footer-row {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-
-  *,
-  *::before,
-  *::after {
-    transition: none !important;
-  }
+  --navy:#10213b;
+  --navy-light:#193657;
+  --orange:#f58220;
+  --orange-light:#ffb36d;
+  --bg:#f4f6fa;
+  --white:#fff;
+  --text:#19283c;
+  --muted:#69778b;
+  --line:#e0e6ef;
+  --radius:18px;
+  --shadow:0 8px 28px rgba(16,33,59,.07);
+  --shadow-hover:0 18px 42px rgba(16,33,59,.14);
+  --header-height:72px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:#fff;line-height:1.65}
+body.menu-open{overflow:hidden}
+a{color:inherit}
+button{font:inherit}
+img{max-width:100%}
+button:focus-visible,a:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.container{width:min(1200px,calc(100% - 40px));margin-inline:auto}
+section[id]{scroll-margin-top:90px}
+
+/* Шапка */
+.site-header{position:sticky;top:0;z-index:1000;color:#fff;background:rgba(16,33,59,.98);border-bottom:2px solid var(--orange);box-shadow:0 5px 24px #05102024;backdrop-filter:blur(14px)}
+.header-inner{min-height:var(--header-height);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0;color:#fff;text-decoration:none}
+.brand-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:var(--orange);font-size:22px}
+.brand-name{font-size:14px;font-weight:900;line-height:1.2;letter-spacing:.3px}
+.brand-name span{display:block;margin-top:4px;color:var(--orange-light);font-size:9px;letter-spacing:1.5px}
+.header-right{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-width:0}
+.main-nav{display:flex;align-items:center;gap:2px}
+.nav-link{display:inline-flex;align-items:center;justify-content:center;padding:9px 8px;border-radius:8px;color:#edf2f8;text-decoration:none;font-size:12px;font-weight:750;white-space:nowrap;transition:background .2s,color .2s}
+.nav-link:hover,.nav-link.active{color:var(--orange-light);background:#ffffff17}
+.travel-menu{position:relative;flex-shrink:0}
+.travel-menu-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:9px 11px;border:1px solid #ffffff33;border-radius:9px;background:#ffffff0f;color:#fff;font-size:12px;font-weight:800;white-space:nowrap;cursor:pointer}
+.travel-menu-button:hover,.travel-menu-button[aria-expanded=true]{background:#ffffff20;border-color:var(--orange)}
+.chevron{display:inline-block;color:var(--orange-light);transition:transform .2s}
+.travel-menu-button[aria-expanded=true] .chevron{transform:rotate(180deg)}
+.travel-dropdown{position:absolute;top:calc(100% + 12px);right:0;width:275px;padding:9px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 18px 45px #06132633;visibility:hidden;opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s}
+.travel-dropdown.open{visibility:visible;opacity:1;pointer-events:auto;transform:translateY(0)}
+.travel-dropdown a{display:flex;align-items:center;gap:11px;padding:11px;border-radius:9px;color:var(--navy);text-decoration:none;font-size:13px;font-weight:750}
+.travel-dropdown a:hover{background:#fff3e8;color:#a64c06}
+.dropdown-icon{width:34px;height:34px;display:grid;place-items:center;flex-shrink:0;border-radius:10px;background:#f1f4f9;font-size:17px}
+.menu-toggle{display:none;width:42px;height:42px;place-items:center;flex-shrink:0;border:1px solid #ffffff30;border-radius:10px;background:#ffffff0b;color:#fff;font-size:22px;cursor:pointer}
+
+/* Кнопки */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:10px;background:var(--orange);color:#fff;text-decoration:none;text-align:center;font-size:13px;font-weight:800;line-height:1.4;cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s}
+.btn:hover{background:#e97010;transform:translateY(-2px);box-shadow:0 8px 20px #f5822033}
+.btn.secondary{background:#edf2f8;border-color:#dce5f0;color:var(--navy);box-shadow:none}
+.btn.secondary:hover{background:#e1eaf5}
+.btn.dark{background:var(--navy);color:#fff}
+.btn.dark:hover{background:var(--navy-light)}
+
+/* Головний банер */
+.hero{position:relative;isolation:isolate;min-height:520px;display:flex;align-items:center;overflow:hidden;padding:72px 0 82px;color:#fff;background-color:var(--navy);background-image:linear-gradient(90deg,#081426f0,#10213bbf 52%,#10213b4d),linear-gradient(135deg,#426b91,#10213b);background-size:cover;background-position:center}
+.hero::before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 80% 30%,#f5822024,transparent 38%);pointer-events:none}
+.hero::after{content:"";position:absolute;bottom:0;left:0;width:35%;height:5px;background:var(--orange)}
+.hero-content{position:relative;z-index:1}
+.eyebrow{margin:0 0 12px;color:var(--orange);font-size:12px;font-weight:850;letter-spacing:2px;text-transform:uppercase;line-height:1.5}
+.hero .eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;color:var(--orange-light)}
+.hero .eyebrow::before{content:"";width:28px;height:2px;flex-shrink:0;background:var(--orange)}
+h1,h2,h3{letter-spacing:-.035em}
+.hero h1{max-width:820px;margin:0 0 22px;color:#fff;font-size:clamp(38px,5.5vw,70px);line-height:1.07;font-weight:900}
+.hero p{max-width:670px;margin:0 0 27px;color:#e4ebf5;font-size:clamp(16px,1.8vw,19px);line-height:1.8}
+.hero-actions{display:flex;flex-wrap:wrap;gap:11px}
+.hero .btn.secondary{background:#ffffff1a;border-color:#ffffff59;color:#fff}
+.hero .btn.secondary:hover{background:#ffffff33}
+
+/* Секції */
+.page-section{padding:clamp(48px,6vw,76px) 0}
+.page-section.alt{background:var(--bg)}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:10px}
+.heading-copy{flex:1 1 auto;min-width:0}
+h2{margin:0 0 13px;color:var(--navy);font-size:clamp(28px,3.4vw,42px);line-height:1.17;font-weight:900}
+.intro{max-width:790px;margin:0;color:var(--muted);font-size:15px}
+.section-top-link{display:inline-flex;align-items:center;justify-content:center;gap:10px;flex:0 0 205px;width:205px;min-height:50px;padding:12px 15px;border:2px solid var(--orange);border-radius:11px;background:var(--orange);color:#fff;text-align:center;text-decoration:none;font-size:14px;font-weight:850;line-height:1.35;transition:background .2s,transform .2s,box-shadow .2s}
+.section-top-link:hover{background:var(--navy);border-color:var(--navy);transform:translateY(-2px);box-shadow:0 8px 18px #10213b29}
+
+/* Картки */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:22px;margin-top:28px}
+.travel-shortcuts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:28px}
+.travel-shortcut{display:flex;flex-direction:column;align-items:flex-start;gap:9px;min-width:0;padding:21px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s}
+.travel-shortcut:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:var(--orange)}
+.travel-shortcut>span{display:grid;place-items:center;width:45px;height:45px;border-radius:12px;background:#fff1e5;font-size:23px}
+.travel-shortcut strong{color:var(--navy);font-size:17px;line-height:1.35}
+.travel-shortcut small{color:var(--muted);font-size:13px;line-height:1.55}
+.travel-shortcut b{margin-top:auto;padding-top:7px;color:#b95a0a;font-size:12px}
+.card{display:flex;flex-direction:column;height:100%;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);transition:transform .24s,box-shadow .24s,border-color .24s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:#c8d4e4}
+.card-media{position:relative;height:225px;flex:0 0 225px;overflow:hidden;background:#e8edf4}
+.card-media>img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .45s}
+.card:hover .card-media>img{transform:scale(1.04)}
+.placeholder{display:grid;place-items:center;width:100%;height:100%;background:linear-gradient(135deg,var(--navy),#284a70);color:var(--orange);font-size:49px}
+.gallery-arrow{position:absolute;top:50%;z-index:3;transform:translateY(-50%);width:37px;height:37px;border:1px solid #ffffff55;border-radius:50%;background:#10213bd9;color:#fff;font-size:24px;line-height:1;cursor:pointer}
+.gallery-arrow:hover{background:var(--orange)}
+.gallery-prev{left:10px}.gallery-next{right:10px}
+.gallery-count{position:absolute;right:10px;bottom:10px;z-index:3;padding:4px 10px;border-radius:30px;background:#10213bd9;color:#fff;font-size:11px;font-weight:750}
+.card-label{position:absolute;top:13px;left:13px;z-index:2;max-width:calc(100% - 26px);padding:6px 10px;border:1px solid #ffffff4d;border-radius:8px;background:#10213be0;color:#fff;font-size:11px;font-weight:800}
+.card-body{display:flex;flex:1 1 auto;flex-direction:column;min-width:0;padding:20px}
+.card h3{margin:0 0 12px;color:var(--navy);font-size:21px;line-height:1.32;font-weight:850;overflow-wrap:anywhere}
+.card-description{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden;margin:0 0 16px;color:var(--muted);font-size:13.5px;line-height:1.75;white-space:pre-line;overflow-wrap:anywhere}
+.meta,.tour-highlight{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 15px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid #e4eaf2;border-radius:8px;background:#f5f7fb;color:#40516a;font-size:11px;font-weight:750;overflow-wrap:anywhere}
+.tour-highlight .chip{background:#fff7f0;border-color:#f7dfca;color:#8a4a16}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:12px}
+.actions .btn{min-height:39px;padding:9px 12px;font-size:12px}
+.empty{grid-column:1/-1;margin:0;padding:24px;border:1px dashed #cdd7e5;border-radius:15px;color:var(--muted);background:#fff}
+
+/* Про місто */
+.split{display:grid;grid-template-columns:1.15fr .85fr;align-items:start;gap:28px}
+.info-panel{min-width:0;padding:clamp(22px,3vw,31px);border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}
+.info-panel h3{margin:0 0 12px;color:var(--navy);font-size:21px}
+.info-panel p{margin:0 0 14px;color:var(--muted)}
+.long-text{white-space:pre-line;overflow-wrap:anywhere;color:var(--muted)}
+
+/* Контакти */
+.contact{padding:clamp(45px,6vw,75px) 0;background:radial-gradient(circle at 90% 5%,#365982a6,transparent 34%),linear-gradient(135deg,#10213b,#0a172a);color:#fff;border-top:5px solid var(--orange)}
+.contact h2,.contact h3{color:#fff}
+.contact p{color:#dce6f2}
+.contact-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:35px}
+.contact-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:20px}
+.contact-item{min-width:0;padding:14px;border:1px solid #ffffff20;border-radius:13px;background:#ffffff09}
+.contact-item strong{display:block;margin-bottom:4px;color:#fff;font-size:12px}
+.contact-item a,.contact-item span{color:#dce6f2;font-size:13px;overflow-wrap:anywhere;text-decoration:none}
+.contact-item a:hover{color:var(--orange-light)}
+.social-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.social-link{padding:9px 13px;border:1px solid #ffffff30;border-radius:10px;color:#fff;font-size:13px;text-decoration:none}
+.social-link:hover{background:#ffffff26}
+.contact-card{align-self:start;padding:27px;border:1px solid #ffffff20;border-radius:18px;background:#ffffff0c}
+.contact-card h3{margin:0 0 12px;font-size:25px}
+
+/* Підвал */
+.footer{padding:24px 0;background:#091326;color:#cbd5e1;font-size:13px}
+.footer-row{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.footer-brand{color:#fff;font-weight:850}
+.footer-tagline{color:var(--orange-light)}
+#load-status{margin:0;padding:7px 0;color:var(--muted);font-size:12px}
+.back-top{position:fixed;right:18px;bottom:18px;z-index:50;width:45px;height:45px;display:none;place-items:center;border:0;border-radius:50%;background:var(--orange);color:#fff;font-size:23px;cursor:pointer;box-shadow:0 5px 15px #10213b30}
+.back-top.visible{display:grid}
+
+/* Адаптивність */
+@media(max-width:1180px){
+  .header-inner{gap:10px}
+  .brand-name{font-size:12px}
+  .header-right{gap:5px}
+  .nav-link{padding:8px 6px;font-size:11px}
+  .travel-menu-button{padding:9px;font-size:11px}
+  .cards{gap:17px}
+}
+@media(max-width:990px){
+  :root{--header-height:66px}
+  .menu-toggle{display:grid}
+  .header-inner{min-height:var(--header-height)}
+  .header-right{position:fixed;top:var(--header-height);left:0;right:0;display:none;align-items:stretch;flex-direction:column;justify-content:flex-start;gap:12px;max-height:calc(100dvh - var(--header-height));overflow-y:auto;padding:16px 20px 22px;background:var(--navy);border-bottom:2px solid var(--orange);box-shadow:0 14px 25px #06132630}
+  .header-right.open{display:flex}
+  .main-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .nav-link{min-height:42px;justify-content:center;padding:9px 8px;border:1px solid #ffffff18;font-size:12px;text-align:center;white-space:normal}
+  .travel-menu{width:100%}
+  .travel-menu-button{width:100%;min-height:45px;justify-content:center;font-size:13px}
+  .travel-dropdown{position:static;display:none;width:100%;margin-top:8px;box-shadow:none;transform:none}
+  .travel-dropdown.open{display:block}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .travel-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .split,.contact-layout{grid-template-columns:1fr}
+  .hero{min-height:470px;padding:65px 0 75px}
+  .section-top-link{flex-basis:190px;width:190px}
+}
+@media(max-width:600px){
+  .container{width:calc(100% - 28px)}
+  .brand-mark{width:38px;height:38px;font-size:20px}
+  .brand-name{font-size:12px}
+  .brand-name span{font-size:9px}
+  .header-right{padding:14px}
+  .main-nav{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nav-link{min-height:42px;font-size:12px}
+  .hero{min-height:450px;padding:54px 0 62px}
+  .hero h1{font-size:clamp(36px,10vw,49px);letter-spacing:-1.1px}
+  .hero p{font-size:15px;line-height:1.75}
+  .hero-actions{gap:9px}
+  .hero-actions .btn{flex:1 1 100%;max-width:340px}
+  .page-section{padding:43px 0}
+  .section-heading{flex-direction:column;align-items:stretch;gap:15px}
+  .section-top-link{flex:auto;width:100%;min-height:48px;padding:12px 15px;font-size:14px}
+  .cards{grid-template-columns:1fr;gap:17px;margin-top:22px}
+  .travel-shortcuts{grid-template-columns:1fr;gap:12px}
+  .travel-shortcut{padding:18px}
+  .card-media{height:225px;flex-basis:225px}
+  .card-body{padding:18px}
+  .card h3{font-size:20px}
+  .card-description{-webkit-line-clamp:5}
+  .actions .btn{flex:1 1 auto}
+  .contact-list{grid-template-columns:1fr}
+  .info-panel,.contact-card{padding:19px}
+  .footer-row{align-items:flex-start;flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important}
 }
 </style>
 </head>
 
 <body>
-
 <header class="site-header">
   <div class="container header-inner">
-
     <a class="brand" href="#home" aria-label="Звягель Туристичний — головна">
       <span class="brand-mark" aria-hidden="true">🧭</span>
-      <span class="brand-name">
-        ЗВЯГЕЛЬ
-        <span>ТУРИСТИЧНИЙ</span>
-      </span>
+      <span class="brand-name">ЗВЯГЕЛЬ<span>ТУРИСТИЧНИЙ</span></span>
     </a>
 
-    <button
-      class="menu-toggle"
-      id="menuToggle"
-      type="button"
-      aria-label="Відкрити меню"
-      aria-expanded="false"
-      aria-controls="headerRight"
-    >☰</button>
+    <button class="menu-toggle" id="menuToggle" type="button"
+      aria-label="Відкрити меню" aria-expanded="false" aria-controls="headerRight">☰</button>
 
     <div class="header-right" id="headerRight">
       <nav class="main-nav" aria-label="Головна навігація">
@@ -1188,33 +242,16 @@ h2 {
       </nav>
 
       <div class="travel-menu">
-        <button
-          type="button"
-          class="travel-menu-button"
-          id="travelMenuButton"
-          aria-expanded="false"
-          aria-controls="travelDropdown"
-        >
+        <button type="button" class="travel-menu-button" id="travelMenuButton"
+          aria-expanded="false" aria-controls="travelDropdown">
           ☰ Для мандрівника <span class="chevron" aria-hidden="true">⌄</span>
         </button>
 
         <div class="travel-dropdown" id="travelDropdown">
-          <a href="catalog.html?section=food">
-            <span class="dropdown-icon" aria-hidden="true">🍽️</span>
-            <span>Де поїсти?</span>
-          </a>
-          <a href="catalog.html?section=stay">
-            <span class="dropdown-icon" aria-hidden="true">🛏️</span>
-            <span>Де переночувати?</span>
-          </a>
-          <a href="getting-here.html">
-            <span class="dropdown-icon" aria-hidden="true">🚌</span>
-            <span>Як дістатися?</span>
-          </a>
-          <a href="map.html">
-            <span class="dropdown-icon" aria-hidden="true">🗺️</span>
-            <span>Туристична карта</span>
-          </a>
+          <a href="./catalog.html?section=food"><span class="dropdown-icon">🍽️</span><span>Де поїсти?</span></a>
+          <a href="./catalog.html?section=stay"><span class="dropdown-icon">🛏️</span><span>Де переночувати?</span></a>
+          <a href="./gettingHere.html"><span class="dropdown-icon">🚌</span><span>Як дістатися?</span></a>
+          <a href="./map.html"><span class="dropdown-icon">🗺️</span><span>Туристична карта</span></a>
         </div>
       </div>
     </div>
@@ -1222,20 +259,11 @@ h2 {
 </header>
 
 <main>
-
-  <!-- ГОЛОВНА -->
-
   <section class="hero" id="home">
     <div class="container hero-content">
       <div class="eyebrow">Твоя наступна подорож починається тут</div>
-
       <h1 id="hero-title">Звягель — місто історії, легенд і відкриттів</h1>
-
-      <p id="hero-subtitle">
-        Відчуйте атмосферу літописного Возвягля, відкрийте спадщину
-        Лесі Українки та досліджуйте місто над Случчю.
-      </p>
-
+      <p id="hero-subtitle">Відчуйте атмосферу літописного Возвягля, відкрийте спадщину Лесі Українки та досліджуйте місто над Случчю.</p>
       <div class="hero-actions">
         <a class="btn" href="#tours">Обрати екскурсію ↗</a>
         <a class="btn secondary" href="#places">Відкрити місто</a>
@@ -1243,32 +271,20 @@ h2 {
     </div>
   </section>
 
-  <!-- ПРО МІСТО -->
-
   <section class="page-section alt" id="about">
     <div class="container split">
       <div>
         <div class="eyebrow">Місто з історією</div>
         <h2 id="about-title">Звягель — місто з глибоким корінням</h2>
-
-        <div id="about-text" class="long-text">
-          Звягель має багату історію, археологічну спадщину та особливу
-          атмосферу на берегах річки Случ. Місто пов’язане з іменем
-          Лесі Українки та родиною Косачів.
-        </div>
+        <div id="about-text" class="long-text">Звягель має багату історію, археологічну спадщину та особливу атмосферу на берегах річки Случ. Місто пов’язане з іменем Лесі Українки та родиною Косачів.</div>
       </div>
-
       <div class="info-panel">
         <h3 id="about-box-title">Відчуй код Звягеля</h3>
-        <p id="about-box-text">
-          Археологія, слово, сила та пам’ять. Досліджуй минуле й відкривай нові маршрути.
-        </p>
+        <p id="about-box-text">Археологія, слово, сила та пам’ять. Досліджуй минуле й відкривай нові маршрути.</p>
         <a class="btn secondary" href="#places">Досліджувати місто →</a>
       </div>
     </div>
   </section>
-
-  <!-- ЕКСКУРСІЇ -->
 
   <section class="page-section" id="tours">
     <div class="container">
@@ -1276,23 +292,13 @@ h2 {
         <div class="heading-copy">
           <div class="eyebrow">Відкривай разом з нами</div>
           <h2 id="tours-title">Екскурсії Звягелем</h2>
-          <p class="intro" id="tours-intro">
-            Обирайте маршрут, дізнавайтеся подробиці та записуйтеся до туристичного центру.
-          </p>
+          <p class="intro" id="tours-intro">Обирайте маршрут, дізнавайтеся подробиці та записуйтеся до туристичного центру.</p>
         </div>
-
-        <a class="section-top-link" href="catalog.html?section=tours">
-          Усі екскурсії <span aria-hidden="true">→</span>
-        </a>
+        <a class="section-top-link" href="./catalog.html?section=tours">Усі екскурсії <span>→</span></a>
       </div>
-
-      <div id="tours-list" class="cards">
-        <p class="empty">Завантаження екскурсій…</p>
-      </div>
+      <div id="tours-list" class="cards"><p class="empty">Завантаження екскурсій…</p></div>
     </div>
   </section>
-
-  <!-- ЦІКАВИНКИ -->
 
   <section class="page-section alt" id="places">
     <div class="container">
@@ -1300,23 +306,13 @@ h2 {
         <div class="heading-copy">
           <div class="eyebrow">Маршрути та відкриття</div>
           <h2 id="places-title">Цікавинки Звягеля</h2>
-          <p class="intro" id="places-intro">
-            Історичні пам’ятки, культурні місця та особливі куточки міста.
-          </p>
+          <p class="intro" id="places-intro">Історичні пам’ятки, культурні місця та особливі куточки міста.</p>
         </div>
-
-        <a class="section-top-link" href="catalog.html?section=places">
-          Усі цікавинки <span aria-hidden="true">→</span>
-        </a>
+        <a class="section-top-link" href="./catalog.html?section=places">Усі цікавинки <span>→</span></a>
       </div>
-
-      <div id="places-list" class="cards">
-        <p class="empty">Завантаження цікавинок…</p>
-      </div>
+      <div id="places-list" class="cards"><p class="empty">Завантаження цікавинок…</p></div>
     </div>
   </section>
-
-  <!-- НОВИНИ -->
 
   <section class="page-section" id="news">
     <div class="container">
@@ -1324,23 +320,13 @@ h2 {
         <div class="heading-copy">
           <div class="eyebrow">Будьте в курсі</div>
           <h2 id="news-title">Новини та оголошення</h2>
-          <p class="intro" id="news-intro">
-            Новини туристичного центру та події міста.
-          </p>
+          <p class="intro" id="news-intro">Новини туристичного центру та події міста.</p>
         </div>
-
-        <a class="section-top-link" href="catalog.html?section=news">
-          Усі новини <span aria-hidden="true">→</span>
-        </a>
+        <a class="section-top-link" href="./catalog.html?section=news">Усі новини <span>→</span></a>
       </div>
-
-      <div id="news-list" class="cards">
-        <p class="empty">Завантаження новин…</p>
-      </div>
+      <div id="news-list" class="cards"><p class="empty">Завантаження новин…</p></div>
     </div>
   </section>
-
-  <!-- ПРОЄКТИ -->
 
   <section class="page-section alt" id="projects">
     <div class="container">
@@ -1348,23 +334,13 @@ h2 {
         <div class="heading-copy">
           <div class="eyebrow">Ідеї, що оживляють місто</div>
           <h2>Наші проєкти</h2>
-          <p class="intro">
-            Туристичні ініціативи, культурні події та нові способи відкривати Звягель.
-          </p>
+          <p class="intro">Туристичні ініціативи, культурні події та нові способи відкривати Звягель.</p>
         </div>
-
-        <a class="section-top-link" href="catalog.html?section=projects">
-          Усі проєкти <span aria-hidden="true">→</span>
-        </a>
+        <a class="section-top-link" href="./catalog.html?section=projects">Усі проєкти <span>→</span></a>
       </div>
-
-      <div id="projects-list" class="cards">
-        <p class="empty">Завантаження проєктів…</p>
-      </div>
+      <div id="projects-list" class="cards"><p class="empty">Завантаження проєктів…</p></div>
     </div>
   </section>
-
-  <!-- ІНФОРМАЦІЯ ДЛЯ МАНДРІВНИКА -->
 
   <section class="page-section" id="travel-info">
     <div class="container">
@@ -1372,134 +348,65 @@ h2 {
         <div class="heading-copy">
           <div class="eyebrow">Усе необхідне для подорожі</div>
           <h2>Плануйте візит до Звягеля</h2>
-          <p class="intro">
-            Знайдіть заклад харчування, місце для ночівлі, інформацію про дорогу
-            або туристичну карту міста.
-          </p>
+          <p class="intro">Знайдіть заклад харчування, місце для ночівлі, інформацію про дорогу або туристичну карту міста.</p>
         </div>
       </div>
 
       <div class="travel-shortcuts">
-        <a class="travel-shortcut" href="catalog.html?section=food">
-          <span aria-hidden="true">🍽️</span>
-          <strong>Де поїсти?</strong>
-          <small>Кафе, ресторани та заклади харчування</small>
-          <b>Переглянути →</b>
-        </a>
-
-        <a class="travel-shortcut" href="catalog.html?section=stay">
-          <span aria-hidden="true">🛏️</span>
-          <strong>Де переночувати?</strong>
-          <small>Готелі та інші варіанти проживання</small>
-          <b>Переглянути →</b>
-        </a>
-
-        <a class="travel-shortcut" href="getting-here.html">
-          <span aria-hidden="true">🚌</span>
-          <strong>Як дістатися?</strong>
-          <small>Корисна інформація для планування дороги</small>
-          <b>Дізнатися більше →</b>
-        </a>
-
-        <a class="travel-shortcut" href="map.html">
-          <span aria-hidden="true">🗺️</span>
-          <strong>Туристична карта</strong>
-          <small>Історичні пам’ятки та цікаві місця міста</small>
-          <b>Відкрити карту →</b>
-        </a>
+        <a class="travel-shortcut" href="./catalog.html?section=food"><span>🍽️</span><strong>Де поїсти?</strong><small>Кафе, ресторани та заклади харчування</small><b>Переглянути →</b></a>
+        <a class="travel-shortcut" href="./catalog.html?section=stay"><span>🛏️</span><strong>Де переночувати?</strong><small>Готелі та інші варіанти проживання</small><b>Переглянути →</b></a>
+        <a class="travel-shortcut" href="./gettingHere.html"><span>🚌</span><strong>Як дістатися?</strong><small>Google Maps, розташування міста та побудова маршруту</small><b>Побудувати маршрут →</b></a>
+        <a class="travel-shortcut" href="./map.html"><span>🗺️</span><strong>Туристична карта</strong><small>Історичні пам’ятки та цікаві місця міста</small><b>Відкрити карту →</b></a>
       </div>
     </div>
   </section>
-
-  <!-- КОНТАКТИ -->
 
   <section class="contact" id="contacts">
     <div class="container contact-layout">
       <div>
         <div class="eyebrow">Завітайте до нас</div>
-
         <h2 id="contacts-title">Контакти туристичного центру</h2>
-
-        <p id="contact-extra">
-          Допоможемо відкрити Звягель, обрати екскурсію та спланувати подорож.
-        </p>
+        <p id="contact-extra">Допоможемо відкрити Звягель, обрати екскурсію та спланувати подорож.</p>
 
         <div class="contact-list">
-          <div class="contact-item">
-            <strong>Телефон</strong>
-            <a id="contact-phone" href="tel:+380673004470">+38 067 300 4470</a>
-          </div>
-
-          <div class="contact-item">
-            <strong>Адреса</strong>
-            <span id="contact-address">вул. Героїв Майдану, 13, Звягель</span>
-          </div>
-
-          <div class="contact-item">
-            <strong>Електронна пошта</strong>
-            <a id="contact-email" href="mailto:tic.zvyagel@gmail.com">tic.zvyagel@gmail.com</a>
-          </div>
-
-          <div class="contact-item">
-            <strong>Графік роботи</strong>
-            <span id="contact-hours">Пн–Пт, 09:00–18:00</span>
-          </div>
+          <div class="contact-item"><strong>Телефон</strong><a id="contact-phone" href="tel:+380673004470">+38 067 300 4470</a></div>
+          <div class="contact-item"><strong>Адреса</strong><span id="contact-address">вул. Героїв Майдану, 13, Звягель</span></div>
+          <div class="contact-item"><strong>Електронна пошта</strong><a id="contact-email" href="mailto:tic.zvyagel@gmail.com">tic.zvyagel@gmail.com</a></div>
+          <div class="contact-item"><strong>Графік роботи</strong><span id="contact-hours">Пн–Пт, 09:00–18:00</span></div>
         </div>
 
         <div class="social-links">
-          <a class="social-link"
-             id="contact-facebook"
-             href="https://www.facebook.com/zviaheltouristcentre/"
-             target="_blank"
-             rel="noopener noreferrer">Facebook ↗</a>
-
-          <a class="social-link"
-             id="contact-instagram"
-             href="https://www.instagram.com/zviahel_tourist_centr/"
-             target="_blank"
-             rel="noopener noreferrer">Instagram ↗</a>
+          <a class="social-link" id="contact-facebook" href="https://www.facebook.com/zviaheltouristcentre/" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
+          <a class="social-link" id="contact-instagram" href="https://www.instagram.com/zviahel_tourist_centr/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
         </div>
       </div>
 
       <div class="contact-card">
         <div class="eyebrow">Твоя наступна подорож</div>
         <h3>Звягель чекає на тебе!</h3>
-        <p>
-          Відкривай стародавні таємниці міста, знайомся зі спадщиною
-          Лесі Українки та досліджуй історію замку.
-        </p>
+        <p>Відкривай стародавні таємниці міста, знайомся зі спадщиною Лесі Українки та досліджуй історію замку.</p>
         <a class="btn" href="#tours">Обрати екскурсію →</a>
-        <a class="btn secondary" href="map.html" style="margin-top:9px">
-          Відкрити туристичну карту
-        </a>
+        <a class="btn secondary" href="./map.html" style="margin-top:9px">Відкрити туристичну карту</a>
+        <a class="btn secondary" href="./gettingHere.html" style="margin-top:9px">Як дістатися до Звягеля?</a>
       </div>
     </div>
   </section>
-
 </main>
 
 <footer class="footer">
   <div class="container footer-row">
-    <div>
-      <div class="footer-brand">© <span id="year"></span> Звягель Туристичний</div>
-      <div class="footer-tagline">Відкривай. Досліджуй. Повертайся.</div>
-    </div>
+    <div><div class="footer-brand">© <span id="year"></span> Звягель Туристичний</div><div class="footer-tagline">Відкривай. Досліджуй. Повертайся.</div></div>
     <div>Розробка сайту — <strong>Юрій Ігнатов</strong></div>
   </div>
 </footer>
 
 <button id="backTop" class="back-top" type="button" aria-label="Повернутися вгору">↑</button>
-<div class="container">
-  <p id="load-status" role="status" aria-live="polite"></p>
-</div>
+<div class="container"><p id="load-status" role="status" aria-live="polite"></p></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
 <script>
 "use strict";
-
-/* ================= FIREBASE ================= */
 
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
@@ -1512,27 +419,21 @@ const FIREBASE_CONFIG = {
 };
 
 const $ = id => document.getElementById(id);
-
 $("year").textContent = new Date().getFullYear();
 
 let db = null;
 let firebaseReady = false;
 
 try {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(FIREBASE_CONFIG);
-  }
-
+  if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
   db = firebase.firestore();
   firebaseReady = true;
 } catch (error) {
-  console.error("Помилка ініціалізації Firebase:", error);
-  $("load-status").textContent =
-    "Не вдалося підключитися до бази даних. Спробуйте оновити сторінку.";
+  console.error("Помилка Firebase:", error);
+  $("load-status").textContent = "Не вдалося підключитися до бази даних. Оновіть сторінку пізніше.";
 }
 
-/* ================= МОБІЛЬНЕ МЕНЮ ================= */
-
+/* Мобільне меню */
 const menuToggle = $("menuToggle");
 const headerRight = $("headerRight");
 const travelMenuButton = $("travelMenuButton");
@@ -1554,82 +455,57 @@ function closeHeaderMenu() {
 
 menuToggle.addEventListener("click", () => {
   const opened = headerRight.classList.toggle("open");
-
   menuToggle.setAttribute("aria-expanded", String(opened));
-  menuToggle.setAttribute(
-    "aria-label",
-    opened ? "Закрити меню" : "Відкрити меню"
-  );
+  menuToggle.setAttribute("aria-label", opened ? "Закрити меню" : "Відкрити меню");
   menuToggle.textContent = opened ? "✕" : "☰";
   document.body.classList.toggle("menu-open", opened);
-
   if (!opened) closeTravelDropdown();
 });
 
 travelMenuButton.addEventListener("click", event => {
   event.stopPropagation();
-
   const opened = travelDropdown.classList.toggle("open");
   travelMenuButton.setAttribute("aria-expanded", String(opened));
 });
 
 document.addEventListener("click", event => {
-  if (!event.target.closest(".travel-menu")) {
-    closeTravelDropdown();
-  }
+  if (!event.target.closest(".travel-menu")) closeTravelDropdown();
 });
 
 headerRight.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", () => {
-    if (window.innerWidth <= 990) {
-      closeHeaderMenu();
-    } else {
-      closeTravelDropdown();
-    }
+    if (window.innerWidth <= 990) closeHeaderMenu();
+    else closeTravelDropdown();
   });
 });
 
 window.addEventListener("resize", () => {
-  if (window.innerWidth > 990) {
-    closeHeaderMenu();
-  }
+  if (window.innerWidth > 990) closeHeaderMenu();
 });
 
 document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
-    closeHeaderMenu();
-  }
+  if (event.key === "Escape") closeHeaderMenu();
 });
 
-/* ================= АКТИВНИЙ ПУНКТ МЕНЮ ================= */
-
+/* Активний пункт меню */
 const navLinks = [...document.querySelectorAll(".nav-link")];
-
 const observedSections = navLinks
   .map(link => document.querySelector(link.getAttribute("href")))
   .filter(Boolean);
 
 if ("IntersectionObserver" in window) {
-  const sectionObserver = new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-
       navLinks.forEach(link => {
-        link.classList.toggle(
-          "active",
-          link.getAttribute("href") === "#" + entry.target.id
-        );
+        link.classList.toggle("active", link.getAttribute("href") === "#" + entry.target.id);
       });
     });
-  }, {
-    rootMargin: "-25% 0px -65% 0px"
-  });
-
-  observedSections.forEach(section => sectionObserver.observe(section));
+  }, {rootMargin:"-25% 0px -65% 0px"});
+  observedSections.forEach(section => observer.observe(section));
 }
 
-/* ================= ДОПОМІЖНІ ФУНКЦІЇ ================= */
-
+/* Допоміжні функції */
 function safeHttps(value) {
   try {
     const url = new URL(String(value || "").trim());
@@ -1641,36 +517,24 @@ function safeHttps(value) {
 
 function setText(id, value) {
   const element = $(id);
-
-  if (
-    element &&
-    typeof value === "string" &&
-    value.trim()
-  ) {
-    element.textContent = value;
-  }
+  if (element && typeof value === "string" && value.trim()) element.textContent = value;
 }
 
 function makeLink(text, href, className = "btn") {
   const link = document.createElement("a");
-
   link.className = className;
   link.textContent = text;
   link.href = href;
-
   if (href.startsWith("https://")) {
     link.target = "_blank";
     link.rel = "noopener noreferrer";
   }
-
   return link;
 }
 
-/* ================= ТЕКСТИ САЙТУ ================= */
-
+/* Тексти з Firestore */
 function applyHomepage(data) {
   const content = data.texts || data;
-
   setText("hero-title", content.hero_title || content.heroTitle);
   setText("hero-subtitle", content.hero_subtitle || content.heroSubtitle);
   setText("places-title", content.places_title || content.placesTitle);
@@ -1681,23 +545,15 @@ function applyHomepage(data) {
   setText("news-intro", content.news_intro || content.newsIntro);
 
   const image = safeHttps(content.hero_image || content.heroImage);
-
   if (image) {
     document.querySelector(".hero").style.backgroundImage =
-      'linear-gradient(90deg,rgba(8,20,38,.92),rgba(16,33,59,.68) 55%,rgba(16,33,59,.3)),url("' +
-      image + '")';
+      'linear-gradient(90deg,rgba(8,20,38,.92),rgba(16,33,59,.68) 55%,rgba(16,33,59,.3)),url("' + image + '")';
   }
 }
 
 function applyAbout(data) {
   setText("about-title", data.title);
-
-  setText(
-    "about-text",
-    data.body ||
-    [data.text1, data.text2].filter(Boolean).join("\n\n")
-  );
-
+  setText("about-text", data.body || [data.text1, data.text2].filter(Boolean).join("\n\n"));
   setText("about-box-title", data.box_title || data.boxTitle);
   setText("about-box-text", data.box_text || data.boxText);
 }
@@ -1710,63 +566,33 @@ function applyContacts(data) {
 
   if (data.phone) {
     const phone = String(data.phone);
-
     $("contact-phone").textContent = phone;
-    $("contact-phone").href =
-      "tel:" + phone.replace(/[^\d+]/g, "");
+    $("contact-phone").href = "tel:" + phone.replace(/[^\d+]/g, "");
   }
 
-  if (
-    data.email &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)
-  ) {
+  if (data.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     $("contact-email").textContent = data.email;
     $("contact-email").href = "mailto:" + data.email;
   }
 
   const facebook = safeHttps(data.facebook);
   const instagram = safeHttps(data.instagram);
-
   if (facebook) $("contact-facebook").href = facebook;
   if (instagram) $("contact-instagram").href = instagram;
 }
 
-/*
-  Інформація про те, як дістатися, відображається
-  на окремій сторінці getting-here.html.
-  Головна сторінка більше не звертається до відсутніх
-  елементів getting-here-text, google-map-link і directions-link.
-*/
-
-/* ================= ГАЛЕРЕЇ ФОТО ================= */
-
+/* Галереї */
 function placeholder(type) {
   const element = document.createElement("div");
   element.className = "placeholder";
-
-  const icons = {
-    tour: "🧭",
-    news: "📰",
-    food: "🍽️",
-    stay: "🛏️",
-    place: "🏰",
-    project: "✨"
-  };
-
+  const icons = {tour:"🧭",news:"📰",food:"🍽️",stay:"🛏️",place:"🏰",project:"✨"};
   element.textContent = icons[type] || "📍";
   return element;
 }
 
 function createGallery(data, type) {
-  const rawImages = [
-    data.image,
-    ...(Array.isArray(data.images) ? data.images : [])
-  ];
-
-  const urls = [...new Set(
-    rawImages.map(safeHttps).filter(Boolean)
-  )];
-
+  const rawImages = [data.image, ...(Array.isArray(data.images) ? data.images : [])];
+  const urls = [...new Set(rawImages.map(safeHttps).filter(Boolean))];
   const media = document.createElement("div");
   media.className = "card-media";
 
@@ -1782,8 +608,7 @@ function createGallery(data, type) {
 
   function showImage(index) {
     image.src = urls[index];
-    image.alt =
-      (data.title || "Звягель") + " — фото " + (index + 1);
+    image.alt = (data.title || "Звягель") + " — фото " + (index + 1);
   }
 
   image.onerror = () => {
@@ -1794,15 +619,7 @@ function createGallery(data, type) {
   showImage(0);
   media.appendChild(image);
 
-  const labels = {
-    tour: "ЕКСКУРСІЯ",
-    news: "НОВИНИ",
-    food: "ДЕ ПОЇСТИ",
-    stay: "ПРОЖИВАННЯ",
-    place: "ЦІКАВИНКА",
-    project: "ПРОЄКТ"
-  };
-
+  const labels = {tour:"ЕКСКУРСІЯ",news:"НОВИНИ",food:"ДЕ ПОЇСТИ",stay:"ПРОЖИВАННЯ",place:"ЦІКАВИНКА",project:"ПРОЄКТ"};
   const label = document.createElement("span");
   label.className = "card-label";
   label.textContent = labels[type] || "ЗВЯГЕЛЬ";
@@ -1810,7 +627,6 @@ function createGallery(data, type) {
 
   if (urls.length > 1) {
     let active = 0;
-
     const count = document.createElement("span");
     count.className = "gallery-count";
     count.textContent = "1 / " + urls.length;
@@ -1821,66 +637,38 @@ function createGallery(data, type) {
       count.textContent = (active + 1) + " / " + urls.length;
     }
 
-    function createArrow(symbol, direction, ariaLabel, step) {
+    function arrow(symbol, direction, labelText, step) {
       const button = document.createElement("button");
-
       button.type = "button";
       button.className = "gallery-arrow " + direction;
       button.textContent = symbol;
-      button.setAttribute("aria-label", ariaLabel);
-
+      button.setAttribute("aria-label", labelText);
       button.addEventListener("click", event => {
         event.preventDefault();
         event.stopPropagation();
         update(step);
       });
-
       return button;
     }
 
     media.append(
-      createArrow("‹", "gallery-prev", "Попереднє фото", -1),
-      createArrow("›", "gallery-next", "Наступне фото", 1),
+      arrow("‹","gallery-prev","Попереднє фото",-1),
+      arrow("›","gallery-next","Наступне фото",1),
       count
     );
   }
-
   return media;
 }
 
-/* ================= КАРТКИ КОНТЕНТУ ================= */
-
+/* Картки */
 function getDescription(data, type) {
-  if (type === "news") {
-    return data.summary ||
-      data.shortDescription ||
-      data.description ||
-      data.body || "";
-  }
-
-  if (type === "project") {
-    return data.summary ||
-      data.shortDescription ||
-      data.description ||
-      data.body ||
-      data.subtitle || "";
-  }
-
-  return data.subtitle ||
-    data.shortDescription ||
-    data.description ||
-    data.summary || "";
+  if (type === "news") return data.summary || data.shortDescription || data.description || data.body || "";
+  if (type === "project") return data.summary || data.shortDescription || data.description || data.body || data.subtitle || "";
+  return data.subtitle || data.shortDescription || data.description || data.summary || "";
 }
 
 function addChip(parent, text) {
-  if (
-    text === undefined ||
-    text === null ||
-    String(text).trim() === ""
-  ) {
-    return;
-  }
-
+  if (text === undefined || text === null || String(text).trim() === "") return;
   const chip = document.createElement("span");
   chip.className = "chip";
   chip.textContent = String(text);
@@ -1889,9 +677,7 @@ function addChip(parent, text) {
 
 function makePhone(value) {
   const match = String(value || "").match(/\+?[\d\s().-]{9,}/);
-
   if (!match) return "";
-
   const phone = match[0].replace(/[^\d+]/g, "");
   return phone.replace(/\D/g, "").length >= 10 ? phone : "";
 }
@@ -1899,35 +685,24 @@ function makePhone(value) {
 function renderCards(rootId, sourceDocs, type, limit) {
   const root = $(rootId);
   if (!root) return;
-
   root.replaceChildren();
 
   let docs = sourceDocs.filter(data => data.published === true);
-
   if (type === "news") {
-    docs.sort((a, b) => {
-      const dateA = String(a.date || a.createdAt || "");
-      const dateB = String(b.date || b.createdAt || "");
-      return dateB.localeCompare(dateA);
-    });
+    docs.sort((a,b) => String(b.date || b.createdAt || "").localeCompare(String(a.date || a.createdAt || "")));
   }
-
   docs = docs.slice(0, limit);
 
   if (!docs.length) {
     const empty = document.createElement("p");
     empty.className = "empty";
-
     const messages = {
-      tour: "Наразі екскурсії ще не додано. Слідкуйте за оновленнями туристичного центру.",
-      place: "Інформація про цікаві місця незабаром з’явиться.",
-      news: "Нових публікацій поки немає. Слідкуйте за оновленнями.",
-      project: "Інформація про проєкти незабаром з’явиться."
+      tour:"Наразі екскурсії ще не додано. Слідкуйте за оновленнями туристичного центру.",
+      place:"Інформація про цікаві місця незабаром з’явиться.",
+      news:"Нових публікацій поки немає. Слідкуйте за оновленнями.",
+      project:"Інформація про проєкти незабаром з’явиться."
     };
-
-    empty.textContent =
-      messages[type] || "Інформація незабаром з’явиться.";
-
+    empty.textContent = messages[type] || "Інформація незабаром з’явиться.";
     root.appendChild(empty);
     return;
   }
@@ -1935,8 +710,7 @@ function renderCards(rootId, sourceDocs, type, limit) {
   docs.forEach(data => {
     const card = document.createElement("article");
     card.className = "card";
-
-    card.appendChild(createGallery(data, type));
+    card.appendChild(createGallery(data,type));
 
     const body = document.createElement("div");
     body.className = "card-body";
@@ -1948,55 +722,33 @@ function renderCards(rootId, sourceDocs, type, limit) {
     if (type === "tour") {
       const highlights = document.createElement("div");
       highlights.className = "tour-highlight";
-
-      if (data.duration) addChip(highlights, "◷ " + data.duration);
-      if (data.price) addChip(highlights, "₴ " + data.price);
-
+      if (data.duration) addChip(highlights,"◷ " + data.duration);
+      if (data.price) addChip(highlights,"₴ " + data.price);
       const format = data.format || data.category || data.typeLabel;
-      if (format) addChip(highlights, format);
-
-      if (highlights.childNodes.length) {
-        body.appendChild(highlights);
-      }
-    }
-
-    if (type === "food" || type === "stay") {
-      const meta = document.createElement("div");
-      meta.className = "meta";
-
-      if (data.address) addChip(meta, "📍 " + data.address);
-      if (data.price) addChip(meta, "₴ " + data.price);
-      if (data.hours) addChip(meta, "◷ " + data.hours);
-
-      if (meta.childNodes.length) body.appendChild(meta);
+      if (format) addChip(highlights,format);
+      if (highlights.childNodes.length) body.appendChild(highlights);
     }
 
     if (type === "news" && data.date) {
       const meta = document.createElement("div");
       meta.className = "meta";
-      addChip(meta, "📅 " + data.date);
+      addChip(meta,"📅 " + data.date);
       body.appendChild(meta);
     }
 
     if (type === "place" && data.address) {
       const meta = document.createElement("div");
       meta.className = "meta";
-      addChip(meta, "📍 " + data.address);
+      addChip(meta,"📍 " + data.address);
       body.appendChild(meta);
     }
 
-    const description = getDescription(data, type);
-
+    const description = getDescription(data,type);
     if (description) {
       const paragraph = document.createElement("p");
       paragraph.className = "card-description";
-
       const text = String(description).trim();
-
-      paragraph.textContent = text.length > 260
-        ? text.slice(0, 257).trimEnd() + "…"
-        : text;
-
+      paragraph.textContent = text.length > 260 ? text.slice(0,257).trimEnd() + "…" : text;
       body.appendChild(paragraph);
     }
 
@@ -2004,168 +756,89 @@ function renderCards(rootId, sourceDocs, type, limit) {
     actions.className = "actions";
 
     if (type === "project") {
-      actions.appendChild(
-        makeLink(
-          "Усі проєкти →",
-          "catalog.html?section=projects",
-          "btn dark"
-        )
-      );
+      actions.appendChild(makeLink("Усі проєкти →","./catalog.html?section=projects","btn dark"));
     }
 
-    if (["news", "place", "tour"].includes(type)) {
-      const section = type === "place" ? "places" :
-                      type === "tour" ? "tours" : "news";
-
-      const detailLink =
-        "article.html?type=" + encodeURIComponent(section) +
-        "&id=" + encodeURIComponent(data.id || "");
-
-      actions.appendChild(
-        makeLink(
-          type === "news" ? "Читати новину →" : "Детальніше →",
-          detailLink,
-          "btn dark"
-        )
-      );
+    if (["news","place","tour"].includes(type)) {
+      const section = type === "place" ? "places" : type === "tour" ? "tours" : "news";
+      const detailLink = "./article.html?type=" + encodeURIComponent(section) + "&id=" + encodeURIComponent(data.id || "");
+      actions.appendChild(makeLink(type === "news" ? "Читати новину →" : "Детальніше →",detailLink,"btn dark"));
     }
 
     if (type === "tour") {
       const phone = makePhone(data.phone || data.booking);
-
-      actions.appendChild(
-        makeLink(
-          "☎ Записатися",
-          phone ? "tel:" + phone : "tel:+380673004470",
-          "btn"
-        )
-      );
+      actions.appendChild(makeLink("☎ Записатися",phone ? "tel:" + phone : "tel:+380673004470","btn"));
     }
 
-    if (type === "food" || type === "stay") {
-      const externalLink = safeHttps(data.link);
-      const phone = makePhone(data.phone);
-      const mapLink = safeHttps(data.mapLink);
-
-      if (externalLink) {
-        actions.appendChild(
-          makeLink("Детальніше ↗", externalLink, "btn dark")
-        );
-      }
-
-      if (phone) {
-        actions.appendChild(
-          makeLink("☎ Зателефонувати", "tel:" + phone, "btn")
-        );
-      }
-
-      if (mapLink) {
-        actions.appendChild(
-          makeLink("На карті ↗", mapLink, "btn secondary")
-        );
-      }
-    }
-
-    if (actions.childNodes.length) {
-      body.appendChild(actions);
-    }
-
+    if (actions.childNodes.length) body.appendChild(actions);
     card.appendChild(body);
     root.appendChild(card);
   });
 }
 
-/* ================= КНОПКА ПОВЕРНЕННЯ ВГОРУ ================= */
-
+/* Повернення вгору */
 $("backTop").addEventListener("click", () => {
   window.scrollTo({
-    top: 0,
-    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ? "auto"
-      : "smooth"
+    top:0,
+    behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
   });
 });
 
 function updateBackTop() {
-  $("backTop").classList.toggle("visible", window.scrollY > 450);
+  $("backTop").classList.toggle("visible",window.scrollY > 450);
 }
-
-window.addEventListener("scroll", updateBackTop, { passive: true });
+window.addEventListener("scroll",updateBackTop,{passive:true});
 updateBackTop();
 
-/* ================= FIRESTORE ================= */
-
+/* Firebase */
 function reportError(error) {
-  console.error("Firebase:", error);
-
-  $("load-status").textContent =
-    "Не вдалося завантажити частину інформації. Перевірте інтернет і правила доступу Firebase.";
+  console.error("Помилка Firestore:",error);
+  $("load-status").textContent = "Не вдалося завантажити частину інформації. Перевірте інтернет і правила доступу Firebase.";
 }
 
 if (firebaseReady) {
   db.collection("siteContent").doc("homepage").onSnapshot(
-    snapshot => {
-      if (snapshot.exists) applyHomepage(snapshot.data());
-    },
+    snapshot => { if (snapshot.exists) applyHomepage(snapshot.data()); },
     reportError
   );
 
   db.collection("siteContent").doc("about").onSnapshot(
-    snapshot => {
-      if (snapshot.exists) applyAbout(snapshot.data());
-    },
+    snapshot => { if (snapshot.exists) applyAbout(snapshot.data()); },
     reportError
   );
 
   db.collection("siteContent").doc("contacts").onSnapshot(
-    snapshot => {
-      if (snapshot.exists) applyContacts(snapshot.data());
-    },
+    snapshot => { if (snapshot.exists) applyContacts(snapshot.data()); },
     reportError
   );
 
-  /*
-    Документ siteContent/gettingHere тут навмисно не завантажуємо.
-    Для нього призначена окрема сторінка getting-here.html.
-  */
-
   [
-    ["places", "places-list", "place", 3],
-    ["tours", "tours-list", "tour", 3],
-    ["news", "news-list", "news", 3],
-    ["projects", "projects-list", "project", 3]
-  ].forEach(([collection, root, type, limit]) => {
+    ["places","places-list","place",3],
+    ["tours","tours-list","tour",3],
+    ["news","news-list","news",3],
+    ["projects","projects-list","project",3]
+  ].forEach(([collection,root,type,limit]) => {
     db.collection(collection)
-      .where("published", "==", true)
-      .onSnapshot(
-        snapshot => {
-          const docs = snapshot.docs.map(document => ({
-            ...document.data(),
-            id: document.id
-          }));
-
-          renderCards(root, docs, type, limit);
-        },
-        error => {
-          reportError(error);
-
-          const rootElement = $(root);
-
-          if (rootElement) {
-            rootElement.replaceChildren();
-
-            const message = document.createElement("p");
-            message.className = "empty";
-            message.textContent =
-              "Не вдалося завантажити дані. Спробуйте оновити сторінку.";
-
-            rootElement.appendChild(message);
-          }
+      .where("published","==",true)
+      .onSnapshot(snapshot => {
+        const docs = snapshot.docs.map(document => ({
+          ...document.data(),
+          id:document.id
+        }));
+        renderCards(root,docs,type,limit);
+      },error => {
+        reportError(error);
+        const rootElement = $(root);
+        if (rootElement) {
+          rootElement.replaceChildren();
+          const message = document.createElement("p");
+          message.className = "empty";
+          message.textContent = "Не вдалося завантажити дані. Спробуйте оновити сторінку.";
+          rootElement.appendChild(message);
         }
-      );
+      });
   });
 }
 </script>
-
 </body>
 </html>
