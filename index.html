@@ -1079,6 +1079,7 @@ a:focus-visible, button:focus-visible {
         <a class="nav-link" href="#tours">Екскурсії</a>
         <a class="nav-link" href="#places">Цікавинки</a>
         <a class="nav-link" href="#news">Новини</a>
+        <a class="nav-link" href="#projects">Проєкти</a>
         <a class="nav-link" href="#contacts">Контакти</a>
       </nav>
 
@@ -1117,6 +1118,17 @@ a:focus-visible, button:focus-visible {
       <div class="hero-actions">
         <a class="btn" href="#tours">Обрати екскурсію ↗</a>
         <a class="btn secondary" href="#places">Відкрити місто</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="travel-shortcuts" style="padding-top:30px;padding-bottom:30px">
+    <div class="container">
+      <div class="cards" style="margin-top:0;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px">
+        <a class="info-panel" href="#food" style="text-decoration:none;display:block;border-top:4px solid var(--orange)"><h3>🍽️ Де поїсти?</h3><p>Кафе, ресторани та заклади харчування у Звягелі.</p><strong>Переглянути заклади →</strong></a>
+        <a class="info-panel" href="#stay" style="text-decoration:none;display:block;border-top:4px solid var(--orange)"><h3>🛏️ Де переночувати?</h3><p>Готелі та варіанти проживання для мандрівників.</p><strong>Знайти проживання →</strong></a>
+        <a class="info-panel" href="#getting-here" style="text-decoration:none;display:block;border-top:4px solid var(--orange)"><h3>🚌 Як дістатися?</h3><p>Інформація про дорогу до Звягеля та корисні карти.</p><strong>Спланувати дорогу →</strong></a>
+        <a class="info-panel" href="#tourist-map" style="text-decoration:none;display:block;border-top:4px solid var(--orange)"><h3>🗺️ Туристична карта</h3><p>Знайомтеся з локаціями та пам’ятками міста.</p><strong>Відкрити карту →</strong></a>
       </div>
     </div>
   </section>
@@ -1190,6 +1202,22 @@ a:focus-visible, button:focus-visible {
       </div>
       <div id="news-list" class="cards">
         <p class="empty">Завантаження новин…</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section alt" id="projects">
+    <div class="container">
+      <div class="section-heading">
+        <div class="heading-copy">
+          <div class="eyebrow">Ідеї, що оживляють місто</div>
+          <h2>Туристичні проєкти</h2>
+          <p class="intro">Ініціативи, події та нові туристичні продукти, які відкривають Звягель по-новому.</p>
+        </div>
+        <a class="section-top-link" href="catalog.html?section=projects">Усі проєкти <span aria-hidden="true">→</span></a>
+      </div>
+      <div id="projects-list" class="cards">
+        <p class="empty">Завантаження проєктів…</p>
       </div>
     </div>
   </section>
@@ -1549,6 +1577,7 @@ function placeholder(type) {
     news: "📰",
     food: "🍽️",
     stay: "🛏️",
+    project: "💡",
     place: "🏰"
   };
 
@@ -1588,7 +1617,8 @@ function createGallery(data, type) {
     place: "ЦІКАВИНКА",
     news: "НОВИНИ",
     food: "ДЕ ПОЇСТИ",
-    stay: "ПРОЖИВАННЯ"
+    stay: "ПРОЖИВАННЯ",
+    project: "ПРОЄКТ"
   };
 
   const label = document.createElement("span");
@@ -1690,7 +1720,8 @@ function renderCards(rootId, sourceDocs, type, limit) {
       place: "Інформація про цікаві місця незабаром з’явиться.",
       news: "Нових публікацій поки немає. Слідкуйте за оновленнями.",
       food: "Інформація про заклади харчування незабаром з’явиться.",
-      stay: "Інформація про місця проживання незабаром з’явиться."
+      stay: "Інформація про місця проживання незабаром з’явиться.",
+      project: "Інформація про туристичні проєкти незабаром з’явиться."
     };
 
     empty.textContent = messages[type] || "Інформація незабаром з’явиться.";
@@ -1765,9 +1796,10 @@ function renderCards(rootId, sourceDocs, type, limit) {
     const actions = document.createElement("div");
     actions.className = "actions";
 
-    if (["news", "place", "tour"].includes(type)) {
+    if (["news", "place", "tour", "project"].includes(type)) {
       const section = type === "place" ? "places" :
-                      type === "tour" ? "tours" : "news";
+                      type === "tour" ? "tours" :
+                      type === "project" ? "projects" : "news";
 
       const detailLink =
         "article.html?type=" + encodeURIComponent(section) +
@@ -1864,6 +1896,7 @@ db.collection("siteContent").doc("gettingHere").onSnapshot(
   ["places", "places-list", "place", 3],
   ["tours", "tours-list", "tour", 3],
   ["news", "news-list", "news", 3],
+  ["projects", "projects-list", "project", 3],
   ["food", "food-list", "food", 3],
   ["stay", "stay-list", "stay", 3]
 ].forEach(([collection, root, type, limit]) => {
