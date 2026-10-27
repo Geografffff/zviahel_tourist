@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10213b">
-<meta name="description" content="Дізнайтеся більше про екскурсії, історичні пам'ятки та цікаві місця Звягеля.">
+<meta name="description" content="Дізнайтеся більше про екскурсії, історичні пам'ятки, проєкти та цікаві місця Звягеля.">
 <meta name="robots" content="index, follow">
 <title>Матеріал — Звягель Туристичний</title>
 
@@ -341,7 +341,9 @@ const typeMap = {
   tours: "tours",
   place: "places",
   places: "places",
-  news: "news"
+  news: "news",
+  project: "projects",
+  projects: "projects"
 };
 
 const type = typeMap[rawType] || "tours";
@@ -364,6 +366,12 @@ const settings = {
     icon: "📰",
     collection: "news",
     catalog: "news"
+  },
+  projects: {
+    label: "Проєкти",
+    icon: "📂",
+    collection: "projects",
+    catalog: "projects"
   }
 };
 
@@ -572,8 +580,8 @@ function renderRoute(data) {
 }
 
 function renderArticle(data) {
-  const title = data.title || "Без назви";
-  const description = data.description || data.body || data.summary || "";
+  const title = data.title || data.name || "Без назви";
+  const description = data.description || data.body || data.summary || data.content || "";
   const images = getImages(data);
 
   document.title = title + " — Звягель Туристичний";
@@ -661,8 +669,12 @@ function renderArticle(data) {
     addFact(facts, "📍", "Адреса", data.address || "Звягель");
     addFact(facts, "🕒", "Графік відвідування", data.hours || data.schedule || "Уточнюйте");
     addFact(facts, "🏛️", "Тип локації", data.category || "Історична пам’ятка");
-  } else {
+  } else if (type === "news") {
     addFact(facts, "📰", "Дата публікації", data.date || "");
+  } else if (type === "projects") {
+    addFact(facts, "📂", "Категорія проєкту", data.category || "");
+    addFact(facts, "📅", "Дата", data.date || "");
+    addFact(facts, "📍", "Місце реалізації", data.address || "");
   }
 
   if (data.price && type !== "tours") {
@@ -682,8 +694,19 @@ function renderArticle(data) {
   articleBody.appendChild(
     el("div", "eyebrow", type === "tours" ? "Досвід і враження" : "Дізнайтеся більше")
   );
+
   articleBody.appendChild(
-    el("h2", "", type === "tours" ? "Про екскурсію" : type === "places" ? "Про локацію" : "Деталі новини")
+    el(
+      "h2",
+      "",
+      type === "tours"
+        ? "Про екскурсію"
+        : type === "places"
+          ? "Про локацію"
+          : type === "news"
+            ? "Деталі новини"
+            : "Про проєкт"
+    )
   );
 
   const descNode = el("div", "description");
@@ -709,7 +732,15 @@ function renderArticle(data) {
   const sidebar = el("aside", "sidebar-card");
   sidebar.appendChild(el("div", "fact-icon", "🧭"));
   sidebar.appendChild(
-    el("h3", "", type === "tours" ? "Відкрийте Звягель разом з нами" : "Відкрийте Звягель")
+    el(
+      "h3",
+      "",
+      type === "tours"
+        ? "Відкрийте Звягель разом з нами"
+        : type === "projects"
+          ? "Проєкти туристичного Звягеля"
+          : "Відкрийте Звягель"
+    )
   );
   sidebar.appendChild(
     el(
@@ -717,11 +748,17 @@ function renderArticle(data) {
       "",
       type === "tours"
         ? "Зв’яжіться з туристичним центром, щоб уточнити дату, вартість та умови проведення екскурсії."
-        : "Зверніться до туристичного центру, щоб дізнатися більше про локацію та туристичні маршрути."
+        : type === "projects"
+          ? "Дізнайтеся більше про ініціативи, події та ідеї, що розвивають туристичну привабливість Звягеля."
+          : "Зверніться до туристичного центру, щоб дізнатися більше про локацію та туристичні маршрути Звягеля."
     )
   );
   sidebar.appendChild(
-    link(type === "tours" ? "Записатися на екскурсію ↓" : "Зв’язатися з нами ↓", "#contacts", "btn")
+    link(
+      type === "tours" ? "Записатися на екскурсію ↓" : "Зв’язатися з нами ↓",
+      "#contacts",
+      "btn"
+    )
   );
 
   grid.append(articleBody, sidebar);
@@ -769,13 +806,23 @@ function renderArticle(data) {
   const contactsContainer = el("div", "container");
   contactsContainer.append(
     el("div", "eyebrow", "Плануйте свою подорож"),
-    el("h2", "", type === "tours" ? "Записатися на екскурсію" : "Зв’яжіться з нами"),
+    el(
+      "h2",
+      "",
+      type === "tours"
+        ? "Записатися на екскурсію"
+        : type === "projects"
+          ? "Дізнатися більше про проєкт"
+          : "Зв’яжіться з нами"
+    ),
     el(
       "p",
       "contacts-intro",
       type === "tours"
         ? "Хочете відвідати цю екскурсію? Зателефонуйте до Звягельського туристичного центру. Уточніть дату, кількість учасників та вартість."
-        : "Звертайтеся до туристичного центру за інформацією про локацію, екскурсії та туристичні маршрути Звягеля."
+        : type === "projects"
+          ? "Щоб дізнатися більше про цей проєкт, його реалізацію або можливості долучення, зв’яжіться із Звягельським туристичним центром."
+          : "Звертайтеся до туристичного центру за інформацією про локацію, екскурсії та туристичні маршрути Звягеля."
     )
   );
 
@@ -804,7 +851,9 @@ function renderArticle(data) {
       "",
       type === "tours"
         ? "Під час звернення повідомте назву екскурсії: «" + title + "». Працівники центру допоможуть уточнити деталі."
-        : "Зателефонуйте до туристичного центру, щоб отримати інформацію про відвідування та екскурсійні можливості."
+        : type === "projects"
+          ? "Повідомте назву проєкту, який вас цікавить, щоб працівники центру могли надати потрібну інформацію."
+          : "Зателефонуйте до туристичного центру, щоб отримати інформацію про відвідування та екскурсійні можливості."
     )
   );
 
