@@ -12,7 +12,6 @@
 <style>
 :root{
   --navy:#10213b;
-  --navy2:#193657;
   --orange:#f58220;
   --bg:#f4f6fa;
   --line:#dce3ec;
@@ -353,36 +352,32 @@ const settings = {
     label: "Екскурсії",
     icon: "🧭",
     collection: "tours",
-    catalog: "tours"
+    section: "tours"
   },
   places: {
     label: "Цікавинки",
     icon: "🏰",
     collection: "places",
-    catalog: "places"
+    section: "places"
   },
   news: {
     label: "Новини",
     icon: "📰",
     collection: "news",
-    catalog: "news"
+    section: "news"
   },
   projects: {
     label: "Проєкти",
-    icon: "🎧",
+    icon: "📚",
     collection: "projects",
-    catalog: "projects"
+    section: "projects"
   }
 };
 
 const current = settings[type];
+const sectionUrl = "index.html#" + current.section;
 
-$("back-link").href = "index.html#" + (
-  type === "tours" ? "tours" :
-  type === "places" ? "places" :
-  type === "news" ? "news" :
-  "projects"
-);
+$("back-link").href = sectionUrl;
 $("back-link").textContent = "← До розділу «" + current.label + "»";
 
 function safeUrl(value) {
@@ -444,7 +439,7 @@ function makePhoto(url, title) {
   return img;
 }
 
-/* Перегляд фотографій */
+/* Галерея фотографій */
 let lightboxImages = [];
 let lightboxIndex = 0;
 
@@ -604,16 +599,10 @@ function renderArticle(data) {
 
   const crumbs = el("nav", "breadcrumbs");
   crumbs.setAttribute("aria-label", "Навігація");
-
   crumbs.append(
     link("Головна", "index.html#home", ""),
     el("span", "", "/"),
-    link(current.label, "index.html#" + (
-      type === "tours" ? "tours" :
-      type === "places" ? "places" :
-      type === "news" ? "news" :
-      "projects"
-    ), ""),
+    link(current.label, sectionUrl, ""),
     el("span", "", "/"),
     el("span", "", title)
   );
@@ -642,12 +631,7 @@ function renderArticle(data) {
   );
 
   heroActions.appendChild(
-    link("← Назад до розділу", "index.html#" + (
-      type === "tours" ? "tours" :
-      type === "places" ? "places" :
-      type === "news" ? "news" :
-      "projects"
-    ), "btn btn-outline")
+    link("← До розділу «" + current.label + "»", sectionUrl, "btn btn-outline")
   );
 
   heroText.appendChild(heroActions);
@@ -674,11 +658,7 @@ function renderArticle(data) {
   hero.appendChild(heroInner);
   main.appendChild(hero);
 
-  /*
-    Інформаційні картки.
-    Для проєктів вони навмисно не створюються,
-    щоб не показувати категорію, дату чи адресу.
-  */
+  /* Інформаційні картки: для проєктів не показуємо категорію, дату чи адресу */
   const factsSection = el("section", "section");
   const facts = el("div", "container facts");
 
@@ -699,7 +679,7 @@ function renderArticle(data) {
     main.appendChild(factsSection);
   }
 
-  /* Опис матеріалу */
+  /* Основний опис */
   const descSection = el("section", "section section-alt");
   const grid = el("div", "container content-grid");
   const articleBody = el("article");
@@ -718,7 +698,7 @@ function renderArticle(data) {
           ? "Про локацію"
           : type === "news"
             ? "Деталі новини"
-            : "Про аудіогід"
+            : "Детальніше про матеріал"
     )
   );
 
@@ -727,72 +707,48 @@ function renderArticle(data) {
   articleBody.appendChild(descNode);
 
   /*
-    Для проєктів зовнішнє посилання — це аудіогід.
-    Кнопку карти не створюємо.
+    Універсальна кнопка зовнішнього посилання.
+    Не залежить від типу матеріалу.
   */
   if (data.link) {
     const external = safeUrl(data.link);
 
     if (external) {
       articleBody.appendChild(
-        link(
-          type === "projects" ? "🎧 Слухати аудіогід ↗" : "Додаткова інформація ↗",
-          external,
-          "btn btn-light"
-        )
+        link("Детальніше ↗", external, "btn btn-light")
       );
     }
   }
 
   const sidebar = el("aside", "sidebar-card");
-  sidebar.appendChild(el("div", "fact-icon", type === "projects" ? "🎧" : "🧭"));
-
-  sidebar.appendChild(
-    el(
-      "h3",
-      "",
-      type === "tours"
-        ? "Відкрийте Звягель разом з нами"
-        : type === "projects"
-          ? "Слухайте історію Звягеля"
-          : "Відкрийте Звягель"
-    )
-  );
+  sidebar.appendChild(el("div", "fact-icon", current.icon));
+  sidebar.appendChild(el("h3", "", "Відкрийте Звягель"));
 
   sidebar.appendChild(
     el(
       "p",
       "",
-      type === "tours"
-        ? "Зв’яжіться з туристичним центром, щоб уточнити дату, вартість та умови проведення екскурсії."
-        : type === "projects"
-          ? "Відкрийте аудіогід і дізнайтеся більше про історію та спадщину Звягельського замку."
-          : "Зверніться до туристичного центру, щоб дізнатися більше про локацію та туристичні маршрути Звягеля."
+      "Дізнавайтеся більше про історію, культурну спадщину, туристичні маршрути та цікаві місця Звягеля."
     )
   );
 
   sidebar.appendChild(
-    link(
-      type === "tours" ? "Записатися на екскурсію ↓" : "Зв’язатися з нами ↓",
-      "#contacts",
-      "btn"
-    )
+    link("Зв’язатися з нами ↓", "#contacts", "btn")
   );
 
   grid.append(articleBody, sidebar);
   descSection.appendChild(grid);
   main.appendChild(descSection);
 
-  /* Маршрут — лише якщо він є в записі */
+  /* Маршрут — якщо в записі є маршрут або список зупинок */
   const routeSection = el("section", "section");
   routeSection.id = "route-section";
   routeSection.hidden = true;
 
   const routeContainer = el("div", "container");
-
   routeContainer.append(
     el("div", "eyebrow", "Крок за кроком"),
-    el("h2", "", "Маршрут екскурсії")
+    el("h2", "", "Маршрут")
   );
 
   const routeList = el("div", "route-list");
@@ -829,20 +785,14 @@ function renderArticle(data) {
     el(
       "h2",
       "",
-      type === "tours"
-        ? "Записатися на екскурсію"
-        : type === "projects"
-          ? "Дізнатися більше про аудіогід"
-          : "Зв’яжіться з нами"
+      type === "tours" ? "Записатися на екскурсію" : "Зв’яжіться з нами"
     ),
     el(
       "p",
       "contacts-intro",
       type === "tours"
         ? "Хочете відвідати цю екскурсію? Зателефонуйте до Звягельського туристичного центру та уточніть дату, кількість учасників і вартість."
-        : type === "projects"
-          ? "Щоб дізнатися більше про аудіогід та туристичні можливості Звягеля, зв’яжіться із Звягельським туристичним центром."
-          : "Звертайтеся до туристичного центру за інформацією про локації, екскурсії та туристичні маршрути Звягеля."
+        : "Звертайтеся до туристичного центру за інформацією про туристичні маршрути, культурні пам’ятки, проєкти та екскурсії Звягеля."
     )
   );
 
@@ -852,8 +802,10 @@ function renderArticle(data) {
   details.appendChild(el("h3", "", "Звягельський туристичний центр"));
 
   const phoneRow = el("div", "contact-row");
-  phoneRow.appendChild(el("span", "contact-label", "Телефон"));
-  phoneRow.appendChild(link("+38 067 300 4470", "tel:+380673004470", ""));
+  phoneRow.append(
+    el("span", "contact-label", "Телефон"),
+    link("+38 067 300 4470", "tel:+380673004470", "")
+  );
   details.appendChild(phoneRow);
 
   const addressRow = el("div", "contact-row");
@@ -864,18 +816,12 @@ function renderArticle(data) {
   details.appendChild(addressRow);
 
   const info = el("div", "contact-card");
-
-  info.appendChild(el("h3", "", "Наступний крок"));
-
-  info.appendChild(
+  info.append(
+    el("h3", "", "Маєте запитання?"),
     el(
       "p",
       "",
-      type === "tours"
-        ? "Під час звернення повідомте назву екскурсії: «" + title + "». Працівники центру допоможуть уточнити деталі."
-        : type === "projects"
-          ? "Якщо маєте запитання щодо аудіогіда, повідомте працівникам центру назву «" + title + "»."
-          : "Зателефонуйте до туристичного центру, щоб отримати інформацію про відвідування та екскурсійні можливості."
+      "Зателефонуйте до туристичного центру, щоб уточнити інформацію про матеріал або спланувати подорож до Звягеля."
     )
   );
 
@@ -918,12 +864,7 @@ function showError(message) {
   );
 
   state.appendChild(
-    link("Повернутися до розділу", "index.html#" + (
-      type === "tours" ? "tours" :
-      type === "places" ? "places" :
-      type === "news" ? "news" :
-      "projects"
-    ), "btn")
+    link("Повернутися до розділу", sectionUrl, "btn")
   );
 
   container.appendChild(state);
