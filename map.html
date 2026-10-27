@@ -2,266 +2,548 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#10213b">
-<meta name="description" content="Інтерактивна туристична карта Звягеля: пам’ятки, музеї та цікаві місця міста.">
-<title>Туристична карта Звягеля</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10213b">
+  <meta name="description" content="Інтерактивна туристична карта Звягеля: історичні пам’ятки, музеї, туристичні маршрути та цікаві місця міста.">
 
-<style>
-:root {
-  --navy: #10213b;
-  --blue: #1c385d;
-  --orange: #f58220;
-  --bg: #f4f6fa;
-  --muted: #687487;
-  --line: #dce3ec;
-}
+  <title>Туристична карта Звягеля | Звягель Туристичний</title>
 
-* { box-sizing: border-box; }
+  <style>
+    :root {
+      --navy: #10213b;
+      --blue: #1c385d;
+      --orange: #f58220;
+      --orange-dark: #df6e10;
+      --bg: #f4f6fa;
+      --white: #ffffff;
+      --muted: #687487;
+      --line: #dce3ec;
+      --shadow: 0 12px 35px rgba(16, 33, 59, 0.09);
+    }
 
-body {
-  margin: 0;
-  color: var(--navy);
-  background: var(--bg);
-  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-a { color: inherit; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 20px;
+    }
 
-.container {
-  width: min(1160px, 92%);
-  margin: auto;
-}
+    body {
+      margin: 0;
+      color: var(--navy);
+      background: var(--bg);
+      font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    }
 
-header {
-  background: var(--navy);
-  color: white;
-  box-shadow: 0 4px 22px #07132625;
-}
+    a {
+      color: inherit;
+    }
 
-.nav {
-  min-height: 76px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 14px;
-  padding: 14px 0;
-}
+    a:focus-visible {
+      outline: 3px solid var(--orange);
+      outline-offset: 4px;
+    }
 
-.brand {
-  color: white;
-  font-size: 19px;
-  font-weight: 900;
-  text-decoration: none;
-}
+    .container {
+      width: min(1160px, 92%);
+      margin-inline: auto;
+    }
 
-.brand span { color: var(--orange); }
+    /* Шапка */
 
-.nav-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+    .site-header {
+      position: relative;
+      z-index: 10;
+      color: var(--white);
+      background: var(--navy);
+      box-shadow: 0 4px 22px rgba(7, 19, 38, 0.15);
+    }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 11px 17px;
-  border: 1px solid var(--orange);
-  border-radius: 10px;
-  color: white;
-  background: var(--orange);
-  font-size: 14px;
-  font-weight: 800;
-  text-decoration: none;
-  transition: .2s;
-}
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-block: 14px;
+    }
 
-.btn:hover {
-  background: #df6e10;
-  border-color: #df6e10;
-}
+    .brand {
+      display: inline-block;
+      color: var(--white);
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1.3;
+      text-decoration: none;
+      letter-spacing: 0.2px;
+    }
 
-.btn.secondary {
-  color: var(--navy);
-  background: white;
-  border-color: var(--line);
-}
+    .brand span {
+      color: var(--orange);
+    }
 
-.btn.secondary:hover { background: #edf2f8; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
 
-main { padding: 48px 0 64px; }
+    /* Кнопки */
 
-.eyebrow {
-  color: var(--orange);
-  font-size: 12px;
-  font-weight: 850;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 44px;
+      padding: 11px 17px;
+      border: 1px solid var(--orange);
+      border-radius: 10px;
+      color: var(--white);
+      background: var(--orange);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.4;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease,
+                  transform 0.2s ease;
+    }
 
-h1 {
-  margin: 10px 0 14px;
-  font-size: clamp(32px, 5vw, 48px);
-  line-height: 1.15;
-}
+    .btn:hover {
+      background: var(--orange-dark);
+      border-color: var(--orange-dark);
+    }
 
-.intro {
-  max-width: 780px;
-  margin: 0 0 26px;
-  color: var(--muted);
-}
+    .btn:active {
+      transform: translateY(1px);
+    }
 
-.map-frame {
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: white;
-  box-shadow: 0 8px 28px #10213b0e;
-}
+    .btn.secondary {
+      color: var(--navy);
+      background: var(--white);
+      border-color: var(--line);
+    }
 
-.map-frame iframe {
-  display: block;
-  width: 100%;
-  height: min(72vh, 760px);
-  min-height: 420px;
-  border: 0;
-}
+    .btn.secondary:hover {
+      background: #edf2f8;
+    }
 
-.map-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 20px;
-}
+    /* Основний вміст */
 
-.map-note {
-  margin-top: 26px;
-  padding: 20px 22px;
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  color: var(--muted);
-}
+    main {
+      padding: 46px 0 64px;
+    }
 
-.map-note strong { color: var(--navy); }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--orange-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
 
-footer {
-  padding: 24px 0;
-  color: #d6dce5;
-  background: #091326;
-  font-size: 14px;
-}
+    .eyebrow::before {
+      content: "";
+      display: block;
+      width: 26px;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--orange);
+    }
 
-.footer-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 12px;
-}
+    h1 {
+      max-width: 850px;
+      margin: 12px 0 16px;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 900;
+      line-height: 1.13;
+      letter-spacing: -1px;
+    }
 
-@media (max-width: 560px) {
-  main { padding: 34px 0 45px; }
+    .intro {
+      max-width: 780px;
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 17px;
+    }
 
-  .nav {
-    align-items: flex-start;
-    flex-direction: column;
-  }
+    .map-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
 
-  .nav-links { width: 100%; }
+    .map-heading h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+    }
 
-  .map-frame iframe {
-    height: 65vh;
-    min-height: 420px;
-  }
+    .map-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 11px;
+      border: 1px solid #cfe8d8;
+      border-radius: 30px;
+      color: #246b43;
+      background: #effaf3;
+      font-size: 12px;
+      font-weight: 800;
+    }
 
-  .map-actions {
-    flex-direction: column;
-  }
+    .map-label::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #269653;
+    }
 
-  .map-actions .btn { width: 100%; }
-}
-</style>
+    /* Карта */
+
+    .map-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .map-frame iframe {
+      display: block;
+      width: 100%;
+      height: min(72vh, 760px);
+      min-height: 440px;
+      border: 0;
+      background: #edf2f8;
+    }
+
+    .map-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    /* Інформаційний блок */
+
+    .map-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-top: 30px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--orange);
+      border-radius: 14px;
+      background: var(--white);
+      box-shadow: 0 5px 20px rgba(16, 33, 59, 0.04);
+    }
+
+    .note-icon {
+      display: flex;
+      flex: 0 0 48px;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #fff0e3;
+      font-size: 25px;
+    }
+
+    .note-content {
+      min-width: 0;
+    }
+
+    .map-note strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .map-note p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+    }
+
+    .contact-links a {
+      color: var(--blue);
+      font-weight: 750;
+      overflow-wrap: anywhere;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .contact-links a:hover {
+      color: var(--orange-dark);
+    }
+
+    /* Нижня частина */
+
+    footer {
+      padding: 25px 0;
+      color: #d6dce5;
+      background: #091326;
+      font-size: 14px;
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .footer-row span:last-child {
+      color: #f7b477;
+      font-weight: 700;
+    }
+
+    /* Планшети та смартфони */
+
+    @media (max-width: 760px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 13px;
+      }
+
+      .nav-links {
+        width: 100%;
+      }
+
+      main {
+        padding: 34px 0 46px;
+      }
+
+      .intro {
+        font-size: 16px;
+      }
+
+      .map-frame {
+        border-radius: 13px;
+      }
+
+      .map-frame iframe {
+        height: 65vh;
+        min-height: 420px;
+      }
+
+      .map-note {
+        padding: 19px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(100% - 28px, 1160px);
+      }
+
+      .brand {
+        font-size: 17px;
+      }
+
+      .nav-links {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .nav-links .btn {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: clamp(30px, 9vw, 38px);
+        letter-spacing: -0.6px;
+      }
+
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+      }
+
+      .map-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .map-heading h2 {
+        font-size: 18px;
+      }
+
+      .map-frame iframe {
+        height: 62vh;
+        min-height: 390px;
+      }
+
+      .map-actions {
+        flex-direction: column;
+        gap: 9px;
+      }
+
+      .map-actions .btn {
+        width: 100%;
+      }
+
+      .map-note {
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .note-icon {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+        font-size: 21px;
+      }
+
+      .map-note strong {
+        font-size: 16px;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <a class="brand" href="index.html">ЗВЯГЕЛЬ <span>ТУРИСТИЧНИЙ</span></a>
-
-    <div class="nav-links">
-      <a class="btn secondary" href="index.html">← На головну</a>
-      <a class="btn" href="index.html#places">Цікавинки міста</a>
-    </div>
-  </div>
-</header>
-
-<main>
-  <div class="container">
-    <div class="eyebrow">Досліджуй місто</div>
-    <h1>Туристична карта Звягеля</h1>
-
-    <p class="intro">
-      Плануйте прогулянку Звягелем, знаходьте історичні пам’ятки,
-      музеї та цікаві місця на інтерактивній карті.
-      Натискайте на позначки, щоб переглянути доступну інформацію.
-    </p>
-
-    <div class="map-frame">
-      <iframe
-        src="https://www.google.com/maps/d/u/0/embed?mid=1tm36aV9_BaX4Fe9F_MRW6j3yrCtq-_I&ehbc=2E312F"
-        title="Інтерактивна туристична карта Звягеля"
-        loading="lazy"
-        allowfullscreen>
-      </iframe>
-    </div>
-
-    <div class="map-actions">
-      <a
-        class="btn"
-        href="https://www.google.com/maps/d/u/0/viewer?mid=1tm36aV9_BaX4Fe9F_MRW6j3yrCtq-_I"
-        target="_blank"
-        rel="noopener noreferrer">
-        Відкрити карту у Google Maps ↗
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="Звягель Туристичний — головна сторінка">
+        ЗВЯГЕЛЬ <span>ТУРИСТИЧНИЙ</span>
       </a>
 
-      <a class="btn secondary" href="index.html#tours">
-        Переглянути екскурсії
-      </a>
-
-      <a class="btn secondary" href="index.html#contacts">
-        Контакти туристичного центру
-      </a>
+      <nav class="nav-links" aria-label="Навігація сторінки">
+        <a class="btn secondary" href="index.html">← На головну</a>
+        <a class="btn secondary" href="getting-here.html">Як дістатися?</a>
+        <a class="btn" href="index.html#places">Цікавинки міста</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="map-note">
-      <strong>Плануєте відвідати Звягель?</strong>
-      <p>
-        Зверніться до туристичного центру, щоб дізнатися про екскурсії,
-        туристичні маршрути та цікаві місця міста.
+  <main>
+    <div class="container">
+
+      <div class="eyebrow">Досліджуй місто</div>
+
+      <h1>Туристична карта Звягеля</h1>
+
+      <p class="intro">
+        Плануйте прогулянку Звягелем, знаходьте історичні пам’ятки,
+        музеї та цікаві місця на інтерактивній карті.
+        Натискайте на позначки, щоб переглянути доступну інформацію
+        та спланувати власний маршрут містом.
       </p>
-      <a href="tel:+380673004470">+38 067 300 4470</a>
-      ·
-      <a href="mailto:tic.zvyagel@gmail.com">tic.zvyagel@gmail.com</a>
+
+      <div class="map-heading">
+        <h2>Цікаві місця та туристичні локації</h2>
+        <span class="map-label">Інтерактивна карта</span>
+      </div>
+
+      <div class="map-frame">
+        <iframe
+          src="https://www.google.com/maps/d/u/0/embed?mid=1tm36aV9_BaX4Fe9F_MRW6j3yrCtq-_I&ehbc=2E312F"
+          title="Інтерактивна туристична карта Звягеля"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+
+      <div class="map-actions">
+        <a
+          class="btn"
+          href="https://www.google.com/maps/d/u/0/viewer?mid=1tm36aV9_BaX4Fe9F_MRW6j3yrCtq-_I"
+          target="_blank"
+          rel="noopener noreferrer">
+          Відкрити карту у Google Maps ↗
+        </a>
+
+        <a class="btn secondary" href="index.html#tours">
+          Переглянути екскурсії
+        </a>
+
+        <a class="btn secondary" href="index.html#contacts">
+          Контакти туристичного центру
+        </a>
+      </div>
+
+      <section class="map-note" aria-label="Контакти туристичного центру">
+        <div class="note-icon" aria-hidden="true">📍</div>
+
+        <div class="note-content">
+          <strong>Плануєте відвідати Звягель?</strong>
+
+          <p>
+            Зверніться до туристичного центру, щоб дізнатися про екскурсії,
+            туристичні маршрути, пам’ятки та цікаві місця міста.
+          </p>
+
+          <div class="contact-links">
+            <a href="tel:+380673004470">☎ +38 067 300 4470</a>
+            <a href="mailto:tic.zvyagel@gmail.com">✉ tic.zvyagel@gmail.com</a>
+          </div>
+        </div>
+      </section>
+
     </div>
-  </div>
-</main>
+  </main>
 
-<footer>
-  <div class="container footer-row">
-    <span>© <span id="year"></span> Звягель Туристичний</span>
-    <span>Відкривай. Досліджуй. Повертайся.</span>
-  </div>
-</footer>
+  <footer>
+    <div class="container footer-row">
+      <span>© <span id="year"></span> Звягель Туристичний</span>
+      <span>Відкривай. Досліджуй. Повертайся.</span>
+    </div>
+  </footer>
 
-<script>
-document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 
 </body>
 </html>
