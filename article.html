@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10213b">
-<meta name="description" content="Дізнайтеся більше про екскурсії, історичні пам'ятки, проєкти та цікаві місця Звягеля.">
+<meta name="description" content="Екскурсії, пам'ятки, новини та туристичні проєкти Звягеля.">
 <meta name="robots" content="index, follow">
 <title>Матеріал — Звягель Туристичний</title>
 
@@ -73,7 +73,7 @@ header{
 }
 .state-icon{font-size:38px}
 .state h1{color:var(--navy);line-height:1.2}
-.state p{color:var(--muted)}
+.state p{color:var(--muted);overflow-wrap:anywhere}
 .state .btn{margin-top:10px}
 
 .hero{
@@ -278,7 +278,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-off
       <span class="brand-icon">🧭</span>
       <span>Звягель <b>Туристичний</b></span>
     </a>
-    <a class="header-link" id="back-link" href="catalog.html?section=tours">← До каталогу</a>
+    <a class="header-link" id="back-link" href="index.html#home">← Назад</a>
   </div>
 </header>
 
@@ -369,7 +369,7 @@ const settings = {
   },
   projects: {
     label: "Проєкти",
-    icon: "📂",
+    icon: "🎧",
     collection: "projects",
     catalog: "projects"
   }
@@ -377,8 +377,13 @@ const settings = {
 
 const current = settings[type];
 
-$("back-link").href = "catalog.html?section=" + encodeURIComponent(current.catalog);
-$("back-link").textContent = "← Усі матеріали: " + current.label;
+$("back-link").href = "index.html#" + (
+  type === "tours" ? "tours" :
+  type === "places" ? "places" :
+  type === "news" ? "news" :
+  "projects"
+);
+$("back-link").textContent = "← До розділу «" + current.label + "»";
 
 function safeUrl(value) {
   try {
@@ -436,10 +441,6 @@ function makePhoto(url, title) {
   img.alt = title || "Фото Звягеля";
   img.loading = "lazy";
   img.decoding = "async";
-  img.onerror = () => {
-    img.dataset.failed = "true";
-    img.style.display = "none";
-  };
   return img;
 }
 
@@ -479,7 +480,6 @@ $("lightbox").addEventListener("click", event => {
 
 document.addEventListener("keydown", event => {
   if (!$("lightbox").classList.contains("open")) return;
-
   if (event.key === "Escape") closeLightbox();
   if (event.key === "ArrowLeft") moveLightbox(-1);
   if (event.key === "ArrowRight") moveLightbox(1);
@@ -507,6 +507,7 @@ function createGallery(images, title) {
     button.setAttribute("aria-label", "Відкрити фото " + (index + 1));
 
     const img = makePhoto(url, title + " — фото " + (index + 1));
+
     img.onerror = () => {
       button.remove();
       if (!gallery.children.length) {
@@ -607,7 +608,12 @@ function renderArticle(data) {
   crumbs.append(
     link("Головна", "index.html#home", ""),
     el("span", "", "/"),
-    link(current.label, "catalog.html?section=" + current.catalog, ""),
+    link(current.label, "index.html#" + (
+      type === "tours" ? "tours" :
+      type === "places" ? "places" :
+      type === "news" ? "news" :
+      "projects"
+    ), ""),
     el("span", "", "/"),
     el("span", "", title)
   );
@@ -626,25 +632,37 @@ function renderArticle(data) {
   }
 
   const heroActions = el("div", "hero-actions");
-  heroActions.append(
+
+  heroActions.appendChild(
     link(
       type === "tours" ? "Записатися на екскурсію ↓" : "Зв’язатися з нами ↓",
       "#contacts",
       "btn"
-    ),
-    link("← Назад до каталогу", "catalog.html?section=" + current.catalog, "btn btn-outline")
+    )
   );
+
+  heroActions.appendChild(
+    link("← Назад до розділу", "index.html#" + (
+      type === "tours" ? "tours" :
+      type === "places" ? "places" :
+      type === "news" ? "news" :
+      "projects"
+    ), "btn btn-outline")
+  );
+
   heroText.appendChild(heroActions);
 
   const photo = el("div", "hero-photo");
 
   if (images.length) {
     const heroImg = makePhoto(images[0], title);
+
     heroImg.onerror = () => {
       photo.replaceChildren();
       photo.classList.add("photo-placeholder");
       photo.textContent = current.icon;
     };
+
     photo.appendChild(heroImg);
     photo.appendChild(el("div", "photo-caption", "Звягель Туристичний"));
   } else {
@@ -656,7 +674,11 @@ function renderArticle(data) {
   hero.appendChild(heroInner);
   main.appendChild(hero);
 
-  /* Інформаційні картки */
+  /*
+    Інформаційні картки.
+    Для проєктів вони навмисно не створюються,
+    щоб не показувати категорію, дату чи адресу.
+  */
   const factsSection = el("section", "section");
   const facts = el("div", "container facts");
 
@@ -666,19 +688,10 @@ function renderArticle(data) {
     addFact(facts, "🎟️", "Вартість", data.price || "Уточнюйте");
     addFact(facts, "📍", "Місце початку", data.startPoint || data.address || "Уточнюйте");
   } else if (type === "places") {
-    addFact(facts, "📍", "Адреса", data.address || "Звягель");
-    addFact(facts, "🕒", "Графік відвідування", data.hours || data.schedule || "Уточнюйте");
-    addFact(facts, "🏛️", "Тип локації", data.category || "Історична пам’ятка");
+    addFact(facts, "📍", "Адреса", data.address || "");
+    addFact(facts, "🕒", "Графік відвідування", data.hours || data.schedule || "");
   } else if (type === "news") {
     addFact(facts, "📰", "Дата публікації", data.date || "");
-  } else if (type === "projects") {
-    addFact(facts, "📂", "Категорія проєкту", data.category || "");
-    addFact(facts, "📅", "Дата", data.date || "");
-    addFact(facts, "📍", "Місце реалізації", data.address || "");
-  }
-
-  if (data.price && type !== "tours") {
-    addFact(facts, "₴", "Вартість", data.price);
   }
 
   if (facts.children.length) {
@@ -686,7 +699,7 @@ function renderArticle(data) {
     main.appendChild(factsSection);
   }
 
-  /* Опис та бічна картка */
+  /* Опис матеріалу */
   const descSection = el("section", "section section-alt");
   const grid = el("div", "container content-grid");
   const articleBody = el("article");
@@ -705,7 +718,7 @@ function renderArticle(data) {
           ? "Про локацію"
           : type === "news"
             ? "Деталі новини"
-            : "Про проєкт"
+            : "Про аудіогід"
     )
   );
 
@@ -713,24 +726,27 @@ function renderArticle(data) {
   addDescription(descNode, description);
   articleBody.appendChild(descNode);
 
+  /*
+    Для проєктів зовнішнє посилання — це аудіогід.
+    Кнопку карти не створюємо.
+  */
   if (data.link) {
     const external = safeUrl(data.link);
+
     if (external) {
       articleBody.appendChild(
-        link("Додаткова інформація ↗", external, "btn btn-light")
+        link(
+          type === "projects" ? "🎧 Слухати аудіогід ↗" : "Додаткова інформація ↗",
+          external,
+          "btn btn-light"
+        )
       );
     }
   }
 
-  const mapUrl = safeUrl(data.mapLink || data.map);
-  if (mapUrl) {
-    articleBody.appendChild(
-      link("Переглянути на карті ↗", mapUrl, "btn btn-light")
-    );
-  }
-
   const sidebar = el("aside", "sidebar-card");
-  sidebar.appendChild(el("div", "fact-icon", "🧭"));
+  sidebar.appendChild(el("div", "fact-icon", type === "projects" ? "🎧" : "🧭"));
+
   sidebar.appendChild(
     el(
       "h3",
@@ -738,10 +754,11 @@ function renderArticle(data) {
       type === "tours"
         ? "Відкрийте Звягель разом з нами"
         : type === "projects"
-          ? "Проєкти туристичного Звягеля"
+          ? "Слухайте історію Звягеля"
           : "Відкрийте Звягель"
     )
   );
+
   sidebar.appendChild(
     el(
       "p",
@@ -749,10 +766,11 @@ function renderArticle(data) {
       type === "tours"
         ? "Зв’яжіться з туристичним центром, щоб уточнити дату, вартість та умови проведення екскурсії."
         : type === "projects"
-          ? "Дізнайтеся більше про ініціативи, події та ідеї, що розвивають туристичну привабливість Звягеля."
+          ? "Відкрийте аудіогід і дізнайтеся більше про історію та спадщину Звягельського замку."
           : "Зверніться до туристичного центру, щоб дізнатися більше про локацію та туристичні маршрути Звягеля."
     )
   );
+
   sidebar.appendChild(
     link(
       type === "tours" ? "Записатися на екскурсію ↓" : "Зв’язатися з нами ↓",
@@ -765,12 +783,13 @@ function renderArticle(data) {
   descSection.appendChild(grid);
   main.appendChild(descSection);
 
-  /* Маршрут */
+  /* Маршрут — лише якщо він є в записі */
   const routeSection = el("section", "section");
   routeSection.id = "route-section";
   routeSection.hidden = true;
 
   const routeContainer = el("div", "container");
+
   routeContainer.append(
     el("div", "eyebrow", "Крок за кроком"),
     el("h2", "", "Маршрут екскурсії")
@@ -804,6 +823,7 @@ function renderArticle(data) {
   contacts.id = "contacts";
 
   const contactsContainer = el("div", "container");
+
   contactsContainer.append(
     el("div", "eyebrow", "Плануйте свою подорож"),
     el(
@@ -812,17 +832,17 @@ function renderArticle(data) {
       type === "tours"
         ? "Записатися на екскурсію"
         : type === "projects"
-          ? "Дізнатися більше про проєкт"
+          ? "Дізнатися більше про аудіогід"
           : "Зв’яжіться з нами"
     ),
     el(
       "p",
       "contacts-intro",
       type === "tours"
-        ? "Хочете відвідати цю екскурсію? Зателефонуйте до Звягельського туристичного центру. Уточніть дату, кількість учасників та вартість."
+        ? "Хочете відвідати цю екскурсію? Зателефонуйте до Звягельського туристичного центру та уточніть дату, кількість учасників і вартість."
         : type === "projects"
-          ? "Щоб дізнатися більше про цей проєкт, його реалізацію або можливості долучення, зв’яжіться із Звягельським туристичним центром."
-          : "Звертайтеся до туристичного центру за інформацією про локацію, екскурсії та туристичні маршрути Звягеля."
+          ? "Щоб дізнатися більше про аудіогід та туристичні можливості Звягеля, зв’яжіться із Звягельським туристичним центром."
+          : "Звертайтеся до туристичного центру за інформацією про локації, екскурсії та туристичні маршрути Звягеля."
     )
   );
 
@@ -844,7 +864,9 @@ function renderArticle(data) {
   details.appendChild(addressRow);
 
   const info = el("div", "contact-card");
+
   info.appendChild(el("h3", "", "Наступний крок"));
+
   info.appendChild(
     el(
       "p",
@@ -852,7 +874,7 @@ function renderArticle(data) {
       type === "tours"
         ? "Під час звернення повідомте назву екскурсії: «" + title + "». Працівники центру допоможуть уточнити деталі."
         : type === "projects"
-          ? "Повідомте назву проєкту, який вас цікавить, щоб працівники центру могли надати потрібну інформацію."
+          ? "Якщо маєте запитання щодо аудіогіда, повідомте працівникам центру назву «" + title + "»."
           : "Зателефонуйте до туристичного центру, щоб отримати інформацію про відвідування та екскурсійні можливості."
     )
   );
@@ -862,9 +884,10 @@ function renderArticle(data) {
   info.appendChild(actions);
 
   const social = el("div", "contact-actions");
-  const fb = link("Facebook ↗", "https://www.facebook.com/zviaheltouristcentre/", "btn btn-outline");
-  const ig = link("Instagram ↗", "https://www.instagram.com/zviahel_tourist_centr/", "btn btn-outline");
-  social.append(fb, ig);
+  social.append(
+    link("Facebook ↗", "https://www.facebook.com/zviaheltouristcentre/", "btn btn-outline"),
+    link("Instagram ↗", "https://www.instagram.com/zviahel_tourist_centr/", "btn btn-outline")
+  );
   info.appendChild(social);
 
   contactGrid.append(details, info);
@@ -872,7 +895,6 @@ function renderArticle(data) {
   contacts.appendChild(contactsContainer);
   main.appendChild(contacts);
 
-  /* Плавний перехід до контактів */
   main.querySelectorAll('a[href="#contacts"]').forEach(a => {
     a.addEventListener("click", event => {
       event.preventDefault();
@@ -896,7 +918,12 @@ function showError(message) {
   );
 
   state.appendChild(
-    link("Повернутися до каталогу", "catalog.html?section=" + current.catalog, "btn")
+    link("Повернутися до розділу", "index.html#" + (
+      type === "tours" ? "tours" :
+      type === "places" ? "places" :
+      type === "news" ? "news" :
+      "projects"
+    ), "btn")
   );
 
   container.appendChild(state);
@@ -905,7 +932,7 @@ function showError(message) {
 
 async function loadArticle() {
   if (!id) {
-    showError("У посиланні немає ідентифікатора запису. Поверніться до каталогу й відкрийте потрібний матеріал ще раз.");
+    showError("У посиланні немає ідентифікатора запису. Поверніться до розділу й відкрийте потрібний матеріал ще раз.");
     return;
   }
 
@@ -913,14 +940,14 @@ async function loadArticle() {
     const snapshot = await db.collection(current.collection).doc(id).get();
 
     if (!snapshot.exists) {
-      showError("Цей запис не знайдено. Можливо, його видалено або посилання застаріло.");
+      showError("Цей запис не знайдено в колекції «" + current.collection + "». Перевірте посилання та наявність документа у Firebase.");
       return;
     }
 
     const data = snapshot.data() || {};
 
     if (data.published !== true) {
-      showError("Цей матеріал наразі недоступний для перегляду.");
+      showError("Цей матеріал наразі не опублікований або недоступний для перегляду.");
       return;
     }
 
