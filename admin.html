@@ -1,226 +1,350 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#10213b">
+<meta name="color-scheme" content="light">
 <title>Адмінпанель — Звягель Туристичний</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f58220'/%3E%3Cg fill='none' stroke='%2310213b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='16' cy='16' r='9'/%3E%3Cpath d='m20.5 11.5-2.2 6.8-6.8 2.2 2.2-6.8z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap">
+
 <style>
+/* Адмінка навмисно самодостатня: не залежить від design.css і site.js публічного сайту */
 :root {
-  --navy:#10213b;
-  --orange:#f58220;
-  --bg:#f2f5f9;
-  --line:#dce3ec;
-  --muted:#687487;
-  --red:#b42318;
-  --green:#167647;
+  --navy: #10213b;
+  --navy-2: #1b3a5f;
+  --orange: #f58220;
+  --orange-hover: #ff9a3d;
+  --orange-light: #ffb36d;
+  --orange-ink: #a84505;
+  --orange-soft: #fff3e8;
+  --bg: #f2f5f9;
+  --line: #dce3ec;
+  --text: #19283c;
+  --muted: #56647a;
+  --red: #b42318;
+  --red-soft: #fde8e7;
+  --green: #0f6b3e;
+  --green-soft: #e4f5ec;
+  --radius: 14px;
+  --shadow: 0 6px 24px rgba(16, 33, 59, .07);
+  --font: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
-* { box-sizing:border-box; }
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { scroll-padding-bottom: 100px; }   /* щоб липка панель дій не затуляла поле, на яке перейшов фокус */
 body {
-  margin:0;
-  font:15px/1.5 Arial,sans-serif;
-  background:var(--bg);
-  color:var(--navy);
+  margin: 0;
+  font: 16px/1.55 var(--font);
+  color: var(--text);
+  background: var(--bg);
+  overflow-wrap: break-word;
 }
-button,input,textarea { font:inherit; }
-button {
-  cursor:pointer;
-  border:0;
-  border-radius:8px;
-  padding:10px 14px;
-  font-weight:bold;
+button, input, textarea, select { font: inherit; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; line-height: 1.25; color: var(--navy); }
+p { margin: 0; }
+
+.icon { width: 1.15em; height: 1.15em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+.topbar :focus-visible, dialog .btn--solid-danger:focus-visible, .toast :focus-visible { outline-color: var(--orange-light); }
+
+.skip-link { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 10px; background: #fff; color: var(--navy); font-weight: 700; }
+.skip-link:focus { top: 12px; }
+
+/* ---------- Кнопки ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: var(--orange);
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
 }
-button:disabled { opacity:.6; cursor:wait; }
-.primary { background:var(--orange); color:white; }
-.secondary { background:#e7edf5; color:var(--navy); }
-.danger { background:#fde8e7; color:var(--red); }
-.hidden { display:none!important; }
-header {
-  background:var(--navy);
-  color:white;
-  padding:18px max(18px,calc((100vw - 1200px)/2));
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
+.btn:hover { background: var(--orange-hover); }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn--ghost { background: #fff; border-color: #c4cfdd; color: var(--navy); }
+.btn--ghost:hover { background: #eaf0f8; }
+.btn--danger { background: var(--red-soft); border-color: #f0bfba; color: var(--red); }
+.btn--danger:hover { background: #fbd5d2; }
+.btn--solid-danger { background: var(--red); color: #fff; }
+.btn--solid-danger:hover { background: #8f1b12; }
+.btn--dark { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.5); color: #fff; }
+.btn--dark:hover { background: #fff; color: var(--navy); }
+.btn--sm { min-height: 40px; padding: 6px 12px; font-size: 14px; }
+.btn--icon { width: 40px; padding: 0; }
+.btn[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+/* ---------- Шапка ---------- */
+.topbar { background: var(--navy); color: #fff; border-bottom: 3px solid var(--orange); }
+.topbar-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; width: min(1240px, calc(100% - 32px)); margin: 0 auto; padding: 12px 0; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-mark { display: grid; place-items: center; width: 42px; height: 42px; flex: none; border-radius: 12px; background: var(--orange); color: var(--navy); font-size: 22px; }
+.brand strong { display: block; font-size: 17px; line-height: 1.2; }
+.brand span.sub { display: block; color: #c7d3e3; font-size: 13px; }
+.top-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.user { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #dbe4ef; font-size: 14px; }
+
+/* ---------- Основа ---------- */
+main { width: min(1240px, calc(100% - 32px)); margin: 24px auto 60px; }
+.boot { padding: 60px 0; text-align: center; color: var(--muted); }
+.panel { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); }
+
+.login { max-width: 440px; margin: 40px auto; }
+.login h1 { font-size: 26px; margin-bottom: 6px; }
+.login p.lead { color: var(--muted); margin-bottom: 8px; }
+
+.note { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 18px; padding: 12px 14px; border-radius: 12px; background: var(--orange-soft); color: #6b3608; font-size: 14px; }
+.note .icon { margin-top: 3px; }
+
+.layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 20px; align-items: start; }
+
+/* ---------- Меню розділів ---------- */
+.nav { position: sticky; top: 16px; display: grid; gap: 4px; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+.nav-title { margin: 10px 10px 4px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.nav-title:first-child { margin-top: 2px; }
+.nav button {
+  display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 12px;
+  border: 1px solid transparent; border-radius: 10px; background: transparent; color: var(--navy);
+  font-weight: 600; text-align: left; cursor: pointer;
 }
-header h1 { font-size:23px; margin:0; }
-header a { color:white; margin-right:12px; }
-main { max-width:1250px; margin:25px auto; padding:0 16px 50px; }
-.panel {
-  background:white;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:20px;
+.nav button:hover { background: var(--bg); }
+.nav button[aria-current="page"] { background: var(--orange-soft); border-color: #ffd2a1; color: #5a2d05; }
+
+/* ---------- Панель розділу ---------- */
+.panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.panel-head h2 { font-size: 26px; }
+.panel-head p { color: var(--muted); }
+.page-note { margin: 4px 0 16px; color: var(--muted); font-size: 14px; }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 12px 0; }
+.toolbar input[type="search"] { flex: 1 1 220px; min-height: 44px; padding: 8px 14px; border: 1px solid #c4cfdd; border-radius: 11px; background: #fff; color: var(--text); }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.count { color: var(--muted); font-size: 14px; }
+
+.items { display: grid; gap: 10px; margin-top: 12px; }
+.item { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.thumb { width: 64px; height: 64px; overflow: hidden; border-radius: 10px; background: linear-gradient(135deg, var(--navy), var(--navy-2)); color: var(--orange); display: grid; place-items: center; font-size: 26px; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.item-main { min-width: 0; }
+.item h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-bottom: 2px; font-size: 17px; overflow-wrap: anywhere; }
+.item p { color: var(--muted); font-size: 14px; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.item .meta { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; }
+.item-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.badge { display: inline-block; padding: 1px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; line-height: 1.7; }
+.badge--ok { background: var(--green-soft); color: var(--green); }
+.badge--draft { background: #e8edf4; color: var(--muted); }
+
+.empty { padding: 26px; border: 1px dashed #c4cfdd; border-radius: 12px; color: var(--muted); text-align: center; }
+.empty.error { border-color: #f0bfba; background: var(--red-soft); color: var(--red); }
+.empty .btn { margin-top: 12px; }
+
+/* ---------- Редактор ---------- */
+.editor-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 6px 0 14px; }
+.editor-head h3 { font-size: 21px; flex: 1 1 240px; min-width: 0; overflow-wrap: anywhere; }
+.editor-head h3:focus { outline: none; }
+.dirty { padding: 2px 12px; border-radius: 999px; background: var(--orange-soft); color: #6b3608; font-size: 13px; font-weight: 700; }
+
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 18px; }
+.field { min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field > label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 15px; }
+.req { color: var(--red); }
+.field input:not([type="checkbox"]), .field textarea { width: 100%; padding: 10px 12px; border: 1px solid #b9c5d5; border-radius: 10px; background: #fff; color: var(--text); }
+.field input:not([type="checkbox"]) { min-height: 44px; }
+.field textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+.field input:focus-visible, .field textarea:focus-visible { outline-offset: 0; border-color: var(--navy); }
+.field [aria-invalid="true"] { border-color: var(--red); background: #fff8f7; }
+.foot { display: flex; justify-content: space-between; gap: 12px; margin-top: 4px; font-size: 13px; color: var(--muted); }
+.foot .counter { flex: none; font-variant-numeric: tabular-nums; }
+.foot .counter.over { color: var(--red); font-weight: 700; }
+.error-msg { margin-top: 4px; color: var(--red); font-size: 14px; font-weight: 600; }
+.warn-msg { margin-top: 4px; color: #7a3d05; font-size: 14px; }
+
+.switch { position: relative; display: flex !important; align-items: center; gap: 12px; margin: 0 !important; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); cursor: pointer; }
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.switch-ui { position: relative; width: 46px; height: 26px; flex: none; border-radius: 999px; background: #8795a9; transition: background .15s; }
+.switch-ui::after { content: ""; position: absolute; left: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .15s; }
+.switch input:checked + .switch-ui { background: var(--green); }
+.switch input:checked + .switch-ui::after { transform: translateX(20px); }
+.switch input:focus-visible + .switch-ui { outline: 3px solid var(--navy); outline-offset: 2px; }
+
+.previews { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.previews:empty { display: none; }
+.pv { position: relative; width: 84px; height: 64px; overflow: hidden; border-radius: 8px; background: #e8edf4; }
+.pv img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pv b { position: absolute; left: 4px; top: 4px; min-width: 20px; padding: 0 5px; border-radius: 6px; background: rgba(16,33,59,.85); color: #fff; font-size: 12px; text-align: center; }
+.pv--video { width: 112px; height: 63px; background: linear-gradient(135deg, #294b70, #071629); }
+.pv-label { position: absolute; right: 4px; bottom: 4px; padding: 0 6px; border-radius: 6px; background: rgba(16,33,59,.9); color: #fff; font-size: 11px; font-weight: 600; }
+.pv.bad { background: var(--red-soft); outline: 2px solid var(--red); }
+.pv.bad img { opacity: 0; }
+.pv.bad::after { content: "не відкрилось"; position: absolute; inset: 0; display: grid; place-items: center; padding: 4px; color: var(--red); font-size: 11px; font-weight: 700; text-align: center; }
+
+.editor-actions { position: sticky; bottom: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; padding: 12px 0; border-top: 1px solid var(--line); background: #fff; }
+.editor-actions .spacer { flex: 1; }
+.status { margin-top: 8px; font-size: 14px; }
+.status.error { color: var(--red); font-weight: 600; }
+.status.ok { color: var(--green); font-weight: 600; }
+
+/* ---------- Вхід ---------- */
+.login label { display: block; margin: 14px 0 5px; font-weight: 600; }
+.login input[type="email"], .login input[type="password"], .login input[type="text"] { width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid #b9c5d5; border-radius: 10px; }
+.login .check { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; font-weight: 400; }
+.login .btn { width: 100%; margin-top: 16px; }
+
+/* ---------- Повідомлення, діалог ---------- */
+#toasts { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 1000; display: grid; justify-items: center; gap: 8px; pointer-events: none; }
+.toast { display: flex; align-items: center; gap: 14px; max-width: 560px; padding: 12px 16px; border-radius: 12px; background: var(--navy); color: #fff; box-shadow: 0 10px 30px rgba(16,33,59,.35); pointer-events: auto; }
+.toast.error { background: var(--red); }
+.toast button { padding: 4px 8px; border: 0; border-radius: 8px; background: transparent; color: var(--orange-light); font-weight: 700; text-decoration: underline; cursor: pointer; }
+.toast.error button { color: #fff; }
+
+dialog { width: min(440px, calc(100vw - 32px)); padding: 24px; border: 0; border-radius: 16px; color: var(--text); box-shadow: 0 24px 60px rgba(5,11,21,.4); }
+dialog::backdrop { background: rgba(5, 11, 21, .6); }
+dialog h3 { margin-bottom: 8px; font-size: 20px; }
+dialog p { color: var(--muted); }
+dialog .row { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+
+noscript p { padding: 16px; border-radius: 12px; background: var(--orange-soft); color: #6b3608; }
+
+@media (max-width: 880px) {
+  .layout { grid-template-columns: 1fr; }
+  .nav { position: static; display: flex; gap: 6px; overflow-x: auto; padding: 8px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .nav-title { display: none; }
+  .nav button { width: auto; flex: none; white-space: nowrap; scroll-snap-align: start; }
 }
-#loginView { max-width:440px; margin:55px auto; }
-label { display:block; font-weight:bold; margin:12px 0 5px; }
-input:not([type=checkbox]),textarea {
-  width:100%;
-  padding:11px;
-  border:1px solid #cbd5e1;
-  border-radius:8px;
-  color:var(--navy);
-  background:white;
+@media (max-width: 640px) {
+  .panel { padding: 16px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .field { grid-column: 1 / -1; }
+  .item { grid-template-columns: 52px minmax(0, 1fr); gap: 12px; }
+  .thumb { width: 52px; height: 52px; }
+  .item-actions { grid-column: 1 / -1; justify-content: flex-start; }
+  .panel-head h2 { font-size: 23px; }
+  .user { display: none; }
+  .editor-actions .btn { flex: 1 1 140px; }
 }
-input[type=checkbox] { width:auto; }
-textarea { min-height:100px; resize:vertical; }
-.layout {
-  display:grid;
-  grid-template-columns:230px minmax(0,1fr);
-  gap:18px;
-  align-items:start;
-}
-nav { display:grid; gap:7px; position:sticky; top:15px; }
-.navbtn {
-  text-align:left;
-  background:transparent;
-  color:var(--navy);
-  border:1px solid transparent;
-}
-.navbtn.active { background:#fff0df; border-color:#ffd2a1; }
-.section-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.section-head h2 { margin:0; }
-.muted { color:var(--muted); }
-.note {
-  background:#fff5e8;
-  padding:12px;
-  border-radius:8px;
-  margin:15px 0;
-  color:#75430c;
-}
-.item-list { display:grid; gap:10px; margin-top:15px; }
-.item {
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:13px;
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:flex-start;
-}
-.item-main { min-width:0; flex:1; overflow-wrap:anywhere; }
-.item h3 { margin:0 0 5px; }
-.item p { margin:0; color:var(--muted); white-space:pre-wrap; }
-.item-actions { display:flex; gap:6px; flex-wrap:wrap; }
-.small { padding:7px 10px; font-size:13px; }
-.editor { margin-top:22px; padding-top:18px; border-top:1px solid var(--line); }
-.form-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:0 15px;
-}
-.full { grid-column:1/-1; }
-.editor-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:15px; }
-.status { font-size:14px; margin-top:12px; overflow-wrap:anywhere; }
-.error { color:var(--red); }
-.success { color:var(--green); }
-.empty {
-  padding:20px;
-  border:1px dashed var(--line);
-  border-radius:8px;
-  color:var(--muted);
-}
-.badge { color:var(--green); font-size:12px; }
-.help { font-size:13px; color:var(--muted); margin:5px 0 12px; }
-@media(max-width:800px) {
-  .layout { grid-template-columns:1fr; }
-  nav { position:static; grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .navbtn { font-size:13px; padding:9px; }
-  .form-grid { grid-template-columns:1fr; }
-  .full { grid-column:auto; }
-  .item { flex-wrap:wrap; }
-  .item-actions { width:100%; }
-  .panel { padding:14px; }
-}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
 </style>
 </head>
-<body>
 
-<header>
-  <div>
-    <h1>Звягель Туристичний</h1>
-    <div>Адмінпанель керування сайтом</div>
-  </div>
-  <div>
-    <a href="./" target="_blank" rel="noopener">Відкрити сайт ↗</a>
-    <button id="logoutBtn" class="secondary hidden" type="button">Вийти</button>
+<body>
+<a class="skip-link" href="#main">Перейти до змісту</a>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-compass"/></svg></span>
+      <div><strong>Звягель Туристичний</strong><span class="sub">Адмінпанель</span></div>
+    </div>
+    <div class="top-actions">
+      <a class="btn btn--dark btn--sm" href="index.html" target="_blank" rel="noopener">Відкрити сайт <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+      <button id="backupBtn" class="btn btn--dark btn--sm" type="button" hidden><svg class="icon" aria-hidden="true"><use href="icons.svg#i-download"/></svg> <span>Резервна копія</span></button>
+      <span id="userEmail" class="user" hidden></span>
+      <button id="logoutBtn" class="btn btn--dark btn--sm" type="button" hidden><svg class="icon" aria-hidden="true"><use href="icons.svg#i-logout"/></svg> Вийти</button>
+    </div>
   </div>
 </header>
 
-<main>
-  <section id="loginView" class="panel">
-    <h2>Вхід адміністратора</h2>
-    <p class="muted">Увійдіть через свій обліковий запис Firebase.</p>
-    <form id="loginForm">
+<main id="main">
+  <noscript><p>Для роботи адмінпанелі потрібен JavaScript.</p></noscript>
+  <p id="boot" class="boot" role="status">Завантаження…</p>
+
+  <section id="loginView" class="panel login" hidden aria-labelledby="loginTitle">
+    <h1 id="loginTitle">Вхід адміністратора</h1>
+    <p class="lead">Увійдіть через свій обліковий запис.</p>
+    <form id="loginForm" novalidate>
       <label for="email">Електронна пошта</label>
       <input id="email" type="email" autocomplete="username" required>
       <label for="password">Пароль</label>
       <input id="password" type="password" autocomplete="current-password" required>
-      <button id="loginBtn" class="primary" type="submit"
-        style="width:100%;margin-top:16px">Увійти</button>
+      <label class="check"><input id="showPass" type="checkbox"> Показати пароль</label>
+      <button id="loginBtn" class="btn" type="submit">Увійти</button>
       <div id="loginStatus" class="status" role="status"></div>
     </form>
   </section>
 
-  <section id="appView" class="hidden">
+  <section id="appView" hidden>
     <div class="note">
-      Публічний сайт має показувати лише опубліковані записи.
-      Для фотографій використовуйте прямі HTTPS-посилання.
-      Додаткові фотографії вказуйте по одному посиланню в кожному рядку.
-      Нові проєкти зберігаються в колекції Firestore
-      <b>projects</b>.
+      <svg class="icon" aria-hidden="true"><use href="icons.svg#i-alert"/></svg>
+      <div>Відвідувачі бачать лише <b>опубліковані</b> записи. Для фото потрібні прямі посилання з https://. Перед великими змінами завантажте «Резервну копію» — це файл зі всіма записами.</div>
     </div>
 
     <div class="layout">
-      <nav aria-label="Розділи адмінпанелі">
-        <button class="navbtn active" data-section="home" type="button">🏠 Головна</button>
-        <button class="navbtn" data-section="places" type="button">🏰 Цікавинки</button>
-        <button class="navbtn" data-section="about" type="button">🏙️ Про місто</button>
-        <button class="navbtn" data-section="contacts" type="button">☎️ Контакти</button>
-        <button class="navbtn" data-section="tours" type="button">🧭 Екскурсії</button>
-        <button class="navbtn" data-section="news" type="button">📰 Новини</button>
-        <button class="navbtn" data-section="projects" type="button">🧩 Наші проєкти</button>
-        <button class="navbtn" data-section="food" type="button">🍽️ Де поїсти?</button>
-        <button class="navbtn" data-section="stay" type="button">🛏️ Де переночувати?</button>
-        <button class="navbtn" data-section="gettingHere" type="button">🗺️ Як дістатися?</button>
-      </nav>
+      <nav class="nav" id="nav" aria-label="Розділи адмінпанелі"></nav>
 
       <div class="panel">
-        <div class="section-head">
+        <div class="panel-head">
           <div>
-            <h2 id="sectionTitle">Головна</h2>
-            <div id="sectionDesc" class="muted"></div>
+            <h2 id="sectionTitle"></h2>
+            <p id="sectionDesc"></p>
           </div>
-          <button id="addBtn" class="primary" type="button">＋ Додати</button>
+          <button id="addBtn" class="btn" type="button"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-plus"/></svg> Додати запис</button>
         </div>
-        <p id="pageNote" class="muted"></p>
-        <div id="list" class="item-list"></div>
+        <p id="pageNote" class="page-note"></p>
 
-        <div id="editor" class="editor hidden">
-          <h3 id="editorTitle">Редагування</h3>
-          <form id="recordForm">
-            <div id="fields" class="form-grid"></div>
-            <div class="editor-actions">
-              <button id="saveBtn" type="submit" class="primary">Зберегти</button>
-              <button id="cancelBtn" type="button" class="secondary">Скасувати</button>
-              <button id="deleteCurrentBtn" type="button" class="danger hidden">Видалити</button>
+        <div id="listView">
+          <div class="toolbar" id="toolbar">
+            <input id="search" type="search" placeholder="Пошук за назвою або описом…" aria-label="Пошук серед записів">
+            <div class="seg" role="group" aria-label="Фільтр за станом">
+              <button class="btn btn--ghost btn--sm" type="button" data-filter="all" aria-pressed="true">Усі</button>
+              <button class="btn btn--ghost btn--sm" type="button" data-filter="published" aria-pressed="false">Опубліковані</button>
+              <button class="btn btn--ghost btn--sm" type="button" data-filter="draft" aria-pressed="false">Чернетки</button>
             </div>
-            <div id="editorStatus" class="status" role="status"></div>
-          </form>
+            <span id="count" class="count" aria-live="polite"></span>
+          </div>
+          <div id="list" class="items" aria-busy="true"></div>
         </div>
+
+        <form id="editorView" novalidate hidden>
+          <div class="editor-head">
+            <button id="backBtn" class="btn btn--ghost btn--sm" type="button"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-left"/></svg> До списку</button>
+            <h3 id="editorTitle" tabindex="-1"></h3>
+            <span id="dirtyBadge" class="dirty" hidden>Є незбережені зміни</span>
+          </div>
+          <div id="fields" class="form-grid"></div>
+          <div class="editor-actions">
+            <button id="saveBtn" class="btn" type="submit">Зберегти</button>
+            <button id="cancelBtn" class="btn btn--ghost" type="button">Скасувати</button>
+            <span class="spacer"></span>
+            <button id="deleteBtn" class="btn btn--danger" type="button" hidden><svg class="icon" aria-hidden="true"><use href="icons.svg#i-trash"/></svg> Видалити</button>
+          </div>
+          <div id="editorStatus" class="status" role="status"></div>
+        </form>
       </div>
     </div>
   </section>
 </main>
+
+<div id="toasts" role="status" aria-live="polite"></div>
+
+<dialog id="confirm" aria-labelledby="confirmTitle" aria-describedby="confirmText">
+  <form method="dialog">
+    <h3 id="confirmTitle"></h3>
+    <p id="confirmText"></p>
+    <div class="row">
+      <button id="confirmCancel" class="btn btn--ghost" type="submit" value="cancel"></button>
+      <button id="confirmOk" class="btn" type="submit" value="ok"></button>
+    </div>
+  </form>
+</dialog>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -228,7 +352,11 @@ nav { display:grid; gap:7px; position:sticky; top:15px; }
 
 <script>
 "use strict";
+(() => {
 
+/* ================= Налаштування ================= */
+
+// apiKey веб-додатку Firebase публічний за задумом; реальний захист — правила Firestore
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDEizfKA8Ll-BT_olZSq7gt2z5WHH3PC2M",
   authDomain: "zviahel-tourist.firebaseapp.com",
@@ -239,599 +367,1194 @@ const FIREBASE_CONFIG = {
   measurementId: "G-DV5YF43W24"
 };
 
-/* ДВА ДОЗВОЛЕНИХ АДМІНІСТРАТОРИ */
+// Лише для зручності інтерфейсу: хто НЕ адмін, не побачить панель. Справжній захист — isAdmin() у правилах Firestore.
 const ADMIN_UIDS = [
   "6l0nN1oKvCYorigm0MHGycuBV9j1",
   "ODzRXdYQJjMqV7k6jquwZMj1hnd2"
 ];
 
-function isAdmin(user) {
-  return !!user && ADMIN_UIDS.includes(user.uid);
-}
+// Ці ліміти дзеркально повторюють firestore.rules
+const MAX = { title: 200, short: 300, long: 20000, url: 2000, photos: 30, videos: 10, route: 40, routeLine: 1000 };
+const BACKUP_COLLECTIONS = ["places", "tours", "news", "projects", "food", "stay", "events", "siteContent"];
 
-const $ = id => document.getElementById(id);
-let auth;
-let db;
-let currentSection = "home";
-let editingId = null;
-let records = [];
-let busy = false;
+/* ================= Опис розділів і полів ================= */
 
-const galleryFields = [
-  ["image", "Основне фото (HTTPS URL)", "url"],
-  ["images", "Додаткові фото — по одному посиланню в рядку", "textarea"]
+const F = (name, label, type = "text", o = {}) => ({ name, label, type, ...o });
+const TITLE = label => F("title", label, "text", { required: true, full: true, max: MAX.title });
+
+const PHOTOS = [
+  F("image", "Основне фото", "url", { full: true, preview: true, help: "Пряме посилання на зображення, що починається з https://" }),
+  F("images", "Додаткові фото", "urls", { preview: true, rows: 4, help: "По одному посиланню в рядку, до " + MAX.photos + " фото." })
 ];
+const VIDEOS = F("videos", "Відео", "videos", {
+  preview: true, rows: 3,
+  help: "Посилання на YouTube або Vimeo — по одному в рядку, до " + MAX.videos + " відео. На сайті з’явиться плеєр."
+});
+const ORDER = F("order", "Порядок показу", "number", { help: "Менше число — вище в списку. Порожньо — наприкінці." });
+const PUBLISHED = F("published", "Опубліковано на сайті", "checkbox", { help: "Вимкнено — це чернетка, відвідувачі її не бачать." });
 
-const configs = {
+const SECTIONS = {
   home: {
-    title: "Головна",
+    group: "texts", icon: "home", title: "Головна", mode: "doc", doc: "homepage", nested: "texts",
     desc: "Заголовок, вступний текст і назви блоків.",
-    mode: "doc",
-    collection: "siteContent",
-    doc: "homepage",
-    add: false,
-    note: "Редагування заголовків і текстів головної сторінки.",
+    note: "Порожнє поле — на сайті лишається стандартний текст.",
     fields: [
-      ["hero_title", "Головний заголовок", "text"],
-      ["hero_subtitle", "Вступний текст", "textarea"],
-      ["hero_image", "Фото тла (HTTPS URL)", "url"],
-      ["places_title", "Заголовок «Цікавинки»", "text"],
-      ["places_intro", "Вступ до «Цікавинки»", "textarea"],
-      ["tours_title", "Заголовок «Екскурсії»", "text"],
-      ["tours_intro", "Вступ до «Екскурсій»", "textarea"],
-      ["news_title", "Заголовок «Новини»", "text"],
-      ["news_intro", "Вступ до «Новин»", "textarea"],
-      ["projects_title", "Заголовок «Наші проєкти»", "text"],
-      ["projects_intro", "Вступ до «Наших проєктів»", "textarea"]
+      F("hero_title", "Головний заголовок", "text", { full: true }),
+      F("hero_subtitle", "Вступний текст", "textarea", { rows: 4 }),
+      F("hero_image", "Фото тла головного екрана", "url", { full: true, preview: true }),
+      F("places_title", "Заголовок «Цікавинки»"), F("places_intro", "Вступ до «Цікавинок»", "textarea", { rows: 3 }),
+      F("tours_title", "Заголовок «Екскурсії»"), F("tours_intro", "Вступ до «Екскурсій»", "textarea", { rows: 3 }),
+      F("news_title", "Заголовок «Новини»"), F("news_intro", "Вступ до «Новин»", "textarea", { rows: 3 }),
+      F("projects_title", "Заголовок «Наші проєкти»"), F("projects_intro", "Вступ до «Наших проєктів»", "textarea", { rows: 3 })
+    ]
+  },
+  about: {
+    group: "texts", icon: "file", title: "Про місто", mode: "doc", doc: "about",
+    desc: "Історія та інформаційні тексти.",
+    note: "Якщо заповнено «Повний текст», абзаци 1 і 2 на сайті не показуються.",
+    fields: [
+      F("title", "Заголовок розділу", "text", { full: true }),
+      F("body", "Повний текст про місто", "textarea", { rows: 10, help: "Абзаци розділяйте порожнім рядком." }),
+      F("text1", "Перший абзац", "textarea", { rows: 4 }),
+      F("text2", "Другий абзац", "textarea", { rows: 4 }),
+      F("box_title", "Заголовок виділеного блоку"),
+      F("box_text", "Текст виділеного блоку", "textarea", { rows: 3 })
+    ]
+  },
+  contacts: {
+    group: "texts", icon: "phone", title: "Контакти", mode: "doc", doc: "contacts",
+    desc: "Адреса, телефон, графік та соціальні мережі.",
+    note: "Ці дані показуються на головній сторінці й на сторінках матеріалів.",
+    fields: [
+      F("title", "Заголовок контактів", "text", { full: true }),
+      F("address", "Адреса", "text", { full: true }),
+      F("phone", "Телефон", "text", { help: "Наприклад: +38 067 300 4470" }),
+      F("email", "Електронна пошта", "email"),
+      F("hours", "Графік роботи", "text", { full: true }),
+      F("facebook", "Посилання Facebook", "url", { full: true }),
+      F("instagram", "Посилання Instagram", "url", { full: true }),
+      F("extra", "Додаткова інформація", "textarea", { rows: 3 })
+    ]
+  },
+  gettingHere: {
+    group: "texts", icon: "bus", title: "Як дістатися?", mode: "doc", doc: "gettingHere",
+    desc: "Інформація про дорогу та карта міста.",
+    note: "Вкажіть перевірену інформацію та посилання на карту.",
+    fields: [
+      F("title", "Заголовок", "text", { full: true }),
+      F("body", "Текст про те, як дістатися", "textarea", { rows: 10 }),
+      F("mapLink", "Посилання на Google Maps міста", "url", { full: true }),
+      F("directionsLink", "Посилання на маршрут у Google Maps", "url", { full: true })
     ]
   },
 
   places: {
-    title: "Цікавинки",
+    group: "items", icon: "landmark", title: "Цікавинки", mode: "collection", collection: "places", detail: "places",
     desc: "Туристичні місця та пам’ятки.",
-    mode: "collection",
-    collection: "places",
-    add: true,
-    note: "Додавайте пам’ятки, історичні місця, фотографії та посилання.",
+    note: "Пам’ятки, історичні місця, фотографії та посилання.",
     fields: [
-      ["title", "Назва локації", "text", true],
-      ["address", "Адреса", "text"],
-      ...galleryFields,
-      ["description", "Опис", "textarea", true],
-      ["hours", "Графік відвідування", "text"],
-      ["link", "Посилання на додаткову інформацію", "url"],
-      ["mapLink", "Посилання на Google Maps", "url"],
-      ["published", "Опубліковано", "checkbox"]
+      TITLE("Назва локації"),
+      F("address", "Адреса"), F("hours", "Графік відвідування"),
+      ...PHOTOS,
+      F("description", "Опис", "textarea", { required: true, rows: 8, help: "Абзаци розділяйте порожнім рядком." }),
+      VIDEOS,
+      F("link", "Посилання на додаткову інформацію", "url", { full: true }),
+      F("mapLink", "Посилання на Google Maps", "url", { full: true }),
+      ORDER, PUBLISHED
     ]
   },
-
-  about: {
-    title: "Про місто",
-    desc: "Історія та інформаційні тексти.",
-    mode: "doc",
-    collection: "siteContent",
-    doc: "about",
-    add: false,
-    note: "Основний текст розділу «Про місто».",
-    fields: [
-      ["title", "Заголовок розділу", "text"],
-      ["body", "Повний текст про місто", "textarea"],
-      ["text1", "Перший абзац", "textarea"],
-      ["text2", "Другий абзац", "textarea"],
-      ["box_title", "Заголовок виділеного блоку", "text"],
-      ["box_text", "Текст виділеного блоку", "textarea"]
-    ]
-  },
-
-  contacts: {
-    title: "Контакти",
-    desc: "Адреса, телефон, графік та соціальні мережі.",
-    mode: "doc",
-    collection: "siteContent",
-    doc: "contacts",
-    add: false,
-    note: "Використовуйте актуальні контактні дані.",
-    fields: [
-      ["title", "Заголовок контактів", "text"],
-      ["address", "Адреса", "text"],
-      ["phone", "Телефон", "text"],
-      ["email", "Електронна пошта", "email"],
-      ["hours", "Графік роботи", "text"],
-      ["facebook", "Посилання Facebook", "url"],
-      ["instagram", "Посилання Instagram", "url"],
-      ["extra", "Додаткова інформація", "textarea"]
-    ]
-  },
-
   tours: {
-    title: "Екскурсії",
+    group: "items", icon: "compass", title: "Екскурсії", mode: "collection", collection: "tours", detail: "tours",
     desc: "Маршрути, тривалість і умови замовлення.",
-    mode: "collection",
-    collection: "tours",
-    add: true,
-    note: "Додайте основне фото й додаткові фотографії за бажанням.",
+    note: "Телефон екскурсії (якщо вказано) показується на сторінці екскурсії замість загального.",
     fields: [
-      ["title", "Назва екскурсії", "text", true],
-      ["subtitle", "Короткий підзаголовок", "text"],
-      ["duration", "Тривалість", "text"],
-      ["price", "Вартість або умови", "text"],
-      ...galleryFields,
-      ["description", "Опис", "textarea", true],
-      ["booking", "Умови запису / телефон", "text"],
-      ["link", "Посилання на подробиці", "url"],
-      ["published", "Опубліковано", "checkbox"]
+      TITLE("Назва екскурсії"),
+      F("subtitle", "Короткий підзаголовок", "text", { full: true }),
+      F("duration", "Тривалість", "text", { help: "Наприклад: 2 години" }),
+      F("format", "Формат", "text", { help: "Піша, автобусна, індивідуальна…" }),
+      F("price", "Вартість", "text", { help: "Лише число — на сайті додасться «грн»." }),
+      F("startPoint", "Місце початку"),
+      F("phone", "Телефон для запису"),
+      F("booking", "Умови запису (за бажанням)", "text", { help: "Короткий текст на кшталт «Запис за 2 дні»." }),
+      ...PHOTOS,
+      F("description", "Опис", "textarea", { required: true, rows: 8, help: "Абзаци розділяйте порожнім рядком." }),
+      F("route", "Маршрут", "route", { rows: 6, help: "Одна зупинка в рядку. Можна з описом: «Назва | Опис зупинки». До " + MAX.route + " зупинок." }),
+      VIDEOS,
+      F("link", "Посилання на подробиці", "url", { full: true }),
+      F("mapLink", "Посилання на Google Maps", "url", { full: true }),
+      ORDER, PUBLISHED
     ]
   },
-
   news: {
-    title: "Новини",
+    group: "items", icon: "news", title: "Новини", mode: "collection", collection: "news", detail: "news", sort: "date",
     desc: "Новини та оголошення.",
-    mode: "collection",
-    collection: "news",
-    add: true,
-    note: "Короткий опис відображається в картці, повний текст зберігається окремо.",
+    note: "Короткий опис відображається в картці, повний текст — на сторінці новини.",
     fields: [
-      ["title", "Заголовок", "text", true],
-      ["date", "Дата", "text"],
-      ...galleryFields,
-      ["summary", "Короткий опис", "textarea", true],
-      ["body", "Повний текст", "textarea"],
-      ["link", "Посилання на зовнішній матеріал", "url"],
-      ["published", "Опубліковано", "checkbox"]
+      TITLE("Заголовок"),
+      F("date", "Дата", "datetext", { help: "Формат 31.10.2026. Від дати залежить порядок новин." }),
+      ...PHOTOS,
+      F("summary", "Короткий опис", "textarea", { required: true, rows: 3 }),
+      F("body", "Повний текст", "textarea", { rows: 10, help: "Абзаци розділяйте порожнім рядком." }),
+      VIDEOS,
+      F("link", "Посилання на зовнішній матеріал", "url", { full: true }),
+      PUBLISHED
     ]
   },
-
-  /* НОВИЙ РОЗДІЛ */
   projects: {
-    title: "Наші проєкти",
+    group: "items", icon: "bulb", title: "Наші проєкти", mode: "collection", collection: "projects", detail: "projects",
     desc: "Туристичні ініціативи, цифрові продукти та спеціальні проєкти Звягеля.",
-    mode: "collection",
-    collection: "projects",
-    add: true,
-    note: "Запис з’явиться на публічному сайті лише після позначення «Опубліковано».",
+    note: "Запис з’явиться на сайті лише після вмикання «Опубліковано».",
     fields: [
-      ["title", "Назва проєкту", "text", true],
-      ["category", "Категорія / тип проєкту", "text"],
-      ["subtitle", "Короткий підзаголовок", "text"],
-      ...galleryFields,
-      ["description", "Короткий опис проєкту", "textarea", true],
-      ["body", "Детальніша інформація", "textarea"],
-      ["link", "Посилання на проєкт / сайт", "url"],
-      ["date", "Дата або період реалізації", "text"],
-      ["published", "Опубліковано", "checkbox"]
+      TITLE("Назва проєкту"),
+      F("category", "Категорія / тип проєкту"), F("status", "Статус", "text", { help: "Наприклад: діє, у розробці." }),
+      F("subtitle", "Короткий підзаголовок", "text", { full: true }),
+      ...PHOTOS,
+      F("description", "Короткий опис проєкту", "textarea", { required: true, rows: 4 }),
+      F("body", "Детальніша інформація", "textarea", { rows: 10, help: "Абзаци розділяйте порожнім рядком." }),
+      VIDEOS,
+      F("link", "Посилання на проєкт / сайт", "url", { full: true }),
+      F("date", "Дата або період реалізації"),
+      ORDER, PUBLISHED
     ]
   },
-
   food: {
-    title: "Де поїсти?",
+    group: "items", icon: "utensils", title: "Де поїсти?", mode: "collection", collection: "food",
     desc: "Кафе, ресторани та інші заклади харчування.",
-    mode: "collection",
-    collection: "food",
-    add: true,
     note: "Перевіряйте актуальність адрес, цін і графіків роботи.",
     fields: [
-      ["title", "Назва закладу", "text", true],
-      ["address", "Адреса", "text"],
-      ...galleryFields,
-      ["description", "Опис закладу", "textarea", true],
-      ["hours", "Графік роботи", "text"],
-      ["price", "Середній чек / цінова категорія", "text"],
-      ["phone", "Телефон", "text"],
-      ["mapLink", "Посилання на Google Maps", "url"],
-      ["link", "Сайт або соціальна мережа", "url"],
-      ["published", "Опубліковано", "checkbox"]
+      TITLE("Назва закладу"),
+      F("address", "Адреса", "text", { full: true }),
+      ...PHOTOS,
+      F("description", "Опис закладу", "textarea", { required: true, rows: 5 }),
+      F("hours", "Графік роботи"), F("price", "Середній чек / цінова категорія"),
+      F("phone", "Телефон"),
+      F("mapLink", "Посилання на Google Maps", "url", { full: true }),
+      F("link", "Сайт або соціальна мережа", "url", { full: true }),
+      ORDER, PUBLISHED
     ]
   },
-
   stay: {
-    title: "Де переночувати?",
+    group: "items", icon: "bed", title: "Де переночувати?", mode: "collection", collection: "stay",
     desc: "Готелі та інші варіанти проживання.",
-    mode: "collection",
-    collection: "stay",
-    add: true,
     note: "Перевіряйте актуальність цін, контактів та умов розміщення.",
     fields: [
-      ["title", "Назва місця проживання", "text", true],
-      ["address", "Адреса", "text"],
-      ...galleryFields,
-      ["description", "Опис", "textarea", true],
-      ["hours", "Час заїзду / додаткова інформація", "text"],
-      ["price", "Ціна або цінова категорія", "text"],
-      ["phone", "Телефон", "text"],
-      ["mapLink", "Посилання на Google Maps", "url"],
-      ["link", "Сайт або сторінка бронювання", "url"],
-      ["published", "Опубліковано", "checkbox"]
-    ]
-  },
-
-  gettingHere: {
-    title: "Як дістатися?",
-    desc: "Інформація про дорогу та карта міста.",
-    mode: "doc",
-    collection: "siteContent",
-    doc: "gettingHere",
-    add: false,
-    note: "Вкажіть перевірену інформацію та посилання на карту.",
-    fields: [
-      ["body", "Текст про те, як дістатися", "textarea"],
-      ["mapLink", "Посилання на Google Maps міста", "url"],
-      ["directionsLink", "Посилання на маршрут у Google Maps", "url"]
+      TITLE("Назва місця проживання"),
+      F("address", "Адреса", "text", { full: true }),
+      ...PHOTOS,
+      F("description", "Опис", "textarea", { required: true, rows: 5 }),
+      F("hours", "Час заїзду / додаткова інформація"), F("price", "Ціна або цінова категорія"),
+      F("phone", "Телефон"),
+      F("mapLink", "Посилання на Google Maps", "url", { full: true }),
+      F("link", "Сайт або сторінка бронювання", "url", { full: true }),
+      ORDER, PUBLISHED
     ]
   }
 };
+const GROUPS = { texts: "Тексти сайту", items: "Матеріали" };
 
-function setStatus(id, message, type = "") {
-  $(id).textContent = message;
-  $(id).className = "status " + type;
+/* ================= Допоміжні ================= */
+
+const $ = id => document.getElementById(id);
+const SVG_NS = "http://www.w3.org/2000/svg";
+const text = value => String(value === undefined || value === null ? "" : value).trim();
+
+function el(tag, className, content) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (content !== undefined && content !== null) node.textContent = content;
+  return node;
 }
 
-function esc(value) {
-  return String(value ?? "").replace(/[&<>"']/g, ch => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-  })[ch]);
+function icon(name) {
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("class", "icon");
+  svg.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS(SVG_NS, "use");
+  use.setAttribute("href", "icons.svg#i-" + name);
+  svg.appendChild(use);
+  return svg;
+}
+
+function button(className, label, iconName, extra = {}) {
+  const node = el("button", className);
+  node.type = "button";
+  if (iconName) node.appendChild(icon(iconName));
+  if (label) node.appendChild(document.createTextNode(label));
+  if (extra.aria) { node.setAttribute("aria-label", extra.aria); node.title = extra.aria; }
+  return node;
+}
+
+function isHttps(value) {
+  try { return new URL(value).protocol === "https:"; } catch { return false; }
+}
+
+/* Розбір посилань на відео — та сама логіка, що й у site.js (адмінка не залежить від публічного коду).
+   Приймає лише https-посилання YouTube і Vimeo; повертає null для всього іншого. */
+function videoSeconds(raw) {
+  const t = text(raw);
+  const m = t.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?$/i);
+  if (!t || !m) return 0;
+  return Math.min((+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (+m[3] || 0), 43200);
+}
+
+function parseVideo(value) {
+  let url;
+  try { url = new URL(text(value)); } catch { return null; }
+  if (url.protocol !== "https:") return null;
+  const host = url.hostname.toLowerCase().replace(/^(www|m|music)\./, "");
+  const parts = url.pathname.split("/").filter(Boolean);
+
+  let id = "";
+  if (host === "youtu.be") id = parts[0] || "";
+  else if (host === "youtube.com" || host === "youtube-nocookie.com") {
+    if (parts[0] === "watch") id = url.searchParams.get("v") || "";
+    else if (["embed", "shorts", "live", "v"].includes(parts[0])) id = parts[1] || "";
+  }
+  if (/^[A-Za-z0-9_-]{11}$/.test(id)) {
+    return { provider: "youtube", label: "YouTube", id, key: "youtube:" + id, thumb: "https://i.ytimg.com/vi/" + id + "/mqdefault.jpg" };
+  }
+
+  if (host === "vimeo.com" || host === "player.vimeo.com") {
+    const at = parts.findIndex(part => /^\d{1,12}$/.test(part));
+    if (at === -1) return null;
+    return { provider: "vimeo", label: "Vimeo", id: parts[at], key: "vimeo:" + parts[at], thumb: "" };
+  }
+  return null;
+}
+
+function parseDate(value) {
+  const t = text(value);
+  if (!t) return 0;
+  let m = t.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})(?:\s+(\d{1,2}):(\d{2}))?$/);
+  if (m) return new Date(+m[3], +m[2] - 1, +m[1], +(m[4] || 0), +(m[5] || 0)).getTime();
+  m = t.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (m) return new Date(+m[1], +m[2] - 1, +m[3]).getTime();
+  if (/^\d{4}-\d{2}-\d{2}T/.test(t)) { const time = Date.parse(t); return Number.isNaN(time) ? 0 : time; }
+  return 0;
+}
+
+/* Firestore Timestamp → ISO-рядок (для відображення й резервної копії) */
+function plain(value) {
+  if (value === null || value === undefined) return value;
+  if (typeof value.toDate === "function") return value.toDate().toISOString();
+  if (Array.isArray(value)) return value.map(plain);
+  if (typeof value === "object") {
+    const out = {};
+    for (const [key, item] of Object.entries(value)) out[key] = plain(item);
+    return out;
+  }
+  return value;
 }
 
 function explainError(error) {
-  const code = error?.code || "";
-  const message = error?.message || "Невідома помилка.";
+  const code = (error && error.code) || "";
   const known = {
-    "auth/operation-not-allowed":"Вхід через Email/Password вимкнений у Firebase Authentication.",
-    "auth/invalid-credential":"Неправильна електронна пошта або пароль.",
-    "auth/user-not-found":"Користувача з такою електронною поштою не знайдено.",
-    "auth/wrong-password":"Неправильний пароль.",
-    "auth/too-many-requests":"Забагато спроб входу. Спробуйте пізніше.",
-    "auth/network-request-failed":"Не вдалося з’єднатися з Firebase. Перевірте інтернет-з’єднання.",
-    "permission-denied":"Firebase заборонив доступ. Перевірте правила Firestore."
+    "auth/operation-not-allowed": "Вхід через Email/Password вимкнений у Firebase Authentication.",
+    "auth/invalid-credential": "Неправильна електронна пошта або пароль.",
+    "auth/invalid-email": "Некоректна адреса електронної пошти.",
+    "auth/user-not-found": "Користувача з такою поштою не знайдено.",
+    "auth/wrong-password": "Неправильний пароль.",
+    "auth/user-disabled": "Цей обліковий запис вимкнено.",
+    "auth/too-many-requests": "Забагато спроб входу. Спробуйте пізніше.",
+    "auth/network-request-failed": "Не вдалося з’єднатися з Firebase. Перевірте інтернет.",
+    "permission-denied": "Firebase відмовив у доступі. Перевірте, що ви увійшли як адміністратор, і чи дозволяють це правила Firestore (можливо, поле не відповідає обмеженням).",
+    "unavailable": "Сервер недоступний. Перевірте інтернет і спробуйте ще раз.",
+    "resource-exhausted": "Перевищено добовий ліміт Firebase. Спробуйте завтра."
   };
-  return known[code] || message;
+  return known[code] || (error && error.message) || "Невідома помилка.";
 }
 
-function showLogin() {
-  $("appView").classList.add("hidden");
-  $("loginView").classList.remove("hidden");
-  $("logoutBtn").classList.add("hidden");
+/* ================= Сповіщення та діалог підтвердження ================= */
+
+function toast(message, options = {}) {
+  const node = el("div", "toast" + (options.error ? " error" : ""));
+  node.appendChild(el("span", "", message));
+  const remove = () => node.remove();
+  if (options.action) {
+    const act = el("button", "", options.action);
+    act.type = "button";
+    act.addEventListener("click", () => { remove(); options.onAction && options.onAction(); });
+    node.appendChild(act);
+  }
+  $("toasts").appendChild(node);
+  setTimeout(remove, options.timeout || (options.action ? 10000 : 4500));
 }
 
-function showApp() {
-  $("loginView").classList.add("hidden");
-  $("appView").classList.remove("hidden");
-  $("logoutBtn").classList.remove("hidden");
-  loadSection(currentSection);
+function askConfirm({ title, message, ok = "Підтвердити", cancel = "Скасувати", danger = false }) {
+  return new Promise(resolve => {
+    const dialog = $("confirm");
+    $("confirmTitle").textContent = title;
+    $("confirmText").textContent = message;
+    $("confirmOk").textContent = ok;
+    $("confirmOk").className = "btn" + (danger ? " btn--solid-danger" : "");
+    $("confirmCancel").textContent = cancel;
+    dialog.returnValue = "";
+    dialog.addEventListener("close", () => resolve(dialog.returnValue === "ok"), { once: true });
+    dialog.showModal();
+    $("confirmCancel").focus();
+  });
+}
+
+/* ================= Стан ================= */
+
+const state = {
+  section: "",
+  records: [],
+  raw: new Map(),        // id → оригінальні дані документа (для «Повернути» після видалення)
+  filter: "all",
+  query: "",
+  editing: null,         // { cfg, id, isNew, controls, initial, trigger }
+  saving: false,
+  token: 0
+};
+
+let auth = null;
+let db = null;
+
+/* ================= Вхід / вихід ================= */
+
+function showView(name) {
+  $("boot").hidden = name !== "boot";
+  $("loginView").hidden = name !== "login";
+  $("appView").hidden = name !== "app";
+  const app = name === "app";
+  $("logoutBtn").hidden = !app;
+  $("backupBtn").hidden = !app;
+  $("userEmail").hidden = !app;
+}
+
+function setStatus(id, message, kind = "") {
+  const node = $(id);
+  node.textContent = message;
+  node.className = "status" + (kind ? " " + kind : "");
 }
 
 function initFirebase() {
   try {
-    if (!window.firebase) throw new Error("Не завантажилася бібліотека Firebase.");
+    if (!window.firebase) throw new Error("Не вдалося завантажити бібліотеку Firebase. Перевірте інтернет і оновіть сторінку.");
     if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
     auth = firebase.auth();
     db = firebase.firestore();
 
     auth.onAuthStateChanged(async user => {
-      if (!user) { showLogin(); return; }
-      if (!isAdmin(user)) {
+      if (!user) { showView("login"); return; }
+      if (!ADMIN_UIDS.includes(user.uid)) {
         try { await auth.signOut(); } catch (error) { console.error(error); }
-        showLogin();
-        setStatus("loginStatus","Вхід заборонено: цей акаунт не має прав адміністратора.","error");
+        showView("login");
+        setStatus("loginStatus", "Цей обліковий запис не має прав адміністратора.", "error");
         return;
       }
-      showApp();
+      $("userEmail").textContent = user.email || "";
+      showView("app");
+      const hash = location.hash.slice(1);
+      openSection(SECTIONS[hash] ? hash : "tours", { force: true });
     }, error => {
       console.error(error);
-      setStatus("loginStatus",explainError(error),"error");
-      showLogin();
+      showView("login");
+      setStatus("loginStatus", explainError(error), "error");
     });
   } catch (error) {
     console.error(error);
-    showLogin();
-    setStatus("loginStatus",explainError(error),"error");
+    showView("login");
+    setStatus("loginStatus", explainError(error), "error");
   }
 }
 
 $("loginForm").addEventListener("submit", async event => {
   event.preventDefault();
-  if (busy) return;
-  if (!auth) { setStatus("loginStatus","Firebase не ініціалізовано.","error"); return; }
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  if (!email || !password) { setStatus("loginStatus", "Введіть пошту та пароль.", "error"); return; }
+  if (!auth) { setStatus("loginStatus", "Firebase не ініціалізовано.", "error"); return; }
 
-  busy = true;
   $("loginBtn").disabled = true;
-  setStatus("loginStatus","Перевіряємо облікові дані…");
+  setStatus("loginStatus", "Перевіряємо дані…");
   try {
-    const result = await auth.signInWithEmailAndPassword(
-      $("email").value.trim(), $("password").value
-    );
-    if (!isAdmin(result.user)) {
+    const result = await auth.signInWithEmailAndPassword(email, password);
+    if (!ADMIN_UIDS.includes(result.user.uid)) {
       await auth.signOut();
-      setStatus("loginStatus","Вхід заборонено: цей обліковий запис не є адміністратором.","error");
+      setStatus("loginStatus", "Цей обліковий запис не має прав адміністратора.", "error");
       return;
     }
-    setStatus("loginStatus","Вхід успішний.","success");
+    $("password").value = "";
+    setStatus("loginStatus", "");
   } catch (error) {
-    console.error("Firebase login error:",error);
-    setStatus("loginStatus",explainError(error),"error");
+    console.error("Вхід:", error);
+    setStatus("loginStatus", explainError(error), "error");
   } finally {
-    busy = false;
     $("loginBtn").disabled = false;
   }
 });
 
+$("showPass").addEventListener("change", event => {
+  $("password").type = event.target.checked ? "text" : "password";
+});
+
 $("logoutBtn").addEventListener("click", async () => {
-  try { await auth.signOut(); }
-  catch (error) { alert("Не вдалося вийти: " + explainError(error)); }
+  if (!(await guardLeave())) return;
+  try { await auth.signOut(); closeEditor(); }
+  catch (error) { toast("Не вдалося вийти: " + explainError(error), { error: true }); }
 });
 
-document.querySelectorAll(".navbtn").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".navbtn").forEach(item =>
-      item.classList.toggle("active",item === button)
-    );
-    loadSection(button.dataset.section);
+/* ================= Меню розділів ================= */
+
+function buildNav() {
+  const nav = $("nav");
+  nav.replaceChildren();
+  Object.keys(GROUPS).forEach(group => {
+    nav.appendChild(el("p", "nav-title", GROUPS[group]));
+    Object.entries(SECTIONS).filter(([, cfg]) => cfg.group === group).forEach(([key, cfg]) => {
+      const item = button("", cfg.title, cfg.icon);
+      item.dataset.section = key;
+      item.addEventListener("click", () => openSection(key));
+      nav.appendChild(item);
+    });
   });
-});
+}
 
-$("addBtn").addEventListener("click",() => openEditor(null));
-$("cancelBtn").addEventListener("click",closeEditor);
-$("deleteCurrentBtn").addEventListener("click",deleteCurrent);
-$("recordForm").addEventListener("submit",saveRecord);
+async function openSection(key, { force = false } = {}) {
+  const cfg = SECTIONS[key];
+  if (!cfg) return;
+  if (!force && !(await guardLeave())) return;
 
-async function loadSection(section) {
-  if (!configs[section] || !db) return;
-  currentSection = section;
   closeEditor();
+  state.section = key;
+  state.query = "";
+  state.filter = "all";
+  $("search").value = "";
+  syncFilterButtons();
+  history.replaceState(null, "", "#" + key);
 
-  const config = configs[section];
-  $("sectionTitle").textContent = config.title;
-  $("sectionDesc").textContent = config.desc;
-  $("pageNote").textContent = config.note;
-  $("addBtn").classList.toggle("hidden",!config.add);
-  $("list").innerHTML = '<div class="empty">Завантаження…</div>';
+  document.querySelectorAll("#nav button").forEach(item => {
+    if (item.dataset.section === key) item.setAttribute("aria-current", "page");
+    else item.removeAttribute("aria-current");
+  });
+
+  $("sectionTitle").textContent = cfg.title;
+  $("sectionDesc").textContent = cfg.desc;
+  $("pageNote").textContent = cfg.note || "";
+  $("addBtn").hidden = cfg.mode !== "collection";
+
+  if (cfg.mode === "doc") await loadDocument(cfg);
+  else await loadList(cfg);
+}
+
+/* ================= Список записів ================= */
+
+function sortRecords(cfg, items) {
+  const byTitle = (a, b) => text(a.title).localeCompare(text(b.title), "uk");
+  const order = item => (item.order === "" || item.order === null || item.order === undefined || !Number.isFinite(Number(item.order)) ? 1e9 : Number(item.order));
+  if (cfg.sort === "date") {
+    return items.sort((a, b) => parseDate(b.date || b.createdAt) - parseDate(a.date || a.createdAt) || byTitle(a, b));
+  }
+  return items.sort((a, b) => order(a) - order(b) || parseDate(b.createdAt) - parseDate(a.createdAt) || byTitle(a, b));
+}
+
+async function loadList(cfg) {
+  const token = ++state.token;
+  $("listView").hidden = false;
+  $("editorView").hidden = true;
+  $("toolbar").hidden = true;
+  $("list").setAttribute("aria-busy", "true");
+  $("list").replaceChildren(el("div", "empty", "Завантаження…"));
 
   try {
-    if (config.mode === "doc") {
-      const snap = await db.collection(config.collection).doc(config.doc).get();
-      const data = snap.exists ? snap.data() : {};
-      records = [{id:config.doc,...data}];
-
-      /* Сумісність зі старим форматом текстів головної сторінки */
-      if (section === "home" && data.texts) {
-        records[0] = {...records[0],...data.texts};
-      }
-    } else {
-      const snap = await db.collection(config.collection).get();
-      records = snap.docs.map(doc => ({id:doc.id,...doc.data()}));
-      records.sort((a,b) =>
-        String(a.title || "").localeCompare(String(b.title || ""),"uk")
-      );
-    }
+    const snapshot = await db.collection(cfg.collection).get();
+    if (token !== state.token) return;
+    state.raw = new Map(snapshot.docs.map(doc => [doc.id, doc.data()]));
+    state.records = sortRecords(cfg, snapshot.docs.map(doc => ({ ...plain(doc.data()), id: doc.id })));
     renderList();
   } catch (error) {
+    if (token !== state.token) return;
     console.error(error);
-    $("list").innerHTML =
-      '<div class="empty error">Помилка завантаження: ' +
-      esc(explainError(error)) + '</div>';
+    const box = el("div", "empty error");
+    box.appendChild(el("p", "", "Не вдалося завантажити записи. " + explainError(error)));
+    const retry = button("btn btn--ghost", "Спробувати ще раз");
+    retry.addEventListener("click", () => loadList(cfg));
+    box.appendChild(retry);
+    $("list").replaceChildren(box);
+    $("list").removeAttribute("aria-busy");
   }
+}
+
+function photoCount(record) {
+  return new Set([record.image, ...(Array.isArray(record.images) ? record.images : [])].map(text).filter(isHttps)).size;
 }
 
 function renderList() {
-  const config = configs[currentSection];
+  const cfg = SECTIONS[state.section];
+  const list = $("list");
+  list.removeAttribute("aria-busy");
+  $("toolbar").hidden = !state.records.length;
 
-  if (config.mode === "doc") {
-    const record = records[0] || {};
-    const hasData = config.fields.some(field => {
-      const value = record[field[0]];
-      return Array.isArray(value)
-        ? value.length > 0
-        : String(value ?? "").trim().length > 0;
-    });
-
-    $("list").innerHTML =
-      '<div class="item"><div class="item-main"><h3>' +
-      esc(config.title) + '</h3><p>' +
-      (hasData ? "Налаштування збережені." : "Дані ще не заповнені.") +
-      '</p></div><button class="primary small" id="editPage" type="button">Редагувати</button></div>';
-
-    $("editPage").addEventListener("click",() => openEditor(record));
-    return;
-  }
-
-  if (!records.length) {
-    $("list").innerHTML =
-      '<div class="empty">Записів поки немає. Натисніть «＋ Додати».</div>';
-    return;
-  }
-
-  $("list").innerHTML = records.map(record => {
-    const photoCount = Array.isArray(record.images) ? record.images.length : 0;
-    const details = record.description || record.summary || record.body || record.address || "";
-    return '<article class="item"><div class="item-main"><h3>' +
-      esc(record.title || "(без назви)") + " " +
-      (record.published
-        ? '<span class="badge">Опубліковано</span>'
-        : '<span class="muted">Чернетка</span>') +
-      '</h3><p>' + esc(String(details).slice(0,220)) +
-      (record.category ? "\nКатегорія: " + esc(record.category) : "") +
-      (photoCount ? "\nДодаткових фото: " + photoCount : "") +
-      '</p></div><div class="item-actions">' +
-      '<button class="secondary small" type="button" data-edit="' + esc(record.id) + '">Редагувати</button>' +
-      '<button class="danger small" type="button" data-delete="' + esc(record.id) + '">Видалити</button>' +
-      '</div></article>';
-  }).join("");
-
-  $("list").querySelectorAll("[data-edit]").forEach(button => {
-    button.addEventListener("click",() => {
-      const record = records.find(item => item.id === button.dataset.edit);
-      if (record) openEditor(record);
-    });
+  const query = state.query.toLocaleLowerCase("uk");
+  const items = state.records.filter(record => {
+    if (state.filter === "published" && record.published !== true) return false;
+    if (state.filter === "draft" && record.published === true) return false;
+    if (!query) return true;
+    return [record.title, record.description, record.summary, record.body, record.address, record.category]
+      .filter(Boolean).join(" ").toLocaleLowerCase("uk").includes(query);
   });
 
-  $("list").querySelectorAll("[data-delete]").forEach(button => {
-    button.addEventListener("click",async () => {
-      const record = records.find(item => item.id === button.dataset.delete);
-      if (!record) return;
-      if (!confirm("Видалити «" + (record.title || record.id) + "»?")) return;
-      try {
-        await db.collection(config.collection).doc(record.id).delete();
-        await loadSection(currentSection);
-      } catch (error) {
-        alert("Помилка видалення: " + explainError(error));
-      }
-    });
+  $("count").textContent = state.records.length ? "Показано: " + items.length + " із " + state.records.length : "";
+
+  if (!state.records.length) {
+    list.replaceChildren(el("div", "empty", "Записів поки немає. Натисніть «Додати запис»."));
+    return;
+  }
+  if (!items.length) {
+    list.replaceChildren(el("div", "empty", "Нічого не знайдено. Змініть пошук або фільтр."));
+    return;
+  }
+  list.replaceChildren(...items.map(record => buildItem(cfg, record)));
+}
+
+function buildItem(cfg, record) {
+  const item = el("article", "item");
+  item.dataset.id = record.id;
+  const published = record.published === true;
+
+  const thumb = el("div", "thumb");
+  const cover = [record.image, ...(Array.isArray(record.images) ? record.images : [])].map(text).find(isHttps);
+  if (cover) {
+    const image = document.createElement("img");
+    image.src = cover;
+    image.alt = "";
+    image.loading = "lazy";
+    image.referrerPolicy = "no-referrer";
+    image.onerror = () => { image.remove(); thumb.appendChild(icon(cfg.icon)); };
+    thumb.appendChild(image);
+  } else {
+    thumb.appendChild(icon(cfg.icon));
+  }
+
+  const main = el("div", "item-main");
+  const heading = el("h3", "", record.title || "(без назви)");
+  heading.appendChild(el("span", "badge " + (published ? "badge--ok" : "badge--draft"), published ? "Опубліковано" : "Чернетка"));
+  main.appendChild(heading);
+
+  const details = text(record.description || record.summary || record.body || record.address);
+  if (details) main.appendChild(el("p", "", details.slice(0, 200)));
+
+  const meta = [];
+  if (record.date) meta.push("Дата: " + record.date);
+  if (record.category) meta.push("Категорія: " + record.category);
+  const photos = photoCount(record);
+  meta.push(photos ? "Фото: " + photos : "Без фото");
+  const clips = Array.isArray(record.videos) ? record.videos.length : 0;
+  if (clips) meta.push("Відео: " + clips);
+  if (record.order !== undefined && record.order !== null && record.order !== "") meta.push("Порядок: " + record.order);
+  main.appendChild(el("span", "meta", meta.join(" · ")));
+
+  const actions = el("div", "item-actions");
+  const edit = button("btn btn--sm js-edit", "Редагувати", "edit");
+  edit.setAttribute("aria-label", "Редагувати: " + (record.title || record.id));
+  edit.addEventListener("click", () => openEditor(cfg, record, { trigger: record.id }));
+  actions.appendChild(edit);
+
+  const toggle = button("btn btn--ghost btn--sm", published ? "Сховати" : "Опублікувати", published ? null : "eye");
+  toggle.setAttribute("aria-label", (published ? "Сховати: " : "Опублікувати: ") + (record.title || record.id));
+  toggle.addEventListener("click", () => setPublished(cfg, record, !published, toggle));
+  actions.appendChild(toggle);
+
+  if (published && cfg.detail) {
+    const view = el("a", "btn btn--ghost btn--sm btn--icon");
+    view.href = "article.html?type=" + encodeURIComponent(cfg.detail) + "&id=" + encodeURIComponent(record.id);
+    view.target = "_blank";
+    view.rel = "noopener";
+    view.title = "Відкрити на сайті (нова вкладка)";
+    view.setAttribute("aria-label", "Відкрити на сайті (нова вкладка): " + (record.title || record.id));
+    view.appendChild(icon("arrow-up-right"));
+    actions.appendChild(view);
+  }
+
+  const copy = button("btn btn--ghost btn--sm btn--icon", "", "copy", { aria: "Створити копію" });
+  copy.setAttribute("aria-label", "Створити копію: " + (record.title || record.id));
+  copy.addEventListener("click", () => openEditor(cfg, record, { duplicate: true }));
+  actions.appendChild(copy);
+
+  const del = button("btn btn--danger btn--sm btn--icon", "", "trash", { aria: "Видалити" });
+  del.setAttribute("aria-label", "Видалити: " + (record.title || record.id));
+  del.addEventListener("click", () => deleteRecord(cfg, record));
+  actions.appendChild(del);
+
+  item.append(thumb, main, actions);
+  return item;
+}
+
+function syncFilterButtons() {
+  document.querySelectorAll("[data-filter]").forEach(node => {
+    node.setAttribute("aria-pressed", String(node.dataset.filter === state.filter));
   });
 }
 
-function openEditor(record) {
-  const config = configs[currentSection];
-  editingId = record && config.mode === "collection" ? record.id : null;
+document.querySelectorAll("[data-filter]").forEach(node => {
+  node.addEventListener("click", () => { state.filter = node.dataset.filter; syncFilterButtons(); renderList(); });
+});
 
-  $("editor").classList.remove("hidden");
-  $("editorTitle").textContent = record
-    ? "Редагування: " + (record.title || config.title)
-    : "Новий запис";
-  $("deleteCurrentBtn").classList.toggle("hidden",!editingId);
-  setStatus("editorStatus","");
+let searchTimer = 0;
+$("search").addEventListener("input", event => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => { state.query = event.target.value.trim(); renderList(); }, 120);
+});
 
-  $("fields").innerHTML = config.fields.map(([name,label,type,required]) => {
-    const rawValue = record?.[name] ?? (type === "checkbox" ? false : "");
-    const value = name === "images" && Array.isArray(rawValue)
-      ? rawValue.join("\n") : rawValue;
+async function setPublished(cfg, record, value, control) {
+  control.disabled = true;
+  try {
+    await db.collection(cfg.collection).doc(record.id).update({ published: value, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    record.published = value;
+    renderList();
+    toast(value ? "Опубліковано: «" + (record.title || "без назви") + "»" : "Приховано (чернетка): «" + (record.title || "без назви") + "»");
+  } catch (error) {
+    console.error(error);
+    control.disabled = false;
+    toast("Не вдалося змінити стан: " + explainError(error), { error: true });
+  }
+}
 
-    if (type === "checkbox") {
-      return '<div class="full"><label><input type="checkbox" name="' +
-        name + '" ' + (value ? "checked" : "") + '> ' +
-        esc(label) + '</label></div>';
+async function deleteRecord(cfg, record, { fromEditor = false } = {}) {
+  const name = record.title || record.id;
+  const ok = await askConfirm({
+    title: "Видалити запис?",
+    message: "«" + name + "» буде видалено. Одразу після цього можна натиснути «Повернути».",
+    ok: "Видалити", cancel: "Залишити", danger: true
+  });
+  if (!ok) return;
+
+  const raw = state.raw.get(record.id);
+  try {
+    await db.collection(cfg.collection).doc(record.id).delete();
+  } catch (error) {
+    console.error(error);
+    toast("Не вдалося видалити: " + explainError(error), { error: true });
+    return;
+  }
+
+  if (fromEditor) closeEditor();
+  await loadList(cfg);
+  toast("Видалено: «" + name + "»", {
+    action: "Повернути",
+    onAction: async () => {
+      try {
+        await db.collection(cfg.collection).doc(record.id).set(raw || { title: record.title || "", published: false });
+        if (SECTIONS[state.section] === cfg && !state.editing) await loadList(cfg);
+        toast("Запис відновлено.");
+      } catch (error) {
+        console.error(error);
+        toast("Не вдалося відновити: " + explainError(error), { error: true });
+      }
+    }
+  });
+}
+
+$("addBtn").addEventListener("click", () => openEditor(SECTIONS[state.section], null, { trigger: "add" }));
+
+/* ================= Редактор: поля ================= */
+
+const MULTILINE = ["textarea", "urls", "videos", "route"];
+
+function valueForField(def, source) {
+  const value = source ? source[def.name] : undefined;
+  if (def.type === "checkbox") return value === true;
+  if (def.type === "urls" || def.type === "videos") return Array.isArray(value) ? value.join("\n") : text(value);
+  if (def.type === "route") {
+    const items = Array.isArray(value) ? value : (typeof value === "string" ? value.split(/\n+/) : []);
+    return items.map(item => {
+      if (item && typeof item === "object") {
+        const title = text(item.title || item.name);
+        const description = text(item.description || item.text);
+        return description ? title + " | " + description : title;
+      }
+      return text(item);
+    }).filter(Boolean).join("\n");
+  }
+  return value === undefined || value === null ? "" : String(value);
+}
+
+function createControl(def, value) {
+  const id = "f_" + def.name;
+  const wrap = el("div", "field" + (def.full || MULTILINE.includes(def.type) || def.type === "checkbox" ? " full" : ""));
+  const control = { def, wrap, input: null, errorNode: null, warnNode: null, counter: null, previews: null };
+  const describedBy = [];
+
+  let input;
+  if (def.type === "checkbox") {
+    const label = el("label", "switch");
+    input = document.createElement("input");
+    input.type = "checkbox";
+    input.setAttribute("role", "switch");
+    input.checked = !!value;
+    const ui = el("span", "switch-ui");
+    ui.setAttribute("aria-hidden", "true");
+    label.append(input, ui, el("span", "", def.label));
+    wrap.appendChild(label);
+  } else {
+    const label = el("label", "", def.label);
+    label.htmlFor = id;
+    if (def.required) {
+      const star = el("span", "req", " *");
+      star.setAttribute("aria-hidden", "true");
+      label.appendChild(star);
+    }
+    wrap.appendChild(label);
+
+    if (MULTILINE.includes(def.type)) {
+      input = document.createElement("textarea");
+      input.rows = def.rows || 5;
+    } else {
+      input = document.createElement("input");
+      input.type = def.type === "url" ? "url" : def.type === "email" ? "email" : "text";
+      if (def.type === "number") input.inputMode = "numeric";
+      if (def.type === "url") input.placeholder = "https://";
+      if (def.type === "datetext") input.placeholder = "31.10.2026";
+      input.autocomplete = "off";
+    }
+    input.value = value;
+    if (def.required) input.setAttribute("aria-required", "true");
+    input.spellcheck = def.type === "text" || def.type === "textarea" || def.type === "route";
+    wrap.appendChild(input);
+  }
+  input.id = id;
+  input.name = def.name;
+  control.input = input;
+
+  if (def.preview) {
+    control.previews = el("div", "previews");
+    wrap.appendChild(control.previews);
+  }
+
+  const foot = el("div", "foot");
+  if (def.help) {
+    const help = el("span", "", def.help);
+    help.id = id + "_help";
+    describedBy.push(help.id);
+    foot.appendChild(help);
+  }
+  const limit = limitFor(def);
+  if (limit && def.type !== "checkbox" && def.type !== "urls" && def.type !== "videos" && def.type !== "route") {
+    control.counter = el("span", "counter");
+    control.counter.setAttribute("aria-hidden", "true");
+    foot.appendChild(control.counter);
+  }
+  if (foot.childNodes.length) wrap.appendChild(foot);
+
+  control.errorNode = el("p", "error-msg");
+  control.errorNode.id = id + "_err";
+  control.errorNode.hidden = true;
+  control.warnNode = el("p", "warn-msg");
+  control.warnNode.hidden = true;
+  wrap.append(control.errorNode, control.warnNode);
+  describedBy.push(control.errorNode.id);
+  input.setAttribute("aria-describedby", describedBy.join(" "));
+
+  const refresh = () => refreshControl(control);
+  input.addEventListener("input", refresh);
+  input.addEventListener("change", refresh);
+  refreshControl(control, { initial: true });
+  return control;
+}
+
+function limitFor(def) {
+  if (def.max) return def.max;
+  if (def.type === "url") return MAX.url;
+  if (def.type === "textarea") return MAX.long;
+  if (def.type === "text" || def.type === "email" || def.type === "datetext") return MAX.short;
+  return 0;
+}
+
+let previewTimer = new WeakMap();
+
+function refreshControl(control, { initial = false } = {}) {
+  const { def, input } = control;
+  if (!initial && control.errorNode && !control.errorNode.hidden) setError(control, "");
+
+  if (control.counter) {
+    const limit = limitFor(def);
+    const length = input.value.length;
+    control.counter.textContent = length >= limit * 0.8 ? length + " / " + limit : "";
+    control.counter.classList.toggle("over", length > limit);
+  }
+
+  if (def.type === "datetext") {
+    const value = text(input.value);
+    control.warnNode.hidden = !value || !!parseDate(value);
+    control.warnNode.textContent = "Дату не розпізнано: новина потрапить унизу списку. Напишіть, наприклад, 31.10.2026.";
+  }
+
+  if (def.type === "videos") {
+    const lines = videoLines(input.value);
+    const unknown = lines.findIndex(line => !parseVideo(line));
+    control.warnNode.hidden = unknown === -1;
+    control.warnNode.textContent = unknown === -1 ? "" :
+      "Рядок " + (unknown + 1) + " не схожий на посилання YouTube або Vimeo — таке відео на сайті не з’явиться.";
+  }
+
+  if (control.previews) {
+    clearTimeout(previewTimer.get(control));
+    previewTimer.set(control, setTimeout(() => renderPreviews(control), initial ? 0 : 500));
+  }
+}
+
+const videoLines = value => String(value || "").split(/\r?\n/).map(text).filter(Boolean);
+
+function renderVideoPreviews(control) {
+  const seen = new Set();
+  const videos = videoLines(control.input.value).map(parseVideo).filter(video => {
+    if (!video || seen.has(video.key)) return false;
+    seen.add(video.key);
+    return true;
+  }).slice(0, MAX.videos);
+
+  control.previews.replaceChildren(...videos.map((video, index) => {
+    const frame = el("span", "pv pv--video");
+    frame.title = video.label + " · " + video.id;
+    if (video.thumb) {
+      const image = document.createElement("img");
+      image.alt = "";
+      image.loading = "lazy";
+      image.referrerPolicy = "no-referrer";
+      image.src = video.thumb;
+      image.onerror = () => image.remove();
+      frame.appendChild(image);
+    }
+    frame.append(el("b", "", index + 1), el("span", "pv-label", video.label));
+    return frame;
+  }));
+}
+
+function renderPreviews(control) {
+  if (control.def.type === "videos") { renderVideoPreviews(control); return; }
+  const urls = control.def.type === "urls"
+    ? [...new Set(control.input.value.split(/\r?\n/).map(text).filter(Boolean))]
+    : [text(control.input.value)].filter(Boolean);
+
+  control.previews.replaceChildren(...urls.filter(isHttps).slice(0, MAX.photos).map((url, index) => {
+    const frame = el("span", "pv");
+    const image = document.createElement("img");
+    image.alt = "";
+    image.loading = "lazy";
+    image.referrerPolicy = "no-referrer";
+    image.src = url;
+    image.onerror = () => { frame.classList.add("bad"); frame.title = "Фото не відкрилось. Перевірте посилання."; };
+    frame.appendChild(image);
+    if (control.def.type === "urls") frame.appendChild(el("b", "", index + 1));
+    return frame;
+  }));
+}
+
+function setError(control, message) {
+  control.errorNode.textContent = message;
+  control.errorNode.hidden = !message;
+  if (message) control.input.setAttribute("aria-invalid", "true");
+  else control.input.removeAttribute("aria-invalid");
+}
+
+/* ----- читання й перевірка форми ----- */
+
+function readRaw(controls) {
+  const raw = {};
+  controls.forEach(control => {
+    raw[control.def.name] = control.def.type === "checkbox" ? control.input.checked : control.input.value;
+  });
+  return raw;
+}
+
+/* Повертає { data, errors } — data лише з валідних значень */
+function readForm(controls, { isNew }) {
+  const data = {};
+  const errors = [];
+  const fail = (control, message) => errors.push({ control, message });
+
+  controls.forEach(control => {
+    const { def, input } = control;
+    const name = def.name;
+
+    if (def.type === "checkbox") { data[name] = input.checked; return; }
+
+    if (def.type === "urls") {
+      const lines = [...new Set(input.value.split(/\r?\n/).map(text).filter(Boolean))];
+      const bad = lines.find(line => !isHttps(line) || line.length > MAX.url);
+      if (bad) fail(control, "Кожне посилання має починатися з https:// (перевірте: " + bad.slice(0, 60) + (bad.length > 60 ? "…" : "") + ").");
+      else if (lines.length > MAX.photos) fail(control, "Забагато фото: дозволено до " + MAX.photos + ".");
+      else data[name] = lines;
+      return;
     }
 
-    if (type === "textarea") {
-      const help = name === "images"
-        ? '<p class="help">Вставте прямі HTTPS-посилання на фото, кожне з нового рядка.</p>'
-        : "";
-      return '<div class="full"><label for="f_' + name + '">' +
-        esc(label) + (required ? " *" : "") +
-        '</label><textarea id="f_' + name + '" name="' + name + '" ' +
-        (required ? "required" : "") + '>' + esc(value) +
-        '</textarea>' + help + '</div>';
+    if (def.type === "videos") {
+      const lines = [...new Set(videoLines(input.value))];
+      const bad = lines.find(line => !parseVideo(line) || line.length > MAX.url);
+      if (bad) fail(control, "Не вдалося розпізнати посилання на відео: " + bad.slice(0, 60) + (bad.length > 60 ? "…" : "") + ". Підтримуються YouTube і Vimeo (https://).");
+      else if (lines.length > MAX.videos) fail(control, "Забагато відео: дозволено до " + MAX.videos + ".");
+      else data[name] = lines;
+      return;
     }
 
-    const full = [
-      "title","image","address","hero_image","facebook",
-      "instagram","mapLink","directionsLink","link"
-    ].includes(name) ? "full" : "";
-    const inputType = ["url","email"].includes(type) ? type : "text";
+    if (def.type === "route") {
+      const lines = input.value.split(/\r?\n/).map(text).filter(Boolean);
+      if (lines.length > MAX.route) fail(control, "Забагато зупинок: дозволено до " + MAX.route + ".");
+      else if (lines.some(line => line.length > MAX.routeLine)) fail(control, "Один із рядків задовгий (понад " + MAX.routeLine + " символів).");
+      else data[name] = lines;
+      return;
+    }
 
-    return '<div class="' + full + '"><label for="f_' + name + '">' +
-      esc(label) + (required ? " *" : "") +
-      '</label><input id="f_' + name + '" name="' + name +
-      '" type="' + inputType + '" value="' + esc(value) + '" ' +
-      (required ? "required" : "") + '></div>';
-  }).join("");
+    const value = text(input.value);
 
-  $("editor").scrollIntoView({behavior:"smooth",block:"start"});
+    if (def.type === "number") {
+      if (!value) { data[name] = isNew ? undefined : firebase.firestore.FieldValue.delete(); return; }
+      const number = Number(value.replace(",", "."));
+      if (!Number.isFinite(number) || !Number.isInteger(number) || Math.abs(number) > 100000) fail(control, "Введіть ціле число, наприклад 1, 2, 10.");
+      else data[name] = number;
+      return;
+    }
+
+    if (def.required && !value) { fail(control, "Це поле обов’язкове."); return; }
+    const limit = limitFor(def);
+    if (limit && value.length > limit) { fail(control, "Задовго: " + value.length + " із " + limit + " символів."); return; }
+    if (value && def.type === "url" && !isHttps(value)) { fail(control, "Потрібне повне посилання, що починається з https://"); return; }
+    if (value && def.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) { fail(control, "Схоже, адреса пошти введена з помилкою."); return; }
+    data[name] = value;
+  });
+
+  Object.keys(data).forEach(key => { if (data[key] === undefined) delete data[key]; });
+  return { data, errors };
+}
+
+/* ================= Редактор: відкриття, закриття, збереження ================= */
+
+function isDirty() {
+  const editing = state.editing;
+  return !!editing && JSON.stringify(readRaw(editing.controls)) !== editing.initial;
+}
+
+function updateDirty() {
+  $("dirtyBadge").hidden = !isDirty();
+}
+
+async function guardLeave() {
+  if (!state.editing || !isDirty()) return true;
+  return askConfirm({
+    title: "Є незбережені зміни",
+    message: "Якщо піти зараз, внесені зміни буде втрачено.",
+    ok: "Відхилити зміни", cancel: "Залишитися", danger: true
+  });
+}
+
+function openEditor(cfg, record, { duplicate = false, trigger = "" } = {}) {
+  const isDoc = cfg.mode === "doc";
+  const isNew = !record || duplicate;
+
+  let source = record;
+  if (duplicate && record) {
+    source = { ...record, published: false, title: (text(record.title) + " (копія)").slice(0, MAX.title) };
+    delete source.order;
+  }
+
+  const controls = cfg.fields.map(def => createControl(def, valueForField(def, source)));
+  $("fields").replaceChildren(...controls.map(control => control.wrap));
+
+  state.editing = {
+    cfg, controls, isNew, trigger,
+    id: isNew ? null : (isDoc ? cfg.doc : record.id),
+    initial: JSON.stringify(readRaw(controls))
+  };
+
+  $("editorTitle").textContent = isDoc ? "Редагування: " + cfg.title
+    : isNew ? (duplicate ? "Нова копія запису" : "Новий запис")
+    : "Редагування: " + (record.title || "без назви");
+  $("backBtn").hidden = isDoc;
+  $("cancelBtn").textContent = isDoc ? "Скасувати зміни" : "Скасувати";
+  $("deleteBtn").hidden = isDoc || isNew;
+  $("saveBtn").textContent = "Зберегти";
+  setStatus("editorStatus", "");
+  updateDirty();
+
+  $("listView").hidden = true;
+  $("addBtn").hidden = true;
+  $("editorView").hidden = false;
+  const heading = $("editorTitle");
+  heading.focus({ preventScroll: true });
+  $("editorView").scrollIntoView({ behavior: "auto", block: "start" });
 }
 
 function closeEditor() {
-  $("editor").classList.add("hidden");
-  $("fields").innerHTML = "";
-  editingId = null;
+  const editing = state.editing;
+  state.editing = null;
+  $("editorView").hidden = true;
+  $("fields").replaceChildren();
+  $("dirtyBadge").hidden = true;
+  const cfg = SECTIONS[state.section];
+  if (cfg && cfg.mode === "collection") {
+    $("listView").hidden = false;
+    $("addBtn").hidden = false;
+  }
+  return editing;
 }
 
-function validHttpsOrEmpty(value,fieldName) {
-  if (!value) return true;
-  try {
-    const url = new URL(value);
-    if (url.protocol === "https:") return true;
-  } catch (_) {}
+async function leaveEditor() {
+  const editing = state.editing;
+  if (!editing) return;
+  if (!(await guardLeave())) return;
 
-  setStatus("editorStatus",
-    'Поле «' + fieldName + '» має містити повне HTTPS-посилання.',
-    "error");
-  return false;
+  if (editing.cfg.mode === "doc") {
+    openEditor(editing.cfg, state.docRecord || {});
+    return;
+  }
+  closeEditor();
+  const target = editing.trigger === "add" || !editing.trigger
+    ? $("addBtn")
+    : document.querySelector('.item[data-id="' + CSS.escape(editing.trigger) + '"] .js-edit');
+  if (target) target.focus();
 }
 
-async function saveRecord(event) {
+$("backBtn").addEventListener("click", leaveEditor);
+$("cancelBtn").addEventListener("click", leaveEditor);
+function onFieldEdit() {
+  updateDirty();
+  const status = $("editorStatus");
+  if (status.classList.contains("error") || status.classList.contains("ok")) setStatus("editorStatus", "");
+}
+$("fields").addEventListener("input", onFieldEdit);
+$("fields").addEventListener("change", onFieldEdit);
+$("deleteBtn").addEventListener("click", () => {
+  const editing = state.editing;
+  if (!editing || editing.isNew) return;
+  const record = state.records.find(item => item.id === editing.id) || { id: editing.id, title: "" };
+  deleteRecord(editing.cfg, record, { fromEditor: true });
+});
+
+window.addEventListener("beforeunload", event => {
+  if (isDirty()) { event.preventDefault(); event.returnValue = ""; }
+});
+
+document.addEventListener("keydown", event => {
+  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s" && state.editing) {
+    event.preventDefault();
+    $("editorView").requestSubmit();
+  }
+});
+
+$("editorView").addEventListener("submit", async event => {
   event.preventDefault();
-  const config = configs[currentSection];
-  const data = {};
+  const editing = state.editing;
+  if (!editing || state.saving) return;
 
-  for (const [name,label,type] of config.fields) {
-    const element = $("fields").querySelector('[name="' + name + '"]');
-    if (!element) continue;
+  const { cfg, controls, isNew } = editing;
+  controls.forEach(control => setError(control, ""));
+  const { data, errors } = readForm(controls, { isNew });
 
-    if (type === "checkbox") {
-      data[name] = element.checked;
-    } else if (name === "images") {
-      const urls = element.value.split(/\r?\n/).map(url => url.trim()).filter(Boolean);
-      for (const url of urls) {
-        if (!validHttpsOrEmpty(url,label)) return;
-      }
-      data[name] = [...new Set(urls)];
-    } else {
-      data[name] = element.value.trim();
-      if (type === "url" && !validHttpsOrEmpty(data[name],label)) return;
-    }
+  if (errors.length) {
+    errors.forEach(({ control, message }) => setError(control, message));
+    setStatus("editorStatus", errors.length === 1 ? "Виправте одне поле." : "Виправте поля з помилками: " + errors.length + ".", "error");
+    errors[0].control.input.focus();
+    return;
   }
 
-  if (data.image && !validHttpsOrEmpty(data.image,"Основне фото")) return;
-
+  state.saving = true;
   $("saveBtn").disabled = true;
-  setStatus("editorStatus","Зберігаємо…");
+  $("saveBtn").textContent = "Зберігаємо…";
+  setStatus("editorStatus", "");
 
+  const stamp = firebase.firestore.FieldValue.serverTimestamp();
   try {
-    if (config.mode === "doc") {
-      const ref = db.collection(config.collection).doc(config.doc);
-
-      if (currentSection === "home") {
-        const oldSnap = await ref.get();
-        const old = oldSnap.exists ? oldSnap.data() : {};
-        const texts = {...(old.texts || {})};
-
-        config.fields.forEach(([name]) => { texts[name] = data[name]; });
-
-        await ref.set({
-          texts,
-          updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-        },{merge:true});
-      } else {
-        await ref.set({
-          ...data,
-          updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-        },{merge:true});
-      }
+    if (cfg.mode === "doc") {
+      const ref = db.collection("siteContent").doc(cfg.doc);
+      const payload = cfg.nested ? { [cfg.nested]: data, updatedAt: stamp } : { ...data, updatedAt: stamp };
+      await ref.set(payload, { merge: true });
+      state.docRecord = { ...(state.docRecord || {}), ...data };
+      editing.initial = JSON.stringify(readRaw(controls));
+      updateDirty();
+      setStatus("editorStatus", "Збережено.", "ok");
+      toast("Збережено.");
     } else {
-      data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-
-      if (editingId) {
-        await db.collection(config.collection).doc(editingId).set(data,{merge:true});
-      } else {
-        data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-        await db.collection(config.collection).add(data);
-      }
+      const collection = db.collection(cfg.collection);
+      if (isNew) await collection.add({ ...data, createdAt: stamp, updatedAt: stamp });
+      else await collection.doc(editing.id).set({ ...data, updatedAt: stamp }, { merge: true });
+      closeEditor();
+      await loadList(cfg);
+      toast(isNew ? "Запис створено." : "Зміни збережено.");
     }
-
-    closeEditor();
-    await loadSection(currentSection);
-    alert("Зміни збережено.");
   } catch (error) {
     console.error(error);
-    setStatus("editorStatus","Помилка збереження: " + explainError(error),"error");
+    setStatus("editorStatus", "Не вдалося зберегти. " + explainError(error), "error");
   } finally {
+    state.saving = false;
     $("saveBtn").disabled = false;
+    $("saveBtn").textContent = "Зберегти";
   }
-}
+});
 
-async function deleteCurrent() {
-  const config = configs[currentSection];
-  if (!editingId) return;
-  if (!confirm("Ви впевнені, що хочете видалити цей запис?")) return;
+/* ================= Тексти сайту (siteContent) ================= */
+
+async function loadDocument(cfg) {
+  const token = ++state.token;
+  $("editorView").hidden = true;
+  $("listView").hidden = false;
+  $("toolbar").hidden = true;
+  $("list").setAttribute("aria-busy", "true");
+  $("list").replaceChildren(el("div", "empty", "Завантаження…"));
 
   try {
-    await db.collection(config.collection).doc(editingId).delete();
-    closeEditor();
-    await loadSection(currentSection);
+    const snapshot = await db.collection("siteContent").doc(cfg.doc).get();
+    if (token !== state.token) return;
+    const data = snapshot.exists ? plain(snapshot.data()) : {};
+    // старий формат головної: тексти лежали в полі texts
+    const record = cfg.nested && data[cfg.nested] && typeof data[cfg.nested] === "object" ? { ...data, ...data[cfg.nested] } : data;
+    state.docRecord = record;
+    $("list").removeAttribute("aria-busy");
+    openEditor(cfg, record);
   } catch (error) {
-    setStatus("editorStatus","Помилка видалення: " + explainError(error),"error");
+    if (token !== state.token) return;
+    console.error(error);
+    $("list").removeAttribute("aria-busy");
+    const box = el("div", "empty error");
+    box.appendChild(el("p", "", "Не вдалося завантажити тексти. " + explainError(error)));
+    const retry = button("btn btn--ghost", "Спробувати ще раз");
+    retry.addEventListener("click", () => loadDocument(cfg));
+    box.appendChild(retry);
+    $("list").replaceChildren(box);
   }
 }
 
+/* ================= Резервна копія ================= */
+
+$("backupBtn").addEventListener("click", async () => {
+  const trigger = $("backupBtn");
+  const label = trigger.querySelector("span");
+  trigger.disabled = true;
+  label.textContent = "Готуємо…";
+  try {
+    const out = { exportedAt: new Date().toISOString(), project: FIREBASE_CONFIG.projectId, collections: {} };
+    let total = 0;
+    for (const name of BACKUP_COLLECTIONS) {
+      const snapshot = await db.collection(name).get();
+      out.collections[name] = snapshot.docs.map(doc => ({ id: doc.id, data: plain(doc.data()) }));
+      total += snapshot.size;
+    }
+    const blob = new Blob([JSON.stringify(out, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "zviahel-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    toast("Копію збережено: " + total + " записів.");
+  } catch (error) {
+    console.error(error);
+    toast("Не вдалося створити копію: " + explainError(error), { error: true });
+  } finally {
+    trigger.disabled = false;
+    label.textContent = "Резервна копія";
+  }
+});
+
+/* ================= Старт ================= */
+
+buildNav();
 initFirebase();
+
+})();
 </script>
 </body>
 </html>
