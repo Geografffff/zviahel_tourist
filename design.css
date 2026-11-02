@@ -638,15 +638,25 @@ h2 { margin: 0 0 12px; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.16; }
 }
 .contact p { color: #dce6f2; }
 
-.contact-layout { display: grid; grid-template-columns: 1.2fr .8fr; gap: 36px; }
-.contact-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+/* Дві колонки однакової висоти: ліворуч — заголовок і дані, праворуч — картка з діями */
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: stretch;
+}
+.contact-main { display: flex; flex-direction: column; min-width: 0; }
+.contact-main h2 { margin-bottom: 14px; }
+.contact-main > p:not(.eyebrow) { max-width: 60ch; font-size: 18px; line-height: 1.6; }
+.contact-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: auto; padding-top: 26px; }
+.contact-item--wide { grid-column: 1 / -1; }
 
 .contact-item {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 14px;
   min-width: 0;
-  padding: 14px;
+  padding: 16px 18px;
   border: 1px solid rgba(255,255,255,.14);
   border-radius: 14px;
   background: rgba(255,255,255,.04);
@@ -662,12 +672,26 @@ h2 { margin: 0 0 12px; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.16; }
   color: var(--orange-light);
   font-size: 19px;
 }
+/* до 1100 px колонки стають одна під одною: у вузькій лівій колонці телефон і пошта ламалися б */
+@media (max-width: 1100px) {
+  .contact-layout { grid-template-columns: 1fr; }
+}
+.contact-item a[href^="tel:"] { white-space: nowrap; }
 .contact-item strong { display: block; margin-bottom: 2px; color: #fff; font-size: 14px; }
 .contact-item a, .contact-item span.val { color: #dce6f2; font-size: 15px; overflow-wrap: anywhere; text-decoration: none; }
 .contact-item a { display: inline-block; padding: 4px 0; }
 .contact-item a:hover { color: var(--orange-light); text-decoration: underline; }
 
-.social-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.social-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 22px; }
+.social-label {
+  flex: 0 0 100%;
+  margin: 0;
+  color: #c3d1e3;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
 .social-link {
   display: inline-flex;
   align-items: center;
@@ -684,14 +708,28 @@ h2 { margin: 0 0 12px; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.16; }
 .social-link:hover { background: rgba(255,255,255,.12); }
 
 .contact-card {
-  align-self: start;
-  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(24px, 3vw, 36px);
   border: 1px solid rgba(255,255,255,.14);
   border-radius: var(--radius);
   background: rgba(255,255,255,.05);
 }
 .contact-card h3 { margin: 0 0 12px; font-family: var(--font-head); font-size: 26px; line-height: 1.2; }
-.contact-card .btn { margin-top: 6px; }
+/* дії притиснуті до низу картки — вона вирівнюється по висоті з лівою колонкою */
+.contact-card-actions { display: grid; gap: 0; margin-top: auto; padding-top: 24px; }
+.contact-card .btn { width: 100%; justify-content: center; text-align: center; }
+.contact-card .social-links {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.14);
+}
+.contact-card .social-link { flex: 1 1 0; justify-content: center; min-width: 120px; }
+.contact-card .social-links + .social-links { margin-top: 18px; padding-top: 0; border-top: 0; }
+.social-links--grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.social-links--grid .social-label { grid-column: 1 / -1; }
+.social-links--grid .social-link { min-width: 0; padding: 8px 12px; font-size: 14px; line-height: 1.25; text-align: center; }
 
 /* ---------- Підвал та «вгору» ---------- */
 .footer { padding: 24px 0; background: #091326; color: #cbd5e1; font-size: 14px; }
@@ -763,7 +801,6 @@ h2 { margin: 0 0 12px; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.16; }
   .travel-dropdown { position: static; display: none; width: 100%; margin-top: 10px; box-shadow: none; transform: none; }
   .travel-dropdown.open { display: block; }
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .contact-layout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
@@ -787,7 +824,9 @@ h2 { margin: 0 0 12px; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.16; }
   .tab { justify-content: center; padding: 8px 10px; }
 
   .contact-list { grid-template-columns: 1fr; }
-  .contact-card { padding: 20px; }
+  .contact-card { padding: 22px 20px; }
+  .contact-card .social-link { min-width: 0; }
+  .social-links--grid { grid-template-columns: 1fr; }
   .info-panel { padding: 20px; }
   .footer-row { align-items: flex-start; flex-direction: column; }
 }
