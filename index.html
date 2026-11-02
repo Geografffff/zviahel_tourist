@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Onest:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="design.css?v=4">
+<link rel="stylesheet" href="design.css?v=5">
 
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -406,7 +406,7 @@
 
   <section class="contact on-dark" id="contacts" aria-labelledby="contacts-title">
     <div class="container contact-layout">
-      <div>
+      <div class="contact-main">
         <p class="eyebrow">Завітайте до нас</p>
         <h2 id="contacts-title">Контакти туристичного центру</h2>
         <p id="contact-extra">Допоможемо відкрити Звягель, обрати екскурсію та спланувати подорож.</p>
@@ -417,24 +417,17 @@
             <div><strong>Телефон</strong><a id="contact-phone" class="js-phone" href="tel:+380673004470">+38 067 300 4470</a></div>
           </div>
           <div class="contact-item">
-            <span class="ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-pin"/></svg></span>
-            <div><strong>Адреса</strong><span class="val" id="contact-address">вул. Героїв Майдану, 13, Звягель</span></div>
-          </div>
-          <div class="contact-item">
             <span class="ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-mail"/></svg></span>
             <div><strong>Електронна пошта</strong><a id="contact-email" href="mailto:tic.zvyagel@gmail.com">tic.zvyagel@gmail.com</a></div>
           </div>
-          <div class="contact-item">
+          <div class="contact-item contact-item--wide">
+            <span class="ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-pin"/></svg></span>
+            <div><strong>Адреса</strong><span class="val" id="contact-address">вул. Героїв Майдану, 13, Звягель</span></div>
+          </div>
+          <div class="contact-item contact-item--wide">
             <span class="ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-clock"/></svg></span>
             <div><strong>Графік роботи</strong><span class="val" id="contact-hours">Пн–Пт, 09:00–18:00</span></div>
           </div>
-        </div>
-
-        <div class="social-links">
-          <a class="social-link" id="contact-facebook" href="https://www.facebook.com/zviaheltouristcentre/"
-             target="_blank" rel="noopener noreferrer">Facebook <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
-          <a class="social-link" id="contact-instagram" href="https://www.instagram.com/zviahel_tourist_centr/"
-             target="_blank" rel="noopener noreferrer">Instagram <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
         </div>
       </div>
 
@@ -442,7 +435,23 @@
         <p class="eyebrow">Твоя наступна подорож</p>
         <h3>Звягель чекає на тебе!</h3>
         <p>Відкривай стародавні таємниці міста, знайомся зі спадщиною Лесі Українки та досліджуй історію замку.</p>
-        <a class="btn" href="#tours">Обрати екскурсію <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow"/></svg></a>
+        <div class="contact-card-actions">
+          <a class="btn" href="#tours">Обрати екскурсію <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow"/></svg></a>
+          <div class="social-links">
+            <p class="social-label">Ми в соціальних мережах</p>
+            <a class="social-link" id="contact-facebook" href="https://www.facebook.com/zviaheltouristcentre/"
+               target="_blank" rel="noopener noreferrer">Facebook <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+            <a class="social-link" id="contact-instagram" href="https://www.instagram.com/zviahel_tourist_centr/"
+               target="_blank" rel="noopener noreferrer">Instagram <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+          </div>
+          <div class="social-links social-links--grid">
+            <p class="social-label">Музеї та установи Звягеля</p>
+            <a class="social-link" href="https://linktr.ee/zviahel_tourist_centr" target="_blank" rel="noopener noreferrer" aria-label="Туристичний центр — усі посилання (Linktree)">Туристичний центр <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+            <a class="social-link" href="https://linktr.ee/kraieznavchyi_museum" target="_blank" rel="noopener noreferrer" aria-label="Краєзнавчий музей — усі посилання (Linktree)">Краєзнавчий музей <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+            <a class="social-link" href="https://linktr.ee/MuzeiKosachivDrahomanovykh" target="_blank" rel="noopener noreferrer" aria-label="Музей Косачів-Драгоманових — усі посилання (Linktree)">Музей Косачів-Драгоманових <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+            <a class="social-link" href="https://linktr.ee/zviahel.lesyaukrainka" target="_blank" rel="noopener noreferrer" aria-label="Музей Лесі Українки — усі посилання (Linktree)">Музей Лесі Українки <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
