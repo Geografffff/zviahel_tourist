@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Onest:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="design.css?v=4">
+<link rel="stylesheet" href="design.css?v=5">
 
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -371,7 +371,7 @@ html.lock { overflow: hidden; }
 
   <section class="contact on-dark" id="contacts" aria-labelledby="contact-heading">
     <div class="container contact-layout">
-      <div>
+      <div class="contact-main">
         <p class="eyebrow">Плануйте свою подорож</p>
         <h2 id="contact-heading">Зв’яжіться з нами</h2>
         <p id="contact-intro">Звертайтеся до туристичного центру за інформацією про маршрути, культурні пам’ятки, проєкти та екскурсії Звягеля.</p>
@@ -382,32 +382,41 @@ html.lock { overflow: hidden; }
             <div><strong>Телефон центру</strong><a id="contact-phone" class="js-phone" href="tel:+380673004470">+38 067 300 4470</a></div>
           </div>
           <div class="contact-item">
-            <span class="ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-pin"/></svg></span>
-            <div><strong>Адреса</strong><span class="val" id="contact-address">вул. Героїв Майдану, 13, Звягель</span></div>
-          </div>
-          <div class="contact-item">
             <span class="ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-mail"/></svg></span>
             <div><strong>Електронна пошта</strong><a id="contact-email" href="mailto:tic.zvyagel@gmail.com">tic.zvyagel@gmail.com</a></div>
           </div>
-          <div class="contact-item">
+          <div class="contact-item contact-item--wide">
+            <span class="ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-pin"/></svg></span>
+            <div><strong>Адреса</strong><span class="val" id="contact-address">вул. Героїв Майдану, 13, Звягель</span></div>
+          </div>
+          <div class="contact-item contact-item--wide">
             <span class="ico"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-clock"/></svg></span>
             <div><strong>Графік роботи</strong><span class="val" id="contact-hours">Пн–Пт, 09:00–18:00</span></div>
           </div>
-        </div>
-
-        <div class="social-links">
-          <a class="social-link" id="contact-facebook" href="https://www.facebook.com/zviaheltouristcentre/"
-             target="_blank" rel="noopener noreferrer">Facebook <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
-          <a class="social-link" id="contact-instagram" href="https://www.instagram.com/zviahel_tourist_centr/"
-             target="_blank" rel="noopener noreferrer">Instagram <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
         </div>
       </div>
 
       <div class="contact-card">
         <p class="eyebrow">Звягельський туристичний центр</p>
         <h3>Маєте запитання?</h3>
-        <p>Зателефонуйте до туристичного центру, щоб уточнити інформацію про матеріал або спланувати подорож до Звягеля.</p>
-        <a class="btn js-phone" href="tel:+380673004470"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-phone"/></svg> Зателефонувати</a>
+        <p id="contact-card-text">Зателефонуйте до туристичного центру, щоб уточнити інформацію про матеріал або спланувати подорож до Звягеля.</p>
+        <div class="contact-card-actions">
+          <a class="btn js-phone" id="contact-call" href="tel:+380673004470"><svg class="icon" aria-hidden="true"><use href="icons.svg#i-phone"/></svg> <span>Зателефонувати</span></a>
+          <div class="social-links">
+            <p class="social-label">Ми в соціальних мережах</p>
+            <a class="social-link" id="contact-facebook" href="https://www.facebook.com/zviaheltouristcentre/"
+               target="_blank" rel="noopener noreferrer">Facebook <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+            <a class="social-link" id="contact-instagram" href="https://www.instagram.com/zviahel_tourist_centr/"
+               target="_blank" rel="noopener noreferrer">Instagram <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+          </div>
+          <div class="social-links social-links--grid">
+            <p class="social-label">Музеї та установи Звягеля</p>
+            <a class="social-link" href="https://linktr.ee/zviahel_tourist_centr" target="_blank" rel="noopener noreferrer" aria-label="Туристичний центр — усі посилання (Linktree)">Туристичний центр <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+            <a class="social-link" href="https://linktr.ee/kraieznavchyi_museum" target="_blank" rel="noopener noreferrer" aria-label="Краєзнавчий музей — усі посилання (Linktree)">Краєзнавчий музей <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+            <a class="social-link" href="https://linktr.ee/MuzeiKosachivDrahomanovykh" target="_blank" rel="noopener noreferrer" aria-label="Музей Косачів-Драгоманових — усі посилання (Linktree)">Музей Косачів-Драгоманових <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+            <a class="social-link" href="https://linktr.ee/zviahel.lesyaukrainka" target="_blank" rel="noopener noreferrer" aria-label="Музей Лесі Українки — усі посилання (Linktree)">Музей Лесі Українки <svg class="icon" aria-hidden="true"><use href="icons.svg#i-arrow-up-right"/></svg></a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -462,8 +471,12 @@ document.addEventListener("DOMContentLoaded", () => {
     project: { related: "Інші проєкти", cta: "Зв’язатися з нами" }
   };
 
+  // номер для запису на екскурсію (див. applyBooking); оголошено тут, бо кеш може викликати applyBooking синхронно
+  let bookingPhone = "";
+  const DEFAULT_CARD_TEXT = "Зателефонуйте до туристичного центру, щоб уточнити інформацію про матеріал або спланувати подорож до Звягеля.";
+
   ZV.init();
-  ZV.loadDoc("contacts", ZV.applyContacts);
+  ZV.loadDoc("contacts", data => { ZV.applyContacts(data); applyBooking(); });
 
   if (cfg) {
     $("back-link").href = catalogUrl;
@@ -666,6 +679,28 @@ document.addEventListener("DOMContentLoaded", () => {
     return node;
   }
 
+  // Окремий номер для запису — лише коли він відрізняється від номера центру.
+  // Тоді кнопка в картці веде саме на нього; інакше не дублюємо той самий номер.
+  // Викликається і після відмальовування матеріалу, і після завантаження контактів (що прийде пізніше).
+  function applyBooking() {
+    const call = $("contact-call"), note = $("contact-card-text"), center = $("contact-phone");
+    if (!call || !note || !center) return;
+    const centerDigits = (center.textContent || "").replace(/\D/g, "");
+    const own = bookingPhone && bookingPhone.replace(/\D/g, "") !== centerDigits;
+    call.classList.toggle("js-phone", !own);       // щоб загальний номер центру не перезаписав цей
+    call.href = "tel:" + (own ? bookingPhone : makePhone(center.textContent) || center.textContent.replace(/[^\d+]/g, ""));
+    call.querySelector("span").textContent = own ? "Записатися: " + formatPhone(bookingPhone) : "Зателефонувати";
+    note.textContent = own
+      ? "Для запису на цю екскурсію зателефонуйте за номером нижче. З інших питань звертайтеся до центру — його номер у контактах."
+      : DEFAULT_CARD_TEXT;
+  }
+
+  // +380673004470 → +38 067 300 4470 (як у контактах центру); інші формати лишаються як є
+  function formatPhone(phone) {
+    const digits = String(phone).replace(/\D/g, "");
+    return /^380\d{9}$/.test(digits) ? `+38 ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}` : String(phone);
+  }
+
   function linkButton(label, href, className, iconName, external) {
     const link = el("a", className);
     link.href = href;
@@ -857,7 +892,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (type === "tour" && ownPhone) {
       const phoneRow = el("p", "side-phone");
       phoneRow.appendChild(icon("phone"));
-      phoneRow.appendChild(linkButton(ownPhone, "tel:" + ownPhone, ""));
+      phoneRow.appendChild(linkButton(formatPhone(ownPhone), "tel:" + ownPhone, ""));
       side.appendChild(phoneRow);
     }
     if (type === "tour" && bookingNote) side.appendChild(el("p", "side-note", bookingNote));
@@ -941,15 +976,8 @@ document.addEventListener("DOMContentLoaded", () => {
     $("contact-heading").textContent = type === "tour" ? "Записатися на екскурсію" : "Зв’яжіться з нами";
     if (labels.intro) $("contact-intro").textContent = labels.intro;
 
-    if (type === "tour" && ownPhone) {
-      const row = el("div", "contact-item");
-      const ico = el("span", "ico");
-      ico.appendChild(icon("ticket"));
-      const content = el("div");
-      content.append(el("strong", "", "Запис на цю екскурсію"), linkButton(ownPhone, "tel:" + ownPhone, ""));
-      row.append(ico, content);
-      document.querySelector(".contact-list").prepend(row);
-    }
+    bookingPhone = type === "tour" ? ownPhone : "";
+    applyBooking();
 
     applySeo(data, { title, lead, main, images, videos });
     showRelated();
